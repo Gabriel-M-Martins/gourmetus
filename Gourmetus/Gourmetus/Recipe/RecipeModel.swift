@@ -11,6 +11,7 @@ struct RecipeModel {
     var name: String
     var desc: String?
     var difficulty: Float
+    var imageData: Data?
     
     var steps: [StepModel]
     var ingredients: [IngredientModel]
