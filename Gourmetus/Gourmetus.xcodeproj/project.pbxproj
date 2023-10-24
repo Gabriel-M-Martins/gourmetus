@@ -13,6 +13,14 @@
 		A785B54B2AE1C3A2002E1D1F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A785B54A2AE1C3A2002E1D1F /* Preview Assets.xcassets */; };
 		A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785B54C2AE1C3A2002E1D1F /* Persistence.swift */; };
 		A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */; };
+		A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */; };
+		A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */; };
+		A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */; };
+		A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */; };
+		A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */; };
+		A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B302AE8394100F3ADF3 /* StepModel.swift */; };
+		A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */; };
+		A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B352AE83B0300F3ADF3 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +33,14 @@
 		A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gourmetus.entitlements; sourceTree = "<group>"; };
 		A785B5522AE1C3A2002E1D1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7F16B192AE832DA00F3ADF3 /* Gourmetus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gourmetus.xcdatamodel; sourceTree = "<group>"; };
+		A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPersistance.swift; sourceTree = "<group>"; };
+		A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataSource.swift; sourceTree = "<group>"; };
+		A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
+		A7F16B302AE8394100F3ADF3 /* StepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepModel.swift; sourceTree = "<group>"; };
+		A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
+		A7F16B352AE83B0300F3ADF3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +73,10 @@
 		A785B5422AE1C3A0002E1D1F /* Gourmetus */ = {
 			isa = PBXGroup;
 			children = (
+				A7F16B322AE83A0D00F3ADF3 /* Ingredient */,
+				A7F16B1C2AE8341700F3ADF3 /* Protocols */,
+				A7F16B2F2AE8392900F3ADF3 /* Step */,
+				A7F16B1B2AE833F900F3ADF3 /* Recipe */,
 				A785B5432AE1C3A0002E1D1F /* GourmetusApp.swift */,
 				A785B5452AE1C3A0002E1D1F /* ContentView.swift */,
 				A785B5472AE1C3A2002E1D1F /* Assets.xcassets */,
@@ -65,6 +85,7 @@
 				A785B5522AE1C3A2002E1D1F /* Info.plist */,
 				A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */,
 				A785B5492AE1C3A2002E1D1F /* Preview Content */,
+				A7F16B352AE83B0300F3ADF3 /* Constants.swift */,
 			);
 			path = Gourmetus;
 			sourceTree = "<group>";
@@ -75,6 +96,49 @@
 				A785B54A2AE1C3A2002E1D1F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A7F16B1B2AE833F900F3ADF3 /* Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */,
+				A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */,
+			);
+			path = Recipe;
+			sourceTree = "<group>";
+		};
+		A7F16B1C2AE8341700F3ADF3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B1D2AE8341700F3ADF3 /* Data */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		A7F16B1D2AE8341700F3ADF3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */,
+				A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */,
+				A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		A7F16B2F2AE8392900F3ADF3 /* Step */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B302AE8394100F3ADF3 /* StepModel.swift */,
+			);
+			path = Step;
+			sourceTree = "<group>";
+		};
+		A7F16B322AE83A0D00F3ADF3 /* Ingredient */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */,
+			);
+			path = Ingredient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,10 +211,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */,
+				A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
+				A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */,
 				A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */,
+				A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */,
+				A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */,
 				A785B5462AE1C3A0002E1D1F /* ContentView.swift in Sources */,
 				A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */,
+				A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */,
+				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
+				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
