@@ -12,7 +12,7 @@
 		A785B5482AE1C3A2002E1D1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A785B5472AE1C3A2002E1D1F /* Assets.xcassets */; };
 		A785B54B2AE1C3A2002E1D1F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A785B54A2AE1C3A2002E1D1F /* Preview Assets.xcassets */; };
 		A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785B54C2AE1C3A2002E1D1F /* Persistence.swift */; };
-		A785B5502AE1C3A2002E1D1F /* Gourmetus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A785B54E2AE1C3A2002E1D1F /* Gourmetus.xcdatamodeld */; };
+		A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,9 +22,9 @@
 		A785B5472AE1C3A2002E1D1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A785B54A2AE1C3A2002E1D1F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A785B54C2AE1C3A2002E1D1F /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		A785B54F2AE1C3A2002E1D1F /* Gourmetus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gourmetus.xcdatamodel; sourceTree = "<group>"; };
 		A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gourmetus.entitlements; sourceTree = "<group>"; };
 		A785B5522AE1C3A2002E1D1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7F16B192AE832DA00F3ADF3 /* Gourmetus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gourmetus.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 				A785B54C2AE1C3A2002E1D1F /* Persistence.swift */,
 				A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */,
 				A785B5522AE1C3A2002E1D1F /* Info.plist */,
-				A785B54E2AE1C3A2002E1D1F /* Gourmetus.xcdatamodeld */,
+				A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */,
 				A785B5492AE1C3A2002E1D1F /* Preview Content */,
 			);
 			path = Gourmetus;
@@ -148,7 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
-				A785B5502AE1C3A2002E1D1F /* Gourmetus.xcdatamodeld in Sources */,
+				A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */,
 				A785B5462AE1C3A0002E1D1F /* ContentView.swift in Sources */,
 				A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */,
 			);
@@ -360,12 +360,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A785B54E2AE1C3A2002E1D1F /* Gourmetus.xcdatamodeld */ = {
+		A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A785B54F2AE1C3A2002E1D1F /* Gourmetus.xcdatamodel */,
+				A7F16B192AE832DA00F3ADF3 /* Gourmetus.xcdatamodel */,
 			);
-			currentVersion = A785B54F2AE1C3A2002E1D1F /* Gourmetus.xcdatamodel */;
+			currentVersion = A7F16B192AE832DA00F3ADF3 /* Gourmetus.xcdatamodel */;
 			path = Gourmetus.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
