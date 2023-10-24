@@ -21,6 +21,8 @@
 		A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B302AE8394100F3ADF3 /* StepModel.swift */; };
 		A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */; };
 		A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B352AE83B0300F3ADF3 /* Constants.swift */; };
+		CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265A72AE856A400FBD85B /* CookBookModel.swift */; };
+		CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		A7F16B302AE8394100F3ADF3 /* StepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepModel.swift; sourceTree = "<group>"; };
 		A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 		A7F16B352AE83B0300F3ADF3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE4265A72AE856A400FBD85B /* CookBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookModel.swift; sourceTree = "<group>"; };
+		CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 		A785B5422AE1C3A0002E1D1F /* Gourmetus */ = {
 			isa = PBXGroup;
 			children = (
+				CE4265A62AE8562E00FBD85B /* Cookbook */,
 				A7F16B322AE83A0D00F3ADF3 /* Ingredient */,
 				A7F16B1C2AE8341700F3ADF3 /* Protocols */,
 				A7F16B2F2AE8392900F3ADF3 /* Step */,
@@ -139,6 +144,15 @@
 				A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */,
 			);
 			path = Ingredient;
+			sourceTree = "<group>";
+		};
+		CE4265A62AE8562E00FBD85B /* Cookbook */ = {
+			isa = PBXGroup;
+			children = (
+				CE4265A72AE856A400FBD85B /* CookBookModel.swift */,
+				CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */,
+			);
+			path = Cookbook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,10 +225,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */,
 				A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
 				A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */,
+				CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */,
 				A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */,
 				A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */,
 				A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */,
