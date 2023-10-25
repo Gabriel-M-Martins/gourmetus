@@ -23,6 +23,7 @@
 		A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B352AE83B0300F3ADF3 /* Constants.swift */; };
 		CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265A72AE856A400FBD85B /* CookBookModel.swift */; };
 		CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */; };
+		CEF141492AE98BBF00370031 /* CookBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF141482AE98BBF00370031 /* CookBookRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		A7F16B352AE83B0300F3ADF3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE4265A72AE856A400FBD85B /* CookBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookModel.swift; sourceTree = "<group>"; };
 		CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookDataSource.swift; sourceTree = "<group>"; };
+		CEF141482AE98BBF00370031 /* CookBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 			children = (
 				CE4265A72AE856A400FBD85B /* CookBookModel.swift */,
 				CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */,
+				CEF141482AE98BBF00370031 /* CookBookRepository.swift */,
 			);
 			path = Cookbook;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */,
 				A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */,
+				CEF141492AE98BBF00370031 /* CookBookRepository.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
 				A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */,
 				CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */,
