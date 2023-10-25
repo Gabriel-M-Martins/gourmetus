@@ -7,16 +7,21 @@
 
 import Foundation
 
-struct IngredientModel {
+struct IngredientModel: Identifiable {
+    var id: UUID
     var name: String
     var quantity: String
     var unit: Unit
 }
 
-enum Unit: Codable {
+enum Unit: String, Codable{
     case Cup
     case Ml
     case L
     case Kg
     case G
+    
+    static func fromString(_ string: String) -> Unit?{
+        return Unit(rawValue: string)
+    }
 }
