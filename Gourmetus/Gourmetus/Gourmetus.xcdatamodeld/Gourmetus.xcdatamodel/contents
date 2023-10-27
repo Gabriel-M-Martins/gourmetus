@@ -10,20 +10,19 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="Recipe" representedClassName="Recipe" syncable="YES" codeGenerationType="class">
+        <attribute name="averageTime" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="difficulty" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="difficulty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeDifficulty" inverseName="recipe" inverseEntity="RecipeDifficulty"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="recipe" inverseEntity="Ingredient"/>
         <relationship name="steps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Step" inverseName="recipe" inverseEntity="Step"/>
     </entity>
-    <entity name="RecipeDifficulty" representedClassName="RecipeDifficulty" syncable="YES" codeGenerationType="class">
-        <attribute name="difficulty" optional="YES" attributeType="Binary"/>
-        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="difficulty" inverseEntity="Recipe"/>
-    </entity>
     <entity name="Step" representedClassName="Step" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="order" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
-        <attribute name="timer" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="tip" optional="YES" attributeType="String"/>
         <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="steps" inverseEntity="Recipe"/>
     </entity>
