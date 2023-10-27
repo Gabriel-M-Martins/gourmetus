@@ -22,7 +22,7 @@ final class CoreDataCookBookRepository: CookBookRepository{
             guard var nameAux = favorite.name,
                   var steps = favorite.steps?.allObjects as? [StepModel],
                   var ingredientsAux = favorite.ingredients?.allObjects as? [IngredientModel] else {return}
-            var recipe = RecipeModel(name: nameAux, difficulty: favorite.difficulty, steps: steps, ingredients: ingredientsAux)
+            var recipe = RecipeModel(id:UUID(), name: nameAux, difficulty: favorite.difficulty, steps: steps, ingredients: ingredientsAux)
             cookBookModel.favorites.append(recipe)
         }
         
@@ -30,13 +30,13 @@ final class CoreDataCookBookRepository: CookBookRepository{
             guard var nameAux = latest.name,
                   var steps = latest.steps?.allObjects as? [StepModel],
                   var ingredientsAux = latest.ingredients?.allObjects as? [IngredientModel] else {return}
-            var recipe = RecipeModel(name: nameAux, difficulty: latest.difficulty, steps: steps, ingredients: ingredientsAux)
+            var recipe = RecipeModel(id:UUID(), name: nameAux, difficulty: latest.difficulty, steps: steps, ingredients: ingredientsAux)
             cookBookModel.latest.append(recipe)
         }
     }
     
     func save() {
-        <#code#>
+        
     }
     
     
