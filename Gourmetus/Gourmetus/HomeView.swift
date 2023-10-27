@@ -48,17 +48,22 @@ struct HomeView: View {
 extension HomeView {
     
     private var titleRecentlyAccessed: some View {
-        HStack{
-            Text("Recently accessed")
-                .font(.title2)
-                .foregroundStyle(.green)
-                .padding(.leading)
-            Spacer()
-            Text("View all >")
-                .font(.subheadline)
-                .foregroundStyle(.orange)
-                .padding(.trailing)
+        Button{
+            
+        }label: {
+            HStack{
+                Text("Recently accessed")
+                    .font(.title2)
+                    .foregroundStyle(.green)
+                    .padding(.leading)
+                Spacer()
+                Text("View all >")
+                    .font(.subheadline)
+                    .foregroundStyle(.orange)
+                    .padding(.trailing)
+            }
         }
+        
     }
     
     private var scrollViewRecentlyAccessed: some View {
@@ -74,16 +79,20 @@ extension HomeView {
     }
     
     private var titleFavourites: some View {
-        HStack{
-            Text("Favourites")
-                .font(.title2)
-                .foregroundStyle(.green)
-                .padding(.leading)
-            Spacer()
-            Text("View all >")
-                .font(.subheadline)
-                .foregroundStyle(.orange)
-                .padding(.trailing)
+        Button{
+            
+        }label: {
+            HStack{
+                Text("Favourites")
+                    .font(.title2)
+                    .foregroundStyle(.green)
+                    .padding(.leading)
+                Spacer()
+                Text("View all >")
+                    .font(.subheadline)
+                    .foregroundStyle(.orange)
+                    .padding(.trailing)
+            }
         }
     }
     
@@ -102,16 +111,20 @@ extension HomeView {
     }
     
     private var titleMyRecipes: some View {
-        HStack{
-            Text("My Recipes")
-                .font(.title2)
-                .foregroundStyle(.green)
-                .padding(.leading)
-            Spacer()
-            Text("View all >")
-                .font(.subheadline)
-                .foregroundStyle(.orange)
-                .padding(.trailing)
+        Button{
+            
+        }label: {
+            HStack{
+                Text("My Recipes")
+                    .font(.title2)
+                    .foregroundStyle(.green)
+                    .padding(.leading)
+                Spacer()
+                Text("View all >")
+                    .font(.subheadline)
+                    .foregroundStyle(.orange)
+                    .padding(.trailing)
+            }
         }
     }
     
@@ -123,21 +136,26 @@ extension HomeView {
                 }
             }
             .padding(.horizontal)
+            .padding(.vertical, 2)
         }
         .scrollIndicators(.hidden)
     }
     
     private var titleCommunity: some View {
-        HStack{
-            Text("Community")
-                .font(.title2)
-                .foregroundStyle(.green)
-                .padding(.leading)
-            Spacer()
-            Text("View all >")
-                .font(.subheadline)
-                .foregroundStyle(.orange)
-                .padding(.trailing)
+        Button{
+            
+        }label: {
+            HStack{
+                Text("Community")
+                    .font(.title2)
+                    .foregroundStyle(.green)
+                    .padding(.leading)
+                Spacer()
+                Text("View all >")
+                    .font(.subheadline)
+                    .foregroundStyle(.orange)
+                    .padding(.trailing)
+            }
         }
     }
     
