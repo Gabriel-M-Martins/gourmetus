@@ -13,7 +13,10 @@ struct GourmetusApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+//            RecipeDetailsView(recipe: Constants.mockedRecipe)
+            HomeView()
+//            RecentlyAccessedRow(recipe: Constants.mockedRecipe)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

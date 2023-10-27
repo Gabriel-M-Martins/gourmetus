@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct RecipeModel {
+struct RecipeModel: Identifiable{
+    var id: UUID
     var name: String
     var desc: String?
     var difficulty: Float
