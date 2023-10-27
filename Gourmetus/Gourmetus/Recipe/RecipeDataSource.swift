@@ -8,6 +8,7 @@
 import Foundation
 
 final class RecipeDataSource: CoreDataSource {
-    typealias T = Recipe
+    typealias SourceType = Recipe
+    static var shared: RecipeDataSource = RecipeDataSource()
 }
 
