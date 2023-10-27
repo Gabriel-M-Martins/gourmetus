@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7271B1B2AEAEB4400F7CD16 /* CoreDataCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1A2AEAEB4400F7CD16 /* CoreDataCodable.swift */; };
+		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
+		A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D364B2AEC2CF3008CB1EA /* Repository.swift */; };
 		A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785B5432AE1C3A0002E1D1F /* GourmetusApp.swift */; };
 		A785B5462AE1C3A0002E1D1F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785B5452AE1C3A0002E1D1F /* ContentView.swift */; };
 		A785B5482AE1C3A2002E1D1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A785B5472AE1C3A2002E1D1F /* Assets.xcassets */; };
@@ -14,17 +17,20 @@
 		A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785B54C2AE1C3A2002E1D1F /* Persistence.swift */; };
 		A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */; };
 		A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */; };
-		A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */; };
-		A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */; };
 		A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */; };
 		A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */; };
 		A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B302AE8394100F3ADF3 /* StepModel.swift */; };
 		A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */; };
 		A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B352AE83B0300F3ADF3 /* Constants.swift */; };
 		CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* DeletePopUp.swift */; };
+		A7F16B382AE85B5300F3ADF3 /* RecipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A7271B1A2AEAEB4400F7CD16 /* CoreDataCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCodable.swift; sourceTree = "<group>"; };
+		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
+		A77D364B2AEC2CF3008CB1EA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		A785B5402AE1C3A0002E1D1F /* Gourmetus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gourmetus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A785B5432AE1C3A0002E1D1F /* GourmetusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GourmetusApp.swift; sourceTree = "<group>"; };
 		A785B5452AE1C3A0002E1D1F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,14 +41,14 @@
 		A785B5522AE1C3A2002E1D1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7F16B192AE832DA00F3ADF3 /* Gourmetus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gourmetus.xcdatamodel; sourceTree = "<group>"; };
 		A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
-		A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPersistance.swift; sourceTree = "<group>"; };
 		A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataSource.swift; sourceTree = "<group>"; };
 		A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		A7F16B302AE8394100F3ADF3 /* StepModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepModel.swift; sourceTree = "<group>"; };
 		A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 		A7F16B352AE83B0300F3ADF3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEF1414C2AE9A41300370031 /* DeletePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePopUp.swift; sourceTree = "<group>"; };
+		A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRepository.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A7271B1C2AEAEB5F00F7CD16 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */,
+				A77D364B2AEC2CF3008CB1EA /* Repository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		A785B5372AE1C3A0002E1D1F = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +121,8 @@
 				A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */,
 				A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */,
 				CEF1414C2AE9A41300370031 /* DeletePopUp.swift */,
+				A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */,
+
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -113,19 +130,19 @@
 		A7F16B1C2AE8341700F3ADF3 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				A7F16B1D2AE8341700F3ADF3 /* Data */,
+				A7271B1C2AEAEB5F00F7CD16 /* Repository */,
+				A7F4D1DF2AEAEAC8000E5B00 /* Codable */,
+				A7F16B1D2AE8341700F3ADF3 /* DataSource */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		A7F16B1D2AE8341700F3ADF3 /* Data */ = {
+		A7F16B1D2AE8341700F3ADF3 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
 				A7F16B1E2AE8341700F3ADF3 /* CoreData.swift */,
-				A7F16B1F2AE8341700F3ADF3 /* DataSource.swift */,
-				A7F16B202AE8341700F3ADF3 /* DataPersistance.swift */,
 			);
-			path = Data;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		A7F16B2F2AE8392900F3ADF3 /* Step */ = {
@@ -142,6 +159,14 @@
 				A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */,
 			);
 			path = Ingredient;
+			sourceTree = "<group>";
+		};
+		A7F4D1DF2AEAEAC8000E5B00 /* Codable */ = {
+			isa = PBXGroup;
+			children = (
+				A7271B1A2AEAEB4400F7CD16 /* CoreDataCodable.swift */,
+			);
+			path = Codable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,16 +239,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7F16B222AE8341700F3ADF3 /* DataSource.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
-				A7F16B232AE8341700F3ADF3 /* DataPersistance.swift in Sources */,
+				A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */,
 				A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */,
+				A7F16B382AE85B5300F3ADF3 /* RecipeRepository.swift in Sources */,
 				A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */,
 				A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */,
+				A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */,
 				A785B5462AE1C3A0002E1D1F /* ContentView.swift in Sources */,
 				A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */,
 				A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */,
+				A7271B1B2AEAEB4400F7CD16 /* CoreDataCodable.swift in Sources */,
 				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
 				CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */,
