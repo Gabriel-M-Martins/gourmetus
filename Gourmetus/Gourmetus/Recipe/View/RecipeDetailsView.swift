@@ -87,14 +87,15 @@ extension RecipeDetailsView {
     }
     
     private var image: some View {
+        
         if let imgData = recipe.imageData,
            let img = UIImage(data: imgData){
-            Image(uiImage: img)
+            return Image(uiImage: img)
                 .resizable()
                 .frame(width: 180,height: 100)
                 .padding()
-        }else{
-            Image(systemName: "square.fill")
+        } else {
+            return Image(systemName: "square.fill")
                 .resizable()
                 .frame(width: 180,height: 100)
                 .padding()
