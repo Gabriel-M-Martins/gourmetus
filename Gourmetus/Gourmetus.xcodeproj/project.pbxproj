@@ -110,6 +110,7 @@
 			children = (
 				A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */,
 				A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */,
+				CEF1414C2AE9A41300370031 /* DeletePopUp.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -243,6 +244,7 @@
 				A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */,
 				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
+				CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
