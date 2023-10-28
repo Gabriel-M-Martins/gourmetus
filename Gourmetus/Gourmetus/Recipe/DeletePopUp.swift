@@ -38,9 +38,9 @@ struct DeletePopUp<Content: View>: View {
                 }
             }
         }
-        .onChange(of: tapType) { oldValue, newValue in
-            
-        }
+//        .onChange(of: tapType) { oldValue, newValue in
+//            
+//        }
     }
 }
 

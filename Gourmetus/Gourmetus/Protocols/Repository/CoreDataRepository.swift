@@ -41,7 +41,7 @@ extension CoreDataRepository {
         
         let existingEntity = Self.cache[model.id]
         
-        var usedContext = existingEntity?.managedObjectContext ?? context
+        let usedContext = existingEntity?.managedObjectContext ?? context
         _ = model.encode(context: usedContext, existingEntity: existingEntity)
         
         try? usedContext.save()

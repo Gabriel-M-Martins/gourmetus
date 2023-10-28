@@ -9,11 +9,11 @@ import Foundation
 
 struct Constants {
     static let mockedSteps: [StepModel] = [
-        StepModel(text: "passo 1"),
-        StepModel(text: "passo 2"),
-        StepModel(text: "passo 3"),
-        StepModel(timer: 30),
-        StepModel(text: "passo 4")
+        StepModel(id: UUID(), text: "passo 1"),
+        StepModel(id: UUID(), text: "passo 2"),
+        StepModel(id: UUID(), text: "passo 3"),
+        StepModel(id: UUID(), timer: 30),
+        StepModel(id: UUID(), text: "passo 4")
     ]
     
     static let mockedIngredients: [IngredientModel] = [
@@ -23,5 +23,5 @@ struct Constants {
         IngredientModel(id: UUID(), name: "Açucar", quantity: "2", unit: .Cup)
     ]
     
-    static let mockedRecipe: RecipeModel = RecipeModel(name: "Bolo Formigueiro", difficulty: 3, steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedRecipe: RecipeModel = RecipeModel(id: UUID(), name: "Bolo Formigueiro", difficulty: 3, steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
 }
