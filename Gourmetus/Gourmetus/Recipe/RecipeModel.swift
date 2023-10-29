@@ -38,7 +38,7 @@ struct RecipeModel: Identifiable{
 // MARK: - Core Data Convertable
 extension RecipeModel : CoreDataCodable {
     init?(_ entity: Recipe) {
-        var decoder = JSONDecoder()
+        let decoder = JSONDecoder()
         
         var ingredients = [IngredientModel]()
         if let ingredientsEntities = entity.ingredients?.allObjects as? [Ingredient] {
