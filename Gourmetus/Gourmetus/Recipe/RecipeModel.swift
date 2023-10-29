@@ -8,8 +8,7 @@
 import Foundation
 import CoreData
 
-// MARK: - Recipe Model
-struct RecipeModel {
+struct RecipeModel: Identifiable{
     var id: UUID
     var name: String
     var difficulty: Float

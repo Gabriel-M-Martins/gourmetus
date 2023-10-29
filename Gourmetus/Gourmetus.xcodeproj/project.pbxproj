@@ -10,6 +10,10 @@
 		7B2B6A9B2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */; };
 		7B2B6A9F2AE9A9DC00AFEFFA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */; };
 		7B50B8042AE852B700E00C04 /* RecipeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */; };
+		7BB063E02AE9C4DF0038EEDA /* RecentlyAccessedRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB063DF2AE9C4DF0038EEDA /* RecentlyAccessedRow.swift */; };
+		7BB063E22AEAB2A80038EEDA /* FavouritesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB063E12AEAB2A80038EEDA /* FavouritesRow.swift */; };
+		7BB1448B2AEB098B00F67DD2 /* MyRecipesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB1448A2AEB098B00F67DD2 /* MyRecipesRow.swift */; };
+		7BB1448D2AEC0BFA00F67DD2 /* CommunityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB1448C2AEC0BFA00F67DD2 /* CommunityRow.swift */; };
 		A7271B1B2AEAEB4400F7CD16 /* CoreDataCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1A2AEAEB4400F7CD16 /* CoreDataCodable.swift */; };
 		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
 		A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D364B2AEC2CF3008CB1EA /* Repository.swift */; };
@@ -36,6 +40,10 @@
 		7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 		7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsView.swift; sourceTree = "<group>"; };
+		7BB063DF2AE9C4DF0038EEDA /* RecentlyAccessedRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAccessedRow.swift; sourceTree = "<group>"; };
+		7BB063E12AEAB2A80038EEDA /* FavouritesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesRow.swift; sourceTree = "<group>"; };
+		7BB1448A2AEB098B00F67DD2 /* MyRecipesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipesRow.swift; sourceTree = "<group>"; };
+		7BB1448C2AEC0BFA00F67DD2 /* CommunityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRow.swift; sourceTree = "<group>"; };
 		A7271B1A2AEAEB4400F7CD16 /* CoreDataCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCodable.swift; sourceTree = "<group>"; };
 		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
 		A77D364B2AEC2CF3008CB1EA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -124,6 +132,10 @@
 				A785B5432AE1C3A0002E1D1F /* GourmetusApp.swift */,
 				A785B5452AE1C3A0002E1D1F /* ContentView.swift */,
 				7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */,
+				7BB1448C2AEC0BFA00F67DD2 /* CommunityRow.swift */,
+				7BB1448A2AEB098B00F67DD2 /* MyRecipesRow.swift */,
+				7BB063E12AEAB2A80038EEDA /* FavouritesRow.swift */,
+				7BB063DF2AE9C4DF0038EEDA /* RecentlyAccessedRow.swift */,
 				A785B5472AE1C3A2002E1D1F /* Assets.xcassets */,
 				A785B54C2AE1C3A2002E1D1F /* Persistence.swift */,
 				A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */,
@@ -278,10 +290,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB1448D2AEC0BFA00F67DD2 /* CommunityRow.swift in Sources */,
 				CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* StepModel.swift in Sources */,
 				CEF141492AE98BBF00370031 /* CookBookRepository.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
+				7BB063E22AEAB2A80038EEDA /* FavouritesRow.swift in Sources */,
 				7B2B6A9F2AE9A9DC00AFEFFA /* HomeView.swift in Sources */,
 				CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */,
 				A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */,
@@ -290,11 +304,13 @@
 				A7F16B382AE85B5300F3ADF3 /* RecipeRepository.swift in Sources */,
 				A7F16B292AE8371600F3ADF3 /* RecipeDataSource.swift in Sources */,
 				A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */,
+				7BB1448B2AEB098B00F67DD2 /* MyRecipesRow.swift in Sources */,
 				A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */,
 				A785B5462AE1C3A0002E1D1F /* ContentView.swift in Sources */,
 				A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */,
 				A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */,
 				7B50B8042AE852B700E00C04 /* RecipeDetailsView.swift in Sources */,
+				7BB063E02AE9C4DF0038EEDA /* RecentlyAccessedRow.swift in Sources */,
 				A7271B1B2AEAEB4400F7CD16 /* CoreDataCodable.swift in Sources */,
 				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,

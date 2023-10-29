@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct StepModel {
+struct StepModel: Identifiable {
     var id: UUID
     var text: String?
     var tip: String?
