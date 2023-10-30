@@ -22,7 +22,8 @@ struct RecipeDetailsView: View {
                             image
                             VStack{
                                 HStack(alignment: .bottom) {
-                                    difficulty
+                                    //difficulty
+                                    Text("texto")
                                         .padding(.bottom)
                                 }
                             }
@@ -37,7 +38,7 @@ struct RecipeDetailsView: View {
                             Spacer()
                         }
                         
-                        ingredients
+                        //ingredients
                     }
                     ZStack{
                         Button{
@@ -102,62 +103,65 @@ extension RecipeDetailsView {
         }
     }
     
-    private var difficulty: some View {
-        ForEach(1..<6){ index in
-            if index < Int(recipe.difficulty){
-                Image(systemName: "star.fill")
-                    .foregroundColor(.yellow)
-            }else if index == Int(recipe.difficulty) && !floatIsInteger(num: recipe.difficulty) && index != 5{
-                Image(systemName: "star.fill")
-                    .foregroundColor(.yellow)
-                Image(systemName: "star.leadinghalf.filled")
-                    .foregroundColor(.yellow)
-                ForEach(index+2..<6){ index2 in
-                    Image(systemName: "star")
-                        .foregroundColor(.yellow)
-                }
-            }else if index == Int(recipe.difficulty) && floatIsInteger(num: recipe.difficulty) {
-                Image(systemName: "star.fill")
-                    .foregroundColor(.yellow)
-                ForEach(index+1..<6){ index3 in
-                    Image(systemName: "star")
-                        .foregroundColor(.yellow)
-                }
-            }else{
-                Text("Error")
-            }
-            
-        }
-    }
-    
-    private var owner: some View {
-        HStack{
-            Text("Por (Nome da pessoa)")
-                .padding(.horizontal)
-                .padding(.bottom, 8)
-            Spacer()
-        }
-    }
-    
-    private var tags: some View {
-        HStack{
-            Text("(Tag1) (Tag2) (Tag3)")
-                .padding(.horizontal)
-                .padding(.bottom)
-            Spacer()
-        }
-    }
-    
-    private var ingredients: some View {
-        ForEach(recipe.ingredients) { ingredient in
-            HStack{
-                Text("\(ingredient.quantity) \(ingredient.unit.rawValue) x \(ingredient.name)")
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                Spacer()
-            }
-        }
-    }
-    
-    
+//    private var difficulty: some View {
+//        ForEach(1..<6){ index in
+//            if index < recipe.difficulty {
+//                Image(systemName: "star.fill")
+//                    .foregroundColor(.yellow)
+//            } else if index == Int(recipe.difficulty) && !floatIsInteger(num: recipe.difficulty) && index != 5{
+//                HStack {
+//                    Image(systemName: "star.fill")
+//                        .foregroundColor(.yellow)
+//                    Image(systemName: "star.leadinghalf.filled")
+//                        .foregroundColor(.yellow)
+//                    ForEach(index+2..<6){ index2 in
+//                        Image(systemName: "star")
+//                            .foregroundColor(.yellow)
+//                    }
+//            }else if index == Int(recipe.difficulty) && floatIsInteger(num: recipe.difficulty) {
+//                HStack {
+//                    Image(systemName: "star.fill")
+//                        .foregroundColor(.yellow)
+//                    ForEach(index+1..<6){ index3 in
+//                        Image(systemName: "star")
+//                            .foregroundColor(.yellow)
+//                    }
+//                }
+//            }else{
+//                Text("Error")
+//            }
+//            
+//        }
+//    }
+//    
+//    private var owner: some View {
+//        HStack{
+//            Text("Por (Nome da pessoa)")
+//                .padding(.horizontal)
+//                .padding(.bottom, 8)
+//            Spacer()
+//        }
+//    }
+//    
+//    private var tags: some View {
+//        HStack{
+//            Text("(Tag1) (Tag2) (Tag3)")
+//                .padding(.horizontal)
+//                .padding(.bottom)
+//            Spacer()
+//        }
+//    }
+//    
+//    private var ingredients: some View {
+//        ForEach(recipe.ingredients) { ingredient in
+//            HStack{
+//                Text("\(ingredient.quantity) \(ingredient.unit.description) x \(ingredient.name)")
+//                    .padding(.horizontal)
+//                    .padding(.vertical, 8)
+//                Spacer()
+//            }
+//        }
+//    }
+//    
+//    
 }

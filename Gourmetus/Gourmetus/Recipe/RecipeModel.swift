@@ -11,8 +11,8 @@ import CoreData
 struct RecipeModel: Identifiable{
     var id: UUID
     var name: String
-    var difficulty: Float
     var desc: String?
+    var difficulty: Int
     var imageData: Data?
     
     var steps: [StepModel]
@@ -22,7 +22,7 @@ struct RecipeModel: Identifiable{
         case invalidIndex
     }
     
-    init(id: UUID, name: String, desc: String? = nil, difficulty: Float, imageData: Data? = nil, steps: [StepModel], ingredients: [IngredientModel]) {
+    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [StepModel], ingredients: [IngredientModel]) {
         self.id = id
         self.name = name
         self.desc = desc
@@ -47,7 +47,7 @@ extension RecipeModel : CoreDataCodable {
                       let id = ingredient.id,
                       let quantity = ingredient.quantity,
                       let unitData = ingredient.unit,
-                      let unit = try? decoder.decode(Unit.self, from: unitData) else {
+                      let unit = try? decoder.decode(IngredientUnit.self, from: unitData) else {
                           continue
                       }
                 
@@ -59,7 +59,7 @@ extension RecipeModel : CoreDataCodable {
         if let stepsEntities = entity.steps?.allObjects as? [Step] {
             for step in stepsEntities {
                 guard let id = step.id else { continue }
-                steps.append((Int(step.order), StepModel(id: id, text: step.text, tip: step.tip, imageData: step.image, timer: step.timer)))
+                steps.append((Int(step.order), StepModel(id: id, texto: step.texto, tip: step.tip, imageData: step.image, timer: Int(step.timer))))
             }
         }
         
@@ -70,7 +70,7 @@ extension RecipeModel : CoreDataCodable {
         
         self.id = id
         self.name = name
-        self.difficulty = entity.difficulty
+        self.difficulty = Int(entity.difficulty)
         self.steps = steps.map({ return $0.model })
         self.ingredients = ingredients
     }
@@ -82,7 +82,7 @@ extension RecipeModel : CoreDataCodable {
         result.name = self.name
         result.averageTime = Float()
         result.desc = self.desc
-        result.difficulty = self.difficulty
+        result.difficulty = Int16(self.difficulty)
         result.image = self.imageData
         
         let existingIngredients = Set(result.ingredients?.allObjects as? [Ingredient] ?? [])
