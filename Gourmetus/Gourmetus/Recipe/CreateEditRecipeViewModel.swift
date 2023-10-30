@@ -24,7 +24,7 @@ class CreateEditRecipeViewModel: ObservableObject {
     
     
     func addIngredient(){
-        ingredients.append(IngredientModel(name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
+        ingredients.append(IngredientModel(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
         isAddingIngredient = false
         ingredientName = ""
         ingredientQuantity = ""
@@ -78,7 +78,7 @@ class CreateEditRecipeViewModel: ObservableObject {
             if let indexEdited = ingredientsBeingEdited.firstIndex(of: ingredient) {
                 ingredientsBeingEdited.remove(at: indexEdited)
                         }
-            ingredients[index] = IngredientModel(name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit)
+            ingredients[index] = IngredientModel(id: ingredient.id, name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit)
             ingredientName = ""
             ingredientQuantity = ""
             ingredientUnit = .Kg

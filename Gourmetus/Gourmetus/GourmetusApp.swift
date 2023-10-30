@@ -14,7 +14,11 @@ struct GourmetusApp: App {
     @State var recipe: RecipeModel? = Constants.mockedRecipe
     var body: some Scene {
         WindowGroup {
-           CreateEditRecipeView(recipe: $recipe)
+//            ContentView()
+//            RecipeDetailsView(recipe: Constants.mockedRecipe)
+            HomeView()
+//            RecentlyAccessedRow(recipe: Constants.mockedRecipe)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

@@ -9,19 +9,21 @@ import Foundation
 
 struct Constants {
     static let mockedSteps: [StepModel] = [
-        StepModel(texto: "passo 1"),
-        StepModel(texto: "passo 2"),
-        StepModel(texto: "passo 3"),
-        StepModel(timer: 30),
-        StepModel(texto: "passo 4")
+        StepModel(id: UUID(), texto: "passo 1"),
+        StepModel(id: UUID(), texto: "passo 2"),
+        StepModel(id: UUID(), texto: "passo 3"),
+        StepModel(id: UUID(), timer: 30),
+        StepModel(id: UUID(), texto: "passo 4")
     ]
     
     static let mockedIngredients: [IngredientModel] = [
-        IngredientModel(name: "Farinha", quantity: "0.5", unit: .Kg),
-        IngredientModel(name: "Ovo", quantity: "3", unit: .L),
-        IngredientModel(name: "Sal", quantity: "10", unit: .G),
-        IngredientModel(name: "Açucar", quantity: "2", unit: .Cup)
+        IngredientModel(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
+        IngredientModel(id: UUID(), name: "Ovo", quantity: "3", unit: .L),
+        IngredientModel(id: UUID(), name: "Sal", quantity: "10", unit: .G),
+        IngredientModel(id: UUID(), name: "Açucar", quantity: "2", unit: .Cup)
     ]
     
-    static let mockedRecipe: RecipeModel = RecipeModel(name: "Bolo Formigueiro", desc: "Um bolo", difficulty: 3, steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedRecipe: RecipeModel = RecipeModel(id: UUID(),name: "Bolo Formigueiro auhdasudasudhaudhuahduas", difficulty: 3,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    
+    static let mockedRecipeArray: [RecipeModel] = [mockedRecipe,mockedRecipe,mockedRecipe]
 }
