@@ -7,16 +7,37 @@
 
 import Foundation
 
-struct IngredientModel {
+struct IngredientModel: Equatable, Identifiable {
+    var id = UUID()
     var name: String
     var quantity: String
-    var unit: Unit
+    var unit: IngredientUnit
 }
 
-enum Unit: Codable {
+enum IngredientUnit: Codable, Identifiable, CaseIterable {
+    var id: Self {
+
+           return self
+       }
+    
     case Cup
     case Ml
     case L
     case Kg
     case G
+    
+    var description: String {
+        switch self {
+        case .Cup:
+            return "Cup"
+        case .Ml:
+            return "Ml"
+        case .L:
+            return "L"
+        case .Kg:
+            return "Kg"
+        case .G:
+            return "G"
+        }
+    }
 }

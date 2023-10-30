@@ -10,7 +10,7 @@ import Foundation
 struct RecipeModel {
     var name: String
     var desc: String?
-    var difficulty: Float
+    var difficulty: Int
     var imageData: Data?
     
     var steps: [StepModel]

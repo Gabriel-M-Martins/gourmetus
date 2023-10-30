@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct StepModel {
-    var text: String?
+struct StepModel: Hashable{
+    var texto: String?
     var tip: String?
     var imageData: Data?
-    var timer: Float?
+    var timer: Int?
 }
