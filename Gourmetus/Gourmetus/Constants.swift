@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct Constants {
     static let mockedSteps: [StepModel] = [
-        StepModel(id: UUID(), texto: "passo 1"),
+        StepModel(id: UUID(), texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "DefaultRecipeImage")!.pngData() ),
         StepModel(id: UUID(), texto: "passo 2"),
         StepModel(id: UUID(), texto: "passo 3"),
         StepModel(id: UUID(), timer: 30),
