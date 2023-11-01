@@ -11,7 +11,7 @@ enum TapType {
     case none, cancel, delete
 }
 
-struct DeletePopUp<Content: View>: View {
+struct ConfirmationPopUp<Content: View>: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var showingAlert = false
@@ -45,7 +45,7 @@ struct DeletePopUp<Content: View>: View {
 }
 
 #Preview {
-    DeletePopUp(msgErreor: "Are you sure you want delete this recipe?", visualContent: {Text("Delete Recipe")
+    ConfirmationPopUp(msgErreor: "Are you sure you want delete this recipe?", visualContent: {Text("Delete Recipe")
             .frame(width: 350, height: 64)
             .background(.red)
             .foregroundColor(.white)

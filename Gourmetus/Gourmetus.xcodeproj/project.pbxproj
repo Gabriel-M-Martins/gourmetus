@@ -40,8 +40,9 @@
 		A7F16B382AE85B5300F3ADF3 /* RecipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */; };
 		CE4265A82AE856A400FBD85B /* CookBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265A72AE856A400FBD85B /* CookBookModel.swift */; };
 		CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */; };
+		CE7F24CE2AF040F9004065C8 /* TimerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */; };
 		CEF141492AE98BBF00370031 /* CookBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF141482AE98BBF00370031 /* CookBookRepository.swift */; };
-		CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* DeletePopUp.swift */; };
+		CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,8 +82,9 @@
 		A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRepository.swift; sourceTree = "<group>"; };
 		CE4265A72AE856A400FBD85B /* CookBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookModel.swift; sourceTree = "<group>"; };
 		CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookDataSource.swift; sourceTree = "<group>"; };
+		CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotification.swift; sourceTree = "<group>"; };
 		CEF141482AE98BBF00370031 /* CookBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookRepository.swift; sourceTree = "<group>"; };
-		CEF1414C2AE9A41300370031 /* DeletePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePopUp.swift; sourceTree = "<group>"; };
+		CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPopUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				7BB1448A2AEB098B00F67DD2 /* MyRecipesRow.swift */,
 				7BB063E12AEAB2A80038EEDA /* FavouritesRow.swift */,
 				7BB063DF2AE9C4DF0038EEDA /* RecentlyAccessedRow.swift */,
+				CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */,
 				A785B5472AE1C3A2002E1D1F /* Assets.xcassets */,
 				A785B54C2AE1C3A2002E1D1F /* Persistence.swift */,
 				A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */,
@@ -198,6 +201,7 @@
 				7B50B8022AE8527200E00C04 /* View */,
 				A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */,
 				A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */,
+				CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */,
 				30CB53AE2AE84E3C0093A21D /* CreateEditRecipeView.swift */,
 				3050D4C12AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift */,
 				CEF1414C2AE9A41300370031 /* DeletePopUp.swift */,
@@ -346,6 +350,7 @@
 				CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */,
 				A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */,
 				A7F16B1A2AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld in Sources */,
+				CE7F24CE2AF040F9004065C8 /* TimerNotification.swift in Sources */,
 				7B2B6A9B2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift in Sources */,
 				30F09A082AF2BD8800C502C2 /* TimerComponent.swift in Sources */,
 				A7F16B382AE85B5300F3ADF3 /* RecipeRepository.swift in Sources */,
@@ -363,7 +368,7 @@
 				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
 				3050D4C52AEFEF5600D26A87 /* CreateEditStepViewModel.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
-				CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */,
+				CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
