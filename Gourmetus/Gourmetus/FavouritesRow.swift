@@ -32,6 +32,7 @@ struct FavouritesRow: View {
                 HStack{
                     Text(recipe.name)
                         .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .font(.subheadline)
                     Spacer()

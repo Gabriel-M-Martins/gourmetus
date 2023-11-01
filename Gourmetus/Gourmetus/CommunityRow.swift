@@ -11,6 +11,8 @@ struct CommunityRow: View {
     
     var recipe: RecipeModel
     
+    @ObservedObject var homeViewModel: HomeViewModel
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
             if let imgData = recipe.imageData,
@@ -42,9 +44,32 @@ struct CommunityRow: View {
                 Text("\(Image(systemName: "star.fill")) \(recipe.difficulty.formatted())")
                     .font(.subheadline)
                     .foregroundStyle(.yellow)
-                Text("By \(Image(systemName: "person.circle")) (Owner)")
-                    .font(.footnote)
-                    .foregroundStyle(.gray)
+                HStack{
+                    Text("By \(Image(systemName: "person.circle")) (Owner)")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                    
+                    Spacer()
+                    Button{
+                        homeViewModel.toggleFavourite(recipe: recipe)
+                    }label: {
+                        ZStack{
+                            Circle()
+                                .fill(homeViewModel.isFavorited(recipe: recipe) ? .orange : .white)
+                                .shadow(radius: 5)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(.orange, lineWidth: 3)
+                                )
+                                
+                            Image(systemName: "heart.fill" )
+                                .foregroundColor(homeViewModel.isFavorited(recipe: recipe) ? .white : .orange)
+
+                            
+                        }
+                        .foregroundColor(.orange)
+                    }
+                }
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 16)
@@ -55,11 +80,12 @@ struct CommunityRow: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(.gray, lineWidth: 3)
         )
+        
     }
 }
 
 #Preview {
-    CommunityRow(recipe: Constants.mockedRecipe)
+    CommunityRow(recipe: Constants.mockedRecipe, homeViewModel: HomeViewModel())
 }
 
 extension CommunityRow {

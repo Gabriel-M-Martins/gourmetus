@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecentlyAccessedRow: View {
-    
+        
     var recipe: RecipeModel
     
     var body: some View {

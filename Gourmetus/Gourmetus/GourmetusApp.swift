@@ -18,6 +18,7 @@ struct GourmetusApp: App {
 //            ContentView()
 //            RecipeDetailsView(recipe: Constants.mockedRecipe)
             HomeView()
+//            RecipesListsView(listType: .RecentlyAccessed, homeViewModel: HomeViewModel())
 //            RecentlyAccessedRow(recipe: Constants.mockedRecipe)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

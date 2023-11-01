@@ -9,9 +9,15 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     
-    var recipe: RecipeModel
+    @StateObject var recipeDetailsViewModel: RecipeDetailsViewModel
     
-    @State var isFavorited: Bool = false
+    @ObservedObject var homeViewModel: HomeViewModel
+    
+    init(recipe: RecipeModel, homeViewModel: HomeViewModel) {
+        self._recipeDetailsViewModel = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
+        
+        self.homeViewModel = homeViewModel
+    }
     
     var body: some View {
         NavigationStack{
@@ -53,28 +59,29 @@ struct RecipeDetailsView: View {
                         }
                         
                         Button{
-                            isFavorited.toggle()
+                            homeViewModel.toggleFavourite(recipe: recipeDetailsViewModel.recipe)
                             //Action goes here
                         }label: {
-                            Image(systemName: isFavorited ? "heart.fill" : "heart")
+                            Image(systemName: homeViewModel.isFavorited(recipe: recipeDetailsViewModel.recipe) ? "heart.fill" : "heart")
                         }
                         .buttonStyle(.bordered)
                         .padding(.leading, 250)
                         
                     }
                     .padding()
-                    .navigationTitle(recipe.name)
+                    .navigationTitle(recipeDetailsViewModel.recipe.name)
                 }
                 .padding()
             }
         }
+        .onAppear{
+           
+        }
     }
 }
 
-struct RecipeDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeDetailsView(recipe: Constants.mockedRecipe)
-    }
+#Preview {
+    RecipeDetailsView(recipe: Constants.mockedRecipe, homeViewModel: HomeViewModel())
 }
 
 extension RecipeDetailsView {
@@ -89,7 +96,7 @@ extension RecipeDetailsView {
     
     private var image: some View {
         
-        if let imgData = recipe.imageData,
+        if let imgData = recipeDetailsViewModel.recipe.imageData,
            let img = UIImage(data: imgData){
             return Image(uiImage: img)
                 .resizable()
@@ -105,27 +112,24 @@ extension RecipeDetailsView {
     
 //    private var difficulty: some View {
 //        ForEach(1..<6){ index in
-//            if index < recipe.difficulty {
+//            if index < Int(recipeDetailsViewModel.recipe.difficulty){
 //                Image(systemName: "star.fill")
 //                    .foregroundColor(.yellow)
-//            } else if index == Int(recipe.difficulty) && !floatIsInteger(num: recipe.difficulty) && index != 5{
-//                HStack {
-//                    Image(systemName: "star.fill")
+//            }else if index == Int(recipeDetailsViewModel.recipe.difficulty) && !floatIsInteger(num: recipeDetailsViewModel.recipe.difficulty) && index != 5{
+//                Image(systemName: "star.fill")
+//                    .foregroundColor(.yellow)
+//                Image(systemName: "star.leadinghalf.filled")
+//                    .foregroundColor(.yellow)
+//                ForEach(index+2..<6){ index2 in
+//                    Image(systemName: "star")
 //                        .foregroundColor(.yellow)
-//                    Image(systemName: "star.leadinghalf.filled")
+//                }
+//            }else if index == Int(recipeDetailsViewModel.recipe.difficulty) && floatIsInteger(num: recipeDetailsViewModel.recipe.difficulty) {
+//                Image(systemName: "star.fill")
+//                    .foregroundColor(.yellow)
+//                ForEach(index+1..<6){ index3 in
+//                    Image(systemName: "star")
 //                        .foregroundColor(.yellow)
-//                    ForEach(index+2..<6){ index2 in
-//                        Image(systemName: "star")
-//                            .foregroundColor(.yellow)
-//                    }
-//            }else if index == Int(recipe.difficulty) && floatIsInteger(num: recipe.difficulty) {
-//                HStack {
-//                    Image(systemName: "star.fill")
-//                        .foregroundColor(.yellow)
-//                    ForEach(index+1..<6){ index3 in
-//                        Image(systemName: "star")
-//                            .foregroundColor(.yellow)
-//                    }
 //                }
 //            }else{
 //                Text("Error")
@@ -133,35 +137,35 @@ extension RecipeDetailsView {
 //            
 //        }
 //    }
-//    
-//    private var owner: some View {
-//        HStack{
-//            Text("Por (Nome da pessoa)")
-//                .padding(.horizontal)
-//                .padding(.bottom, 8)
-//            Spacer()
-//        }
-//    }
-//    
-//    private var tags: some View {
-//        HStack{
-//            Text("(Tag1) (Tag2) (Tag3)")
-//                .padding(.horizontal)
-//                .padding(.bottom)
-//            Spacer()
-//        }
-//    }
-//    
-//    private var ingredients: some View {
-//        ForEach(recipe.ingredients) { ingredient in
-//            HStack{
-//                Text("\(ingredient.quantity) \(ingredient.unit.description) x \(ingredient.name)")
-//                    .padding(.horizontal)
-//                    .padding(.vertical, 8)
-//                Spacer()
-//            }
-//        }
-//    }
-//    
-//    
+    
+    private var owner: some View {
+        HStack{
+            Text("Por (Nome da pessoa)")
+                .padding(.horizontal)
+                .padding(.bottom, 8)
+            Spacer()
+        }
+    }
+    
+    private var tags: some View {
+        HStack{
+            Text("(Tag1) (Tag2) (Tag3)")
+                .padding(.horizontal)
+                .padding(.bottom)
+            Spacer()
+        }
+    }
+    
+    private var ingredients: some View {
+        ForEach(recipeDetailsViewModel.recipe.ingredients) { ingredient in
+            HStack{
+                Text("\(ingredient.quantity) \(ingredient.unit.description) x \(ingredient.name)")
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                Spacer()
+            }
+        }
+    }
+    
+    
 }

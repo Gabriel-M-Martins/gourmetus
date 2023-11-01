@@ -24,7 +24,11 @@ struct Constants {
         IngredientModel(id: UUID(), name: "Açucar", quantity: "2", unit: .Cup)
     ]
     
-    static let mockedRecipe: RecipeModel = RecipeModel(id: UUID(),name: "Bolo Formigueiro auhdasudasudhaudhuahduas", difficulty: 3,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedRecipe: RecipeModel = RecipeModel(id: UUID(),name: "Bolo Formigueiro", difficulty: 3,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
     
-    static let mockedRecipeArray: [RecipeModel] = [mockedRecipe,mockedRecipe,mockedRecipe]
+    static let mockedRecipe1: RecipeModel = RecipeModel(id: UUID(),name: "Bala de banana", difficulty: 4,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+
+    static let mockedRecipe2: RecipeModel = RecipeModel(id: UUID(),name: "Brigadeiro", difficulty: 1,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+
+    static let mockedRecipeArray: [RecipeModel] = [mockedRecipe,mockedRecipe1,mockedRecipe2]
 }
