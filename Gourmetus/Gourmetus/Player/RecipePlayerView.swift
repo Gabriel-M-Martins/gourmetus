@@ -38,7 +38,9 @@ struct RecipePlayerView: View {
         VStack{
             
             if(playerViewModel.currentStep.timer != nil){
-                Text(String(playerViewModel.currentStep.timer!))
+                TimerView(remainingTime: playerViewModel.currentStep.timer!)
+                
+               
             }
             
             HStack(spacing: 10){
