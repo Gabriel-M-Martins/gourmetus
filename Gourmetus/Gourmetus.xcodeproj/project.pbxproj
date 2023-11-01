@@ -34,7 +34,7 @@
 		CE4265AC2AE85FBC00FBD85B /* CookBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */; };
 		CE7F24CE2AF040F9004065C8 /* TimerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */; };
 		CEF141492AE98BBF00370031 /* CookBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF141482AE98BBF00370031 /* CookBookRepository.swift */; };
-		CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* DeletePopUp.swift */; };
+		CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,7 @@
 		CE4265AB2AE85FBC00FBD85B /* CookBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookDataSource.swift; sourceTree = "<group>"; };
 		CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotification.swift; sourceTree = "<group>"; };
 		CEF141482AE98BBF00370031 /* CookBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookBookRepository.swift; sourceTree = "<group>"; };
-		CEF1414C2AE9A41300370031 /* DeletePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePopUp.swift; sourceTree = "<group>"; };
+		CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPopUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +165,7 @@
 				7B50B8022AE8527200E00C04 /* View */,
 				A7F16B282AE8371600F3ADF3 /* RecipeDataSource.swift */,
 				A7F16B2A2AE837C000F3ADF3 /* RecipeModel.swift */,
-				CEF1414C2AE9A41300370031 /* DeletePopUp.swift */,
+				CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */,
 				A7F16B372AE85B5300F3ADF3 /* RecipeRepository.swift */,
 			);
 			path = Recipe;
@@ -318,7 +318,7 @@
 				A7271B1B2AEAEB4400F7CD16 /* CoreDataCodable.swift in Sources */,
 				A7F16B2B2AE837C000F3ADF3 /* RecipeModel.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
-				CEF1414D2AE9A41300370031 /* DeletePopUp.swift in Sources */,
+				CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
