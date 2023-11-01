@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct GourmetusApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let persistenceController = PersistenceController.shared
 
     @State var recipe: RecipeModel? = Constants.mockedRecipe
