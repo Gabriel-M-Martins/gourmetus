@@ -19,8 +19,7 @@ struct HomeView: View {
                 scrollViewRecentlyAccessed
                 Divider()
                     .padding(.vertical, 8)
-//                titleFavourites
-                aux
+                titleFavourites
                 scrollViewFavourites
                 Divider()
                     .padding(.vertical, 8)
@@ -93,19 +92,6 @@ extension HomeView {
                     .font(.subheadline)
                     .foregroundStyle(.orange)
                     .padding(.trailing)
-            }
-        }
-    }
-    
-    private var aux: some View {
-        Button{
-        Notification.setTimer(time: 5, title: "A", subtitle: "B")
-        }label: {
-            HStack{
-                Text("Click here")
-                    .font(.title2)
-                    .foregroundStyle(.green)
-                    .padding(.leading)
             }
         }
     }
