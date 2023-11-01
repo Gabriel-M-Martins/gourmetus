@@ -8,23 +8,38 @@
 import Foundation
 import CoreData
 
-
-struct IngredientModel: Identifiable {
+struct IngredientModel: Equatable, Identifiable {
     var id: UUID
     var name: String
     var quantity: String
-    var unit: Unit
+    var unit: IngredientUnit
 }
 
-enum Unit: String, Codable{
+enum IngredientUnit: Codable, Identifiable, CaseIterable {
+    var id: Self {
+
+           return self
+       }
+    
     case Cup
     case Ml
     case L
     case Kg
     case G
     
-    static func fromString(_ string: String) -> Unit?{
-        return Unit(rawValue: string)
+    var description: String {
+        switch self {
+        case .Cup:
+            return "Cup"
+        case .Ml:
+            return "Ml"
+        case .L:
+            return "L"
+        case .Kg:
+            return "Kg"
+        case .G:
+            return "G"
+        }
     }
 }
 
@@ -36,7 +51,7 @@ extension IngredientModel : CoreDataCodable {
         guard let id = entity.id,
               let name = entity.name,
               let unitData = entity.unit,
-              let unit = try? decoder.decode(Unit.self, from: unitData),
+              let unit = try? decoder.decode(IngredientUnit.self, from: unitData),
               let quantity = entity.quantity else { return nil }
         
         self.id = id

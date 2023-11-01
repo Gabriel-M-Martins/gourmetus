@@ -8,12 +8,12 @@
 import Foundation
 import CoreData
 
-struct StepModel: Identifiable {
+struct StepModel: Identifiable, Hashable {
     var id: UUID
-    var text: String?
+    var texto: String?
     var tip: String?
     var imageData: Data?
-    var timer: Float?
+    var timer: Int?
 }
 
 extension StepModel: CoreDataCodable {
@@ -21,11 +21,11 @@ extension StepModel: CoreDataCodable {
         guard let id = entity.id else { return nil }
         
         self.id = id
-        self.text = entity.text
+        self.texto = entity.texto
         self.tip = entity.tip
         self.imageData = entity.image
         // if timer is default core data value, it should be nil
-        self.timer = entity.timer == 0 ? nil : entity.timer
+        self.timer = entity.timer == 0 ? nil : Int(entity.timer)
         
         return nil
     }
@@ -34,10 +34,10 @@ extension StepModel: CoreDataCodable {
         let entity = existingEntity != nil ? existingEntity! : Step(context: context)
         
         entity.id = self.id
-        entity.text = self.text
+        entity.texto = self.texto
         entity.tip = self.tip
         entity.image = self.imageData
-        entity.timer = self.timer ?? 0
+        entity.timer = Int32(self.timer ?? 0)
         
         return entity
     }
