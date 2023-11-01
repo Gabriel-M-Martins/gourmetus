@@ -269,6 +269,28 @@ struct CreateEditRecipeView: View {
                             }
                         }
                         
+                        if(recipe != nil){
+                            Button(action: {
+                                //Funcao de editar receita
+                            }) {
+                                Text("Edit Recipe")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.blue))
+                                    .cornerRadius(10)
+                            }
+                        } else {
+                            Button(action: {
+                               //Funcao de criar receita
+                            }) {
+                                Text("Create Recipe")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color(.blue))
+                                    .cornerRadius(10)
+                            }
+                        }
+                        
                     }
                     .frame(width: geometry.size.width * 0.9, alignment: .leading)
                     .sheet(isPresented: $isPresentingNewSheet) {
