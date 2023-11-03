@@ -13,6 +13,9 @@ struct GourmetusApp: App {
     let persistenceController = PersistenceController.shared
 
     @State var recipe: RecipeModel? = Constants.mockedRecipe
+    
+//    @StateObject var cookBook = CookBookModel
+    
     var body: some Scene {
         WindowGroup {
 //            ContentView()
