@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @StateObject var homeViewModel: HomeViewModel = HomeViewModel()
+    
     @State private var searchText = ""
     
     var body: some View {
@@ -16,15 +18,27 @@ struct HomeView: View {
             ScrollView{
                 Divider()
                 titleRecentlyAccessed
-                scrollViewRecentlyAccessed
+                if homeViewModel.recentlyAccessed.isEmpty {
+                    
+                } else {
+                    scrollViewRecentlyAccessed
+                }
                 Divider()
                     .padding(.vertical, 8)
                 titleFavourites
-                scrollViewFavourites
+                if homeViewModel.favourites.isEmpty {
+                    
+                } else {
+                    scrollViewFavourites
+                }
                 Divider()
                     .padding(.vertical, 8)
                 titleMyRecipes
-                scrollViewMyRecipes
+                if homeViewModel.myRecipes.isEmpty {
+                    
+                } else {
+                    scrollViewMyRecipes
+                }
                 Divider()
                     .padding(.vertical, 8)
                 titleCommunity
@@ -32,14 +46,6 @@ struct HomeView: View {
                 
             }
             .navigationTitle("Menu")
-            .toolbar{
-                Button{
-                    
-                }label: {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(.orange)
-                }
-            }
             .searchable(text: $searchText, placement: .automatic, prompt: "Search")
         }
     }
@@ -48,8 +54,8 @@ struct HomeView: View {
 extension HomeView {
     
     private var titleRecentlyAccessed: some View {
-        Button{
-            
+        NavigationLink{
+            RecipesListsView(listType: .RecentlyAccessed, homeViewModel: homeViewModel)
         }label: {
             HStack{
                 Text("Recently accessed")
@@ -66,11 +72,19 @@ extension HomeView {
         
     }
     
+//    private var scrollViewRecentlyAccessed: some View {
+    
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
             HStack(spacing: 16){
-                ForEach(Constants.mockedRecipeArray) { recipe in
-                    RecentlyAccessedRow(recipe: recipe)
+                ForEach(homeViewModel.recentlyAccessed) { recipe in
+                    NavigationLink{
+                        RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+
+                    }label: {
+                        RecentlyAccessedRow(recipe: recipe)
+                            .tint(Color(uiColor: UIColor.label))
+                    }
                 }
             }
             .padding(.horizontal)
@@ -79,8 +93,8 @@ extension HomeView {
     }
     
     private var titleFavourites: some View {
-        Button{
-            
+        NavigationLink{
+            RecipesListsView(listType: .FavouritesRecipes, homeViewModel: homeViewModel)
         }label: {
             HStack{
                 Text("Favourites")
@@ -99,8 +113,17 @@ extension HomeView {
     private var scrollViewFavourites: some View {
         ScrollView(.horizontal){
             HStack(spacing: 16){
-                ForEach(Constants.mockedRecipeArray) { recipe in
-                    FavouritesRow(recipe: recipe)
+                if homeViewModel.favourites.isEmpty {
+                    Text("It seems you don't have any recipe in your cookbook yet. Start Adding some or browse the community!")
+                } else {
+                    ForEach(homeViewModel.favourites, id: \.id) { recipe in
+                        NavigationLink{
+                            RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+                        }label: {
+                            FavouritesRow(recipe: recipe)
+                                .tint(Color(uiColor: UIColor.label))
+                        }
+                    }
                 }
             }
             .padding(.horizontal)
@@ -111,8 +134,8 @@ extension HomeView {
     }
     
     private var titleMyRecipes: some View {
-        Button{
-            
+        NavigationLink{
+            RecipesListsView(listType: .MyRecipes, homeViewModel: homeViewModel)
         }label: {
             HStack{
                 Text("My Recipes")
@@ -131,8 +154,13 @@ extension HomeView {
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
             HStack(){
-                ForEach(Constants.mockedRecipeArray) { recipe in
-                    MyRecipesRow(recipe: recipe)
+                ForEach(homeViewModel.myRecipes) { recipe in
+                    NavigationLink{
+                        RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+                    }label: {
+                        MyRecipesRow(recipe: recipe)
+                            .tint(Color(uiColor: UIColor.label))
+                    }
                 }
             }
             .padding(.horizontal)
@@ -161,9 +189,14 @@ extension HomeView {
     
     private var scrollViewCommunity: some View {
         VStack{
-            ForEach(Constants.mockedRecipeArray) { recipe in
-                CommunityRow(recipe: recipe)
-                    .padding(.vertical, 8)
+            ForEach(homeViewModel.community) { recipe in
+                NavigationLink{
+                    RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+                }label: {
+                    CommunityRow(recipe: recipe, homeViewModel: homeViewModel)
+                        .padding(.vertical, 8)
+                        .tint(Color(uiColor: UIColor.label))
+                }
             }
             .padding(.horizontal)
         }

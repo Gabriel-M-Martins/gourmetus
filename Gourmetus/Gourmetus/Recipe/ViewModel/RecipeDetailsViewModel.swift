@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class RecipeDetailsViewModel: ObservableObject{
+    @Published var recipe: RecipeModel
+    
+    init(recipe: RecipeModel) {
+        self.recipe = recipe
+    }
+    
+}
