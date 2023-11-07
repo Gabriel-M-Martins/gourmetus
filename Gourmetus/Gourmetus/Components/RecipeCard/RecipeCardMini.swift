@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecentlyAccessedRow: View {
+struct RecipeCardMini: View {
         
     var recipe: RecipeModel
     
@@ -31,5 +31,5 @@ struct RecentlyAccessedRow: View {
 }
 
 #Preview {
-    RecentlyAccessedRow(recipe: Constants.mockedRecipe)
+    RecipeCardMini(recipe: Constants.mockedRecipe)
 }

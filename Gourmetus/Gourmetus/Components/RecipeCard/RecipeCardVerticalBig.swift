@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct CommunityRow: View {
+struct RecipeCardVerticalBig: View {
     
     var recipe: RecipeModel
     
-    @ObservedObject var homeViewModel: HomeViewModel
+    var vm: RecipeCardVerticalBigViewModel
+    
+    init(recipe: RecipeModel) {
+        self.recipe = recipe
+        self.vm = RecipeCardVerticalBigViewModel(recipe: recipe)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
@@ -51,11 +56,11 @@ struct CommunityRow: View {
                     
                     Spacer()
                     Button{
-                        homeViewModel.toggleFavourite(recipe: recipe)
+                        vm.toggleFavourite(recipe: recipe)
                     }label: {
                         ZStack{
                             Circle()
-                                .fill(homeViewModel.isFavorited(recipe: recipe) ? .orange : .white)
+                                .fill(vm.isFavorite ? .orange : .white)
                                 .shadow(radius: 5)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
@@ -63,7 +68,7 @@ struct CommunityRow: View {
                                 )
                                 
                             Image(systemName: "heart.fill" )
-                                .foregroundColor(homeViewModel.isFavorited(recipe: recipe) ? .white : .orange)
+                                .foregroundColor(vm.isFavorite ? .white : .orange)
 
                             
                         }
@@ -85,10 +90,10 @@ struct CommunityRow: View {
 }
 
 #Preview {
-    CommunityRow(recipe: Constants.mockedRecipe, homeViewModel: HomeViewModel())
+    RecipeCardVerticalBig(recipe: Constants.mockedRecipe)
 }
 
-extension CommunityRow {
+extension RecipeCardVerticalBig {
     
     private func floatIsInteger(num: Float) -> Bool{
         if num.truncatingRemainder(dividingBy: 1) == 0 {

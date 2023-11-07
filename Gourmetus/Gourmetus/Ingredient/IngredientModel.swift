@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct IngredientModel: Equatable, Identifiable {
+struct IngredientModel: Equatable, Identifiable, Hashable{
     var id: UUID
     var name: String
     var quantity: String

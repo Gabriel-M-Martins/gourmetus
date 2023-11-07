@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct RecipeModel: Identifiable{
+struct RecipeModel: Identifiable, Hashable{
     var id: UUID
     var name: String
     var desc: String?

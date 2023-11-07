@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyRecipesRow: View {
+struct RecipeCardVerticalSmall: View {
     
     var recipe: RecipeModel
     
@@ -56,10 +56,10 @@ struct MyRecipesRow: View {
 }
 
 #Preview {
-    MyRecipesRow(recipe: Constants.mockedRecipe)
+    RecipeCardVerticalSmall(recipe: Constants.mockedRecipe)
 }
 
-extension MyRecipesRow {
+extension RecipeCardVerticalSmall {
  
     var difficulty: some View {
         HStack{
