@@ -8,8 +8,8 @@
 import SwiftUI
 import UserNotifications
 
-struct Notification {
-    static func setTimer(time:Int, title:String, subtitle:String, sound:UNNotificationSound = .default) {
+struct NotificationService {
+    static func setTimer(time:Int, title:String, subtitle:String, sound:UNNotificationSound = .default) -> UUID{
         let Content = UNMutableNotificationContent()
         let Notification:TimeInterval = TimeInterval(time)
         Content.title = title 
@@ -18,9 +18,17 @@ struct Notification {
         
         let Trigger = UNTimeIntervalNotificationTrigger(timeInterval: Notification, repeats: false)
         
-        let Request = UNNotificationRequest(identifier: UUID().uuidString, content: Content, trigger: Trigger)
+        let notificationId = UUID()
+        
+        let Request = UNNotificationRequest(identifier: notificationId.uuidString, content: Content, trigger: Trigger)
         
         UNUserNotificationCenter.current().add(Request)
+        
+        return notificationId
+    }
+    
+    static func deleteTimer(id:UUID) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
     }
 }
 
@@ -30,6 +38,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         return true
     }
+    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

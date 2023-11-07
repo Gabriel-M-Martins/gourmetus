@@ -13,7 +13,7 @@ struct Constants {
         StepModel(id: UUID(), texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "DefaultRecipeImage")!.pngData() ),
         StepModel(id: UUID(), texto: "passo 2"),
         StepModel(id: UUID(), texto: "passo 3"),
-        StepModel(id: UUID(), timer: 30),
+        StepModel(id: UUID(), timer: 10),
         StepModel(id: UUID(), texto: "passo 4")
     ]
     

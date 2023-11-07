@@ -14,6 +14,8 @@ struct TimerView: View {
     @State var remainingTime: Int
     @State var timer: Timer?
     
+    @State var notificationId: UUID? = nil
+    
     var body: some View {
         VStack {
             Text(" Timer")
@@ -54,10 +56,13 @@ struct TimerView: View {
     }
     
     func startTimer() {
+       // print(remainingTime)
+        notificationId = NotificationService.setTimer(time: remainingTime, title: "Notificacao", subtitle: "Funcionou")
+        print(notificationId)
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if remainingTime > 0 {
                 remainingTime -= 1
-                print("rodando")
+                //print("rodando")
             } else {
                 stopTimer()
             }
@@ -65,6 +70,9 @@ struct TimerView: View {
     }
     
     func stopTimer() {
+        if (notificationId != nil) {
+            NotificationService.deleteTimer(id: notificationId!)
+        }
         timer?.invalidate()
         timer = nil
     }
