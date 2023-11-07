@@ -9,11 +9,15 @@ import SwiftUI
 
 struct RecipeCardHorizontal: View {
     
-    var recipe: RecipeModel
+    @StateObject var vm: RecipeCardHorizontalViewModel
+    
+    init(recipe: RecipeModel) {
+        self._vm = StateObject(wrappedValue: RecipeCardHorizontalViewModel(recipe: recipe))
+    }
     
     var body: some View {
         HStack{
-            if let imgData = recipe.imageData,
+            if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
@@ -30,7 +34,7 @@ struct RecipeCardHorizontal: View {
             
             VStack(alignment: .leading, spacing: 8){
                 HStack{
-                    Text(recipe.name)
+                    Text(vm.recipe.name)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
@@ -40,7 +44,7 @@ struct RecipeCardHorizontal: View {
                 
                 difficulty
                     .font(.subheadline)
-                Text("\(Image(systemName: "star.fill")) \(recipe.difficulty.formatted())")
+                Text("\(Image(systemName: "star.fill")) \(vm.recipe.difficulty.formatted())")
                     .font(.subheadline)
                     .foregroundStyle(.yellow)
                 Text("By \(Image(systemName: "person.circle")) (Owner)")
@@ -76,7 +80,7 @@ extension RecipeCardHorizontal {
     
     var difficulty: some View {
         HStack{
-            ForEach(0..<Int(recipe.difficulty)){ index in
+            ForEach(0..<Int(vm.recipe.difficulty)){ index in
                 Image(systemName: "frying.pan.fill")
                     .foregroundColor(.green)
             }

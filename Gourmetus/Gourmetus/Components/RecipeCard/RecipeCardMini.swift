@@ -9,11 +9,15 @@ import SwiftUI
 
 struct RecipeCardMini: View {
         
-    var recipe: RecipeModel
+    @StateObject var vm: RecipeCardMiniViewModel
+    
+    init(recipe: RecipeModel) {
+        self._vm = StateObject(wrappedValue: RecipeCardMiniViewModel(recipe: recipe))
+    }
     
     var body: some View {
         VStack(alignment: .leading){
-            if let imgData = recipe.imageData,
+            if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
             }else{
@@ -21,7 +25,7 @@ struct RecipeCardMini: View {
                     .resizable()
                     .frame(width: 123, height: 60)
             }
-            Text(recipe.name)
+            Text(vm.recipe.name)
                 .font(.callout)
             Text("Status")
                 .font(.footnote)

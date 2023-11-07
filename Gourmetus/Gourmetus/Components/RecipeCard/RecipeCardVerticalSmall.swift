@@ -9,11 +9,15 @@ import SwiftUI
 
 struct RecipeCardVerticalSmall: View {
     
-    var recipe: RecipeModel
+    @StateObject var vm: RecipeCardVerticalSmallViewModel
+    
+    init(recipe: RecipeModel) {
+        self._vm = StateObject(wrappedValue: RecipeCardVerticalSmallViewModel(recipe: recipe))
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
-            if let imgData = recipe.imageData,
+            if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
@@ -27,7 +31,7 @@ struct RecipeCardVerticalSmall: View {
                     .padding(.vertical, 20.5)
                     .padding(.horizontal, 16)
             }
-                Text(recipe.name)
+            Text(vm.recipe.name)
                     .font(.callout)
                     .lineLimit(1)
                     .padding(.horizontal, 16)
@@ -63,7 +67,7 @@ extension RecipeCardVerticalSmall {
  
     var difficulty: some View {
         HStack{
-            ForEach(0..<Int(recipe.difficulty)){ index in
+            ForEach(0..<Int(vm.recipe.difficulty)){ index in
                 Image(systemName: "frying.pan.fill")
                     .foregroundColor(.green)
             }

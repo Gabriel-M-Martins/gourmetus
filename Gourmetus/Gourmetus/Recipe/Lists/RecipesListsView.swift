@@ -9,15 +9,13 @@ import SwiftUI
 
 struct RecipesListsView: View {
     
-    @ObservedObject var homeViewModel: HomeViewModel
-    
-    @StateObject var recipesListsViewModel: RecipesListsViewModel
+    @StateObject var vm : RecipesListsViewModel
     
     @State private var searchText = ""
     
     init(listType: ListType, homeViewModel: HomeViewModel) {
-        self._recipesListsViewModel = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
-        self.homeViewModel = homeViewModel
+        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType, homeviewModel: homeViewModel))
+
         
     }
     
@@ -25,15 +23,15 @@ struct RecipesListsView: View {
             ScrollView{
                 Divider()
                 HStack{
-                    Text(recipesListsViewModel.listType.description2)
+                    Text(vm.listType.description2)
                         .font(.title)
                         .padding(.leading,16)
                     Spacer()
                 }
                 
-                ForEach(homeViewModel.community) { recipe in
+                ForEach(vm.homeViewModel.community) { recipe in
                     VStack{
-                        if recipesListsViewModel.listType == .RecentlyAccessed{
+                        if vm.listType == .RecentlyAccessed{
                             Divider()
                             HStack{
                                 Text("Completed")
@@ -43,7 +41,7 @@ struct RecipesListsView: View {
                             }
                         }
                         NavigationLink{
-                            RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+                            RecipeDetailsView(recipe: recipe, homeViewModel: vm.homeViewModel)
                         }label: {
                             RecipeCardVerticalBig(recipe: recipe)
                                 .padding(.vertical, 8)
@@ -53,7 +51,7 @@ struct RecipesListsView: View {
                 }
                 .padding(.horizontal)
             }
-            .navigationTitle(recipesListsViewModel.listType.description)
+            .navigationTitle(vm.listType.description)
             .searchable(text: $searchText, placement: .automatic, prompt: "Search")
             
     }
