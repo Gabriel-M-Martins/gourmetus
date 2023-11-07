@@ -50,7 +50,7 @@ struct RecipeDetailsView: View {
                         }
                         NavigationLink{
                             //Action goes here
-                            RecipePlayerView(recipe: recipeDetailsViewModel.recipe)
+                            RecipePlayerView(recipe: vm.recipe)
                         }label: {
                             Text("Start")
                                 .frame(width: 150, height: 40)
