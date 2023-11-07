@@ -16,6 +16,18 @@ struct HomeView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
+                
+                Button(action: {
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                    print("All set!")
+                    } else if let error = error {
+                    print(error.localizedDescription)
+                    }
+                    }
+                }, label: {
+                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                })
                 Divider()
                 titleRecentlyAccessed
                 if vm.recentlyAccessed.isEmpty {
