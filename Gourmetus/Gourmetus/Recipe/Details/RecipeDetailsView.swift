@@ -9,14 +9,10 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     
-    @StateObject var recipeDetailsViewModel: RecipeDetailsViewModel
-    
-    @ObservedObject var homeViewModel: HomeViewModel
+    @StateObject var vm: RecipeDetailsViewModel
     
     init(recipe: RecipeModel, homeViewModel: HomeViewModel) {
-        self._recipeDetailsViewModel = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
-
-        self.homeViewModel = homeViewModel
+        self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe, homeViewModel: homeViewModel))
     }
     
     var body: some View {
@@ -48,7 +44,7 @@ struct RecipeDetailsView: View {
                     }
                     HStack{
                         NavigationLink{
-                            CreateEditRecipeView(recipe: $recipeDetailsViewModel.recipe.toOptional())
+                            CreateEditRecipeView(recipe: $vm.recipe.toOptional())
                         }label: {
                             Text("Editar")
                         }
@@ -64,17 +60,17 @@ struct RecipeDetailsView: View {
                         }
                         
                         Button{
-                            homeViewModel.toggleFavourite(recipe: recipeDetailsViewModel.recipe)
+                            vm.homeViewModel.toggleFavourite(recipe: vm.recipe)
                             //Action goes here
                         }label: {
-                            Image(systemName: homeViewModel.isFavorited(recipe: recipeDetailsViewModel.recipe) ? "heart.fill" : "heart")
+                            Image(systemName: vm.homeViewModel.isFavorited(recipe: vm.recipe) ? "heart.fill" : "heart")
                         }
                         .buttonStyle(.bordered)
 //                        .padding(.leading, 250)
                         
                     }
                     .padding()
-                    .navigationTitle(recipeDetailsViewModel.recipe.name)
+                    .navigationTitle(vm.recipe.name)
                 }
                 .padding()
             }
@@ -101,7 +97,7 @@ extension RecipeDetailsView {
     
     private var image: some View {
         
-        if let imgData = recipeDetailsViewModel.recipe.imageData,
+        if let imgData = vm.recipe.imageData,
            let img = UIImage(data: imgData){
             return Image(uiImage: img)
                 .resizable()
@@ -134,7 +130,7 @@ extension RecipeDetailsView {
     }
     
     private var ingredients: some View {
-        ForEach(recipeDetailsViewModel.recipe.ingredients) { ingredient in
+        ForEach(vm.recipe.ingredients) { ingredient in
             HStack{
                 Text("\(ingredient.quantity) \(ingredient.unit.description) x \(ingredient.name)")
                     .padding(.horizontal)

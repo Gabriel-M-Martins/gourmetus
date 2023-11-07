@@ -9,9 +9,11 @@ import Foundation
 
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: RecipeModel
+    @Published var homeViewModel: HomeViewModel
     
-    init(recipe: RecipeModel) {
+    init(recipe: RecipeModel, homeViewModel: HomeViewModel) {
         self.recipe = recipe
+        self.homeViewModel = homeViewModel
     }
     
 }

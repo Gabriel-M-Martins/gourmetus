@@ -16,6 +16,8 @@ class HomeViewModel: ObservableObject {
     @Published var myRecipes: [RecipeModel]
     @Published var community: [RecipeModel]
     
+    
+    
     init() {
         if let cookModel = CoreDataCookBookRepository.fetch().first {
             self.model = cookModel

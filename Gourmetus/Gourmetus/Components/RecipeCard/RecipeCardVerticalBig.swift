@@ -9,18 +9,15 @@ import SwiftUI
 
 struct RecipeCardVerticalBig: View {
     
-    var recipe: RecipeModel
-    
-    var vm: RecipeCardVerticalBigViewModel
+    @StateObject var vm: RecipeCardVerticalBigViewModel
     
     init(recipe: RecipeModel) {
-        self.recipe = recipe
-        self.vm = RecipeCardVerticalBigViewModel(recipe: recipe)
+        self._vm = StateObject(wrappedValue: RecipeCardVerticalBigViewModel(recipe: recipe))
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
-            if let imgData = recipe.imageData,
+            if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
@@ -37,7 +34,7 @@ struct RecipeCardVerticalBig: View {
             
             VStack(alignment: .leading, spacing: 8){
                 HStack{
-                    Text(recipe.name)
+                    Text(vm.recipe.name)
                         .foregroundColor(.orange)
                         .font(.subheadline)
                         .lineLimit(1)
@@ -46,7 +43,7 @@ struct RecipeCardVerticalBig: View {
                 
                 difficulty
                     .font(.subheadline)
-                Text("\(Image(systemName: "star.fill")) \(recipe.difficulty.formatted())")
+                Text("\(Image(systemName: "star.fill")) \(vm.recipe.difficulty.formatted())")
                     .font(.subheadline)
                     .foregroundStyle(.yellow)
                 HStack{
@@ -56,7 +53,7 @@ struct RecipeCardVerticalBig: View {
                     
                     Spacer()
                     Button{
-                        vm.toggleFavourite(recipe: recipe)
+                        vm.toggleFavourite(recipe: vm.recipe)
                     }label: {
                         ZStack{
                             Circle()
@@ -105,7 +102,7 @@ extension RecipeCardVerticalBig {
     
     var difficulty: some View {
         HStack{
-            ForEach(0..<Int(recipe.difficulty)){ index in
+            ForEach(0..<Int(vm.recipe.difficulty)){ index in
                 Image(systemName: "frying.pan.fill")
                     .foregroundColor(.green)
             }

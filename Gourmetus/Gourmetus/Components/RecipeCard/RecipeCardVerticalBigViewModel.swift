@@ -7,9 +7,17 @@
 
 import Foundation
 
-class RecipeCardVerticalBigViewModel {
-    @Published var cookBook: CookBookModel?
-    @Published var favourites: Set<RecipeModel> = []
+class RecipeCardVerticalBigViewModel: ObservableObject {
+    @Published var cookBook: CookBookModel? {
+        didSet {
+//            print("Alterou o cookbook")
+        }
+    }
+    @Published var favourites: Set<RecipeModel> = [] {
+        didSet {
+            print("Alterou o favourites")
+        }
+    }
     @Published var recipe: RecipeModel
     
     var isFavorite: Bool {
@@ -35,8 +43,10 @@ class RecipeCardVerticalBigViewModel {
         } else {
             self.favourites.insert(recipe)
         }
-        if cookBook != nil{
-            CoreDataCookBookRepository.save(cookBook!)
+//        if cookBook != nil{
+        if var cookBook = cookBook {
+            cookBook.favorites = Array(self.favourites)
+            CoreDataCookBookRepository.save(cookBook)
         }
         
     }
