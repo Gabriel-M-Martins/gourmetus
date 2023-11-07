@@ -15,7 +15,7 @@ struct RecipeDetailsView: View {
     
     init(recipe: RecipeModel, homeViewModel: HomeViewModel) {
         self._recipeDetailsViewModel = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
-        
+
         self.homeViewModel = homeViewModel
     }
     
@@ -44,9 +44,14 @@ struct RecipeDetailsView: View {
                             Spacer()
                         }
                         
-                        //ingredients
+                        ingredients
                     }
-                    ZStack{
+                    HStack{
+                        NavigationLink{
+                            CreateEditRecipeView(recipe: $recipeDetailsViewModel.recipe.toOptional())
+                        }label: {
+                            Text("Editar")
+                        }
                         Button{
                             //Action goes here
                         }label: {
@@ -65,7 +70,7 @@ struct RecipeDetailsView: View {
                             Image(systemName: homeViewModel.isFavorited(recipe: recipeDetailsViewModel.recipe) ? "heart.fill" : "heart")
                         }
                         .buttonStyle(.bordered)
-                        .padding(.leading, 250)
+//                        .padding(.leading, 250)
                         
                     }
                     .padding()
@@ -110,34 +115,6 @@ extension RecipeDetailsView {
         }
     }
     
-//    private var difficulty: some View {
-//        ForEach(1..<6){ index in
-//            if index < Int(recipeDetailsViewModel.recipe.difficulty){
-//                Image(systemName: "star.fill")
-//                    .foregroundColor(.yellow)
-//            }else if index == Int(recipeDetailsViewModel.recipe.difficulty) && !floatIsInteger(num: recipeDetailsViewModel.recipe.difficulty) && index != 5{
-//                Image(systemName: "star.fill")
-//                    .foregroundColor(.yellow)
-//                Image(systemName: "star.leadinghalf.filled")
-//                    .foregroundColor(.yellow)
-//                ForEach(index+2..<6){ index2 in
-//                    Image(systemName: "star")
-//                        .foregroundColor(.yellow)
-//                }
-//            }else if index == Int(recipeDetailsViewModel.recipe.difficulty) && floatIsInteger(num: recipeDetailsViewModel.recipe.difficulty) {
-//                Image(systemName: "star.fill")
-//                    .foregroundColor(.yellow)
-//                ForEach(index+1..<6){ index3 in
-//                    Image(systemName: "star")
-//                        .foregroundColor(.yellow)
-//                }
-//            }else{
-//                Text("Error")
-//            }
-//            
-//        }
-//    }
-    
     private var owner: some View {
         HStack{
             Text("Por (Nome da pessoa)")
@@ -168,4 +145,14 @@ extension RecipeDetailsView {
     }
     
     
+}
+
+extension Binding {
+    func toOptional() -> Binding<Value?> {
+        return Binding<Value?> {
+            self.wrappedValue
+        } set: { val in
+            self.wrappedValue = val ?? self.wrappedValue
+        }
+    }
 }

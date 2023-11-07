@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var homeViewModel: HomeViewModel = HomeViewModel()
+    @StateObject var homeViewModel: HomeViewModel = HomeViewModel() 
     
     @State private var searchText = ""
     
@@ -82,7 +82,7 @@ extension HomeView {
                         RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
 
                     }label: {
-                        RecentlyAccessedRow(recipe: recipe)
+                        RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -120,7 +120,7 @@ extension HomeView {
                         NavigationLink{
                             RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
                         }label: {
-                            FavouritesRow(recipe: recipe)
+                            RecipeCardHorizontal(recipe: recipe)
                                 .tint(Color(uiColor: UIColor.label))
                         }
                     }
@@ -158,7 +158,7 @@ extension HomeView {
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
                     }label: {
-                        MyRecipesRow(recipe: recipe)
+                        RecipeCardVerticalSmall(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -193,7 +193,7 @@ extension HomeView {
                 NavigationLink{
                     RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
                 }label: {
-                    CommunityRow(recipe: recipe, homeViewModel: homeViewModel)
+                    RecipeCardVerticalBig(recipe: recipe)
                         .padding(.vertical, 8)
                         .tint(Color(uiColor: UIColor.label))
                 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavouritesRow: View {
+struct RecipeCardHorizontal: View {
     
     var recipe: RecipeModel
     
@@ -61,10 +61,10 @@ struct FavouritesRow: View {
 }
 
 #Preview {
-    FavouritesRow(recipe: Constants.mockedRecipe)
+    RecipeCardHorizontal(recipe: Constants.mockedRecipe)
 }
 
-extension FavouritesRow {
+extension RecipeCardHorizontal {
     
     private func floatIsInteger(num: Float) -> Bool{
         if num.truncatingRemainder(dividingBy: 1) == 0 {

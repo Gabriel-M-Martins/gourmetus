@@ -32,23 +32,24 @@ struct RecipesListsView: View {
                 }
                 
                 ForEach(homeViewModel.community) { recipe in
-                    if recipesListsViewModel.listType == .RecentlyAccessed{
-                        Divider()
-                        HStack{
-                            Text("Completed")
-                                .foregroundColor(.green)
-                                .padding(.leading, 16)
-                            Spacer()
+                    VStack{
+                        if recipesListsViewModel.listType == .RecentlyAccessed{
+                            Divider()
+                            HStack{
+                                Text("Completed")
+                                    .foregroundColor(.green)
+                                    .padding(.leading, 16)
+                                Spacer()
+                            }
+                        }
+                        NavigationLink{
+                            RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
+                        }label: {
+                            RecipeCardVerticalBig(recipe: recipe)
+                                .padding(.vertical, 8)
+                                .tint(Color(uiColor: UIColor.label))
                         }
                     }
-                    NavigationLink{
-                        RecipeDetailsView(recipe: recipe, homeViewModel: homeViewModel)
-                    }label: {
-                        CommunityRow(recipe: recipe, homeViewModel: homeViewModel)
-                            .padding(.vertical, 8)
-                            .tint(Color(uiColor: UIColor.label))
-                    }
-                    
                 }
                 .padding(.horizontal)
             }
