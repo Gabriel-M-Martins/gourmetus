@@ -15,26 +15,26 @@ class CreateEditStepViewModel: ObservableObject {
     
     func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
         if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
-            viewModel.steps.append(Step(id: UUID(),texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1))
+            viewModel.steps.append(StepModel(id: UUID(),texto: texto, tip: tip , imageData: imageData ,timer: totalTime))
             imageViewModel.selectedImage = UIImage()
         } else {
-            viewModel.steps.append(Step(id: UUID(),texto: texto, tip: tip ,timer: totalTime, order: -1))
+            viewModel.steps.append(StepModel(id: UUID(),texto: texto, tip: tip ,timer: totalTime))
         }
     }
     
-    func editStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel ,editingStep: Step){
+    func editStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel ,editingStep: StepModel){
         if let index = viewModel.steps.firstIndex(of: editingStep) {
             if (imageViewModel.selectedImage != nil) {
                 let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0)
-                viewModel.steps[index] = Step(id:editingStep.id ,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1)
+                viewModel.steps[index] = StepModel(id:editingStep.id ,texto: texto, tip: tip , imageData: imageData ,timer: totalTime)
                 imageViewModel.selectedImage = UIImage()
             } else{
-                viewModel.steps[index] = Step(id:editingStep.id, texto: texto, tip: tip ,timer: totalTime, order: -1)
+                viewModel.steps[index] = StepModel(id:editingStep.id, texto: texto, tip: tip ,timer: totalTime)
             }
         }
     }
     
-    func editField(step: Step){
+    func editField(step: StepModel){
         texto = step.texto ?? ""
         tip = step.tip  ?? ""
         
