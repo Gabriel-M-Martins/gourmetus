@@ -9,7 +9,11 @@ import SwiftUI
 
 struct RecipeCardVerticalBig: View {
     
+    @Injected private var repo: any Repository<Cookbook>
+    
     @StateObject var vm: RecipeCardVerticalBigViewModel
+    
+    @EnvironmentObject var cookbook: Cookbook
     
     init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeCardVerticalBigViewModel(recipe: recipe))
@@ -53,11 +57,12 @@ struct RecipeCardVerticalBig: View {
                     
                     Spacer()
                     Button{
-                        vm.toggleFavourite(recipe: vm.recipe)
+                        cookbook.favorites = vm.toggleFavourite(recipe: vm.recipe, favorites: cookbook.favorites)
+                        repo.save(cookbook)
                     }label: {
                         ZStack{
                             Circle()
-                                .fill(vm.isFavorite ? .orange : .white)
+                                .fill(vm.isFavorite(favorites: cookbook.favorites) ? .orange : .white)
                                 .shadow(radius: 5)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
@@ -65,7 +70,7 @@ struct RecipeCardVerticalBig: View {
                                 )
                                 
                             Image(systemName: "heart.fill" )
-                                .foregroundColor(vm.isFavorite ? .white : .orange)
+                                .foregroundColor(vm.isFavorite(favorites: cookbook.favorites) ? .white : .orange)
 
                             
                         }

@@ -9,10 +9,14 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     
+    @Injected private var repo: any Repository<Cookbook>
+    
     @StateObject var vm: RecipeDetailsViewModel
     
-    init(recipe: Recipe, homeViewModel: HomeViewModel) {
-        self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe, homeViewModel: homeViewModel))
+    @EnvironmentObject var cookbook: Cookbook
+    
+    init(recipe: Recipe) {
+        self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
     }
     
     var body: some View {
@@ -30,8 +34,8 @@ struct RecipeDetailsView: View {
                                 }
                             }
                         }
-                        //                    owner
-                        //                    tags
+//                    owner
+//                    tags
                         
                         HStack{
                             Text("Ingredients")
@@ -61,13 +65,13 @@ struct RecipeDetailsView: View {
                         }
                         
                         Button{
-                            vm.homeViewModel.toggleFavourite(recipe: vm.recipe)
-                            //Action goes here
+                            cookbook.favorites = vm.toggleFavourite(recipe: vm.recipe, favorites: cookbook.favorites)
+                            repo.save(cookbook)
                         }label: {
-                            Image(systemName: vm.homeViewModel.isFavorited(recipe: vm.recipe) ? "heart.fill" : "heart")
+                            Image(systemName: vm.isFavorite(favorites: cookbook.favorites) ? "heart.fill" : "heart")
                         }
                         .buttonStyle(.bordered)
-//                        .padding(.leading, 250)
+                        //                        .padding(.leading, 250)
                         
                     }
                     .padding()
@@ -77,13 +81,13 @@ struct RecipeDetailsView: View {
             }
         }
         .onAppear{
-           
+            
         }
     }
 }
 
 #Preview {
-    RecipeDetailsView(recipe: Constants.mockedRecipe, homeViewModel: HomeViewModel())
+    RecipeDetailsView(recipe: Constants.mockedRecipe)
 }
 
 extension RecipeDetailsView {

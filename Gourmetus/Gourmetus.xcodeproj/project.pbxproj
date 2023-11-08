@@ -152,8 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				7B0B67052AF1748100D6A66C /* ListType.swift */,
-				7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */,
 				7B0B67012AF170EA00D6A66C /* RecipesListsView.swift */,
+				7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
