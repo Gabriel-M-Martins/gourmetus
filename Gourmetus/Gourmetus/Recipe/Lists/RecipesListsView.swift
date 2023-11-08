@@ -11,10 +11,12 @@ struct RecipesListsView: View {
     
     @StateObject var vm : RecipesListsViewModel
     
+    @EnvironmentObject var cookbook: Cookbook
+    
     @State private var searchText = ""
     
     init(listType: ListType, homeViewModel: HomeViewModel) {
-        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType, homeviewModel: homeViewModel))
+        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
 
         
     }
@@ -29,7 +31,7 @@ struct RecipesListsView: View {
                     Spacer()
                 }
                 
-                ForEach(vm.homeViewModel.community) { recipe in
+                ForEach(cookbook.history) { recipe in
                     VStack{
                         if vm.listType == .RecentlyAccessed{
                             Divider()
@@ -41,7 +43,7 @@ struct RecipesListsView: View {
                             }
                         }
                         NavigationLink{
-                            RecipeDetailsView(recipe: recipe, homeViewModel: vm.homeViewModel)
+                            RecipeDetailsView(recipe: recipe)
                         }label: {
                             RecipeCardVerticalBig(recipe: recipe)
                                 .padding(.vertical, 8)

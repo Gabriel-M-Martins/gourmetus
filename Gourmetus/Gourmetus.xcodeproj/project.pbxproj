@@ -148,8 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				7B0B67052AF1748100D6A66C /* ListType.swift */,
-				7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */,
 				7B0B67012AF170EA00D6A66C /* RecipesListsView.swift */,
+				7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -233,7 +233,6 @@
 				3050D4C32AEFEE3000D26A87 /* Helpers */,
 				CE4265A62AE8562E00FBD85B /* Cookbook */,
 				A7F16B322AE83A0D00F3ADF3 /* Ingredient */,
-				A7F16B1C2AE8341700F3ADF3 /* Protocols */,
 				A7F16B2F2AE8392900F3ADF3 /* Step */,
 				A7F16B1B2AE833F900F3ADF3 /* Recipe */,
 				7BE6097E2AF584F20031614A /* Components */,
@@ -287,13 +286,6 @@
 				7BE609802AF588F30031614A /* CreateEdit */,
 			);
 			path = Recipe;
-			sourceTree = "<group>";
-		};
-		A7F16B1C2AE8341700F3ADF3 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A7F16B2F2AE8392900F3ADF3 /* Step */ = {
