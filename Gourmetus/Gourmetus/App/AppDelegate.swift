@@ -17,6 +17,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Dependencies.register(CoreDataRepository<Ingredient>("IngredientEntity"), for: (any Repository<Ingredient>).self)
         Dependencies.register(CoreDataRepository<Cookbook>("CookbookEntity"), for: (any Repository<Cookbook>).self)
         Dependencies.register(CoreDataRepository<Step>("StepEntity"), for: (any Repository<Step>).self)
+        Dependencies.register(CoreDataRepository<Tag>("TagEntity"), for: (any Repository<Tag>).self)
         
         return true
     }
