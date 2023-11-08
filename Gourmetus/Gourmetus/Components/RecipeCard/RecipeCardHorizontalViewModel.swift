@@ -9,9 +9,9 @@ import Foundation
 
 class RecipeCardHorizontalViewModel: ObservableObject{
     
-    @Published var recipe: RecipeModel
+    @Published var recipe: Recipe
     
-    init(recipe: RecipeModel) {
+    init(recipe: Recipe) {
         self.recipe = recipe
     }
     

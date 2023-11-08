@@ -11,7 +11,7 @@ struct RecipePlayerView: View {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     
-    init(recipe: RecipeModel) {
+    init(recipe: Recipe) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe))
     }
     

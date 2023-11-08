@@ -9,9 +9,9 @@ struct CreateEditRecipeView: View {
     @State private var isPresentingNewSheet = false
     @State private var isPresentingEditSheet = false
     
-    @State private var editingStep: StepModel?
+    @State private var editingStep: Step?
     
-    @Binding var recipe: RecipeModel?
+    @Binding var recipe: Recipe?
     
     @State private var selectedDifficulty: Int = 1
     
