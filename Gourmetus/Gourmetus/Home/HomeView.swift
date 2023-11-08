@@ -16,7 +16,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                
                 Button(action: {
                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
