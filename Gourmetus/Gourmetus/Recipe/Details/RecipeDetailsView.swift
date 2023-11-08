@@ -11,7 +11,7 @@ struct RecipeDetailsView: View {
     
     @StateObject var vm: RecipeDetailsViewModel
     
-    init(recipe: RecipeModel, homeViewModel: HomeViewModel) {
+    init(recipe: Recipe, homeViewModel: HomeViewModel) {
         self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe, homeViewModel: homeViewModel))
     }
     

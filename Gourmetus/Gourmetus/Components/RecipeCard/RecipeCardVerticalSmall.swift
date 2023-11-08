@@ -11,7 +11,7 @@ struct RecipeCardVerticalSmall: View {
     
     @StateObject var vm: RecipeCardVerticalSmallViewModel
     
-    init(recipe: RecipeModel) {
+    init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeCardVerticalSmallViewModel(recipe: recipe))
     }
     

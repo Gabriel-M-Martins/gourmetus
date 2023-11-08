@@ -8,17 +8,18 @@
 import Foundation
 
 class RecipeCardVerticalBigViewModel: ObservableObject {
-    @Published var cookBook: CookBookModel? {
+    @Injected private var repo: any Repository<Cookbook>
+    @Published var cookBook: Cookbook? {
         didSet {
 //            print("Alterou o cookbook")
         }
     }
-    @Published var favourites: Set<RecipeModel> = [] {
+    @Published var favourites: Set<Recipe> = [] {
         didSet {
             print("Alterou o favourites")
         }
     }
-    @Published var recipe: RecipeModel
+    @Published var recipe: Recipe
     
     var isFavorite: Bool {
         for favourite in favourites{
@@ -29,15 +30,15 @@ class RecipeCardVerticalBigViewModel: ObservableObject {
         return false
     }
     
-    init(recipe: RecipeModel) {
+    init(recipe: Recipe) {
         self.recipe = recipe
-        if let cookModel = CoreDataCookBookRepository.fetch().first{
+        if let cookModel = repo.fetch().first{
             self.cookBook = cookModel
             self.favourites = Set(cookModel.favorites)
         }
     }
     
-    func toggleFavourite(recipe: RecipeModel){
+    func toggleFavourite(recipe: Recipe){
         if self.isFavorite{
             self.favourites.remove(recipe)
         } else {
@@ -46,7 +47,7 @@ class RecipeCardVerticalBigViewModel: ObservableObject {
 //        if cookBook != nil{
         if var cookBook = cookBook {
             cookBook.favorites = Array(self.favourites)
-            CoreDataCookBookRepository.save(cookBook)
+            repo.save(cookBook)
         }
         
     }

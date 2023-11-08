@@ -11,7 +11,7 @@ struct RecipeCardMini: View {
         
     @StateObject var vm: RecipeCardMiniViewModel
     
-    init(recipe: RecipeModel) {
+    init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeCardMiniViewModel(recipe: recipe))
     }
     

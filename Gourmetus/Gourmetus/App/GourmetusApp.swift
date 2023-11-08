@@ -12,9 +12,9 @@ struct GourmetusApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let persistenceController = PersistenceController.shared
 
-    @State var recipe: RecipeModel? = Constants.mockedRecipe
+    @State var recipe: Recipe? = Constants.mockedRecipe
     
-//    @StateObject var cookBook = CookBookModel
+//    @StateObject var cookBook = Cookbook
     
     var body: some Scene {
         WindowGroup {
