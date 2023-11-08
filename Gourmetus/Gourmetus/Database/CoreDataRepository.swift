@@ -12,7 +12,6 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
     private var container: NSPersistentContainer { PersistenceController.shared.container }
     
     // TODO: tirar a cache e fazer o save dar um fetch no banco p/ checar se ja existe
-    var cache: [ UUID : NSManagedObject ] = [:]
     private var entityName: String
     
     init(_ entityName: String) {
@@ -20,16 +19,35 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
     }
     
     func delete(_ id: UUID) {
+        let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         
+        let fetchedResults = (try? container.viewContext.fetch(request)) ?? []
+        for result in fetchedResults {
+            container.viewContext.delete(result)
+        }
     }
     
+    private func fetch(_ entityName: String) -> [NSManagedObject] {
+        let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        return (try? container.viewContext.fetch(request)) ?? []
+    }
+    
+    func fetch(id: UUID) -> Model? {
+        let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        guard let fetchedResult = (try? container.viewContext.fetch(request))?.first else { return nil }
+        
+        guard let representation = traverseRelationships(object: fetchedResult, visited: Set()) else { return nil }
+        
+        return Model(entityRepresentation: representation)
+    }
     
     func fetch() -> [Model] {
-        let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        
-        guard let fetchResults = try? container.viewContext.fetch(request) else { return [] }
-        
         var result = [Model]()
+        
+        let fetchResults = fetch(self.entityName)
         for fetchResult in fetchResults {
             guard let representation = traverseRelationships(object: fetchResult, visited: Set()) else { continue }
             
@@ -54,11 +72,12 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
 extension CoreDataRepository {
     private func representationToEntity(representation: EntityRepresentation, context: NSManagedObjectContext?) -> NSManagedObject? {
         guard let entityDescription = container.managedObjectModel.entitiesByName[representation.entityName] else { return nil }
-        let existingEntity = cache[representation.id]
+        
+        let existingEntity = fetch(representation.entityName).first(where: { $0.value(forKey: "id") as? UUID == representation.id })
         
         let context = context ?? existingEntity?.managedObjectContext ?? container.viewContext
         let entity = existingEntity ?? NSManagedObject(entity: entityDescription, insertInto: context)
-        
+
         return entity
     }
     

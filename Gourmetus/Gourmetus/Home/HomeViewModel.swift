@@ -16,10 +16,7 @@ class HomeViewModel: ObservableObject {
     @Published var myRecipes: [Recipe] = []
     @Published var community: [Recipe] = []
     
-    @Injected private var _repo: any Repository<Cookbook>
-    private var repo: any Repository<Cookbook> {
-        return _repo
-    }
+    @Injected private var repo: any Repository<Cookbook>
     
     
     init() {
