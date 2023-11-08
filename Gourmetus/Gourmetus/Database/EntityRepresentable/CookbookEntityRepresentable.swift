@@ -10,7 +10,9 @@ import Foundation
 extension Cookbook : EntityRepresentable {
     convenience init?(entityRepresentation: EntityRepresentation) {
         guard let favoritesRepresentations = entityRepresentation.toManyRelationships["favorites"],
-              let historyRepresentations = entityRepresentation.toManyRelationships["history"] else { return nil }
+              let historyRepresentations = entityRepresentation.toManyRelationships["history"],
+              let ownedRecipesRepresentations = entityRepresentation.toManyRelationships["ownedRecipes"],
+              let communityRepresentations = entityRepresentation.toManyRelationships["community"] else { return nil }
         
         let favorites = favoritesRepresentations.reduce([Recipe]()) { partialResult, representation in
             guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
@@ -30,7 +32,25 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, favorites: favorites, latest: history)
+        let ownedRecipes = ownedRecipesRepresentations.reduce([Recipe]()) { partialResult, representation in
+            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+            
+            var result = partialResult
+            result.append(model)
+            
+            return result
+        }
+        
+        let community = communityRepresentations.reduce([Recipe]()) { partialResult, representation in
+            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+            
+            var result = partialResult
+            result.append(model)
+            
+            return result
+        }
+        
+        self.init(id: entityRepresentation.id, ownedRecipes: ownedRecipes, favorites: favorites, latest: history, community: community)
     }
     
     func encode() -> EntityRepresentation {
@@ -39,8 +59,10 @@ extension Cookbook : EntityRepresentable {
         ]
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
+            "ownedRecipes" : self.ownedRecipes.map({ $0.encode() }),
             "favorites" : self.favorites.map({ $0.encode() }),
-            "history" : self.history.map({ $0.encode() })
+            "history" : self.history.map({ $0.encode() }),
+            "community" : self.community.map({ $0.encode() })
         ]
         
         let toOneRelationships: [String : EntityRepresentation] = [:]

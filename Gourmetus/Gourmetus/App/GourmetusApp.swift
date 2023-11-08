@@ -14,12 +14,11 @@ struct GourmetusApp: App {
 
     @State var recipe: Recipe? = Constants.mockedRecipe
     
-//    @StateObject var cookBook = Cookbook
-    
     var body: some Scene {
         WindowGroup {
             TabBarView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        
     }
 }

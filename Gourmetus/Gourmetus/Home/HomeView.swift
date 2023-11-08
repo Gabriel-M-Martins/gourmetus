@@ -11,26 +11,27 @@ struct HomeView: View {
     
     @StateObject var vm: HomeViewModel = HomeViewModel()
     
+    @EnvironmentObject var cookbook: Cookbook
+    
     @State private var searchText = ""
     
     var body: some View {
         NavigationStack{
             ScrollView{
-                
                 Button(action: {
                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    if success {
-                    print("All set!")
-                    } else if let error = error {
-                    print(error.localizedDescription)
-                    }
+                        if success {
+                            print("All set!")
+                        } else if let error = error {
+                            print(error.localizedDescription)
+                        }
                     }
                 }, label: {
                     /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
                 })
                 Divider()
                 titleRecentlyAccessed
-                if vm.recentlyAccessed.isEmpty {
+                if cookbook.history.isEmpty {
                     
                 } else {
                     scrollViewRecentlyAccessed
@@ -38,7 +39,7 @@ struct HomeView: View {
                 Divider()
                     .padding(.vertical, 8)
                 titleFavourites
-                if vm.favourites.isEmpty {
+                if cookbook.favorites.isEmpty {
                     
                 } else {
                     scrollViewFavourites
@@ -46,7 +47,7 @@ struct HomeView: View {
                 Divider()
                     .padding(.vertical, 8)
                 titleMyRecipes
-                if vm.myRecipes.isEmpty {
+                if cookbook.ownedRecipes.isEmpty {
                     
                 } else {
                     scrollViewMyRecipes
@@ -54,7 +55,11 @@ struct HomeView: View {
                 Divider()
                     .padding(.vertical, 8)
                 titleCommunity
-                scrollViewCommunity
+                if cookbook.community.isEmpty{
+                    
+                }else{
+                    scrollViewCommunity
+                }
                 
             }
             .navigationTitle("Menu")
@@ -84,15 +89,13 @@ extension HomeView {
         
     }
     
-//    private var scrollViewRecentlyAccessed: some View {
-    
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
             HStack(spacing: 16){
-                ForEach(vm.recentlyAccessed) { recipe in
+                ForEach(cookbook.history) { recipe in
                     NavigationLink{
-                        RecipeDetailsView(recipe: recipe, homeViewModel: vm)
-
+                        RecipeDetailsView(recipe: recipe)
+                        
                     }label: {
                         RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
@@ -125,12 +128,12 @@ extension HomeView {
     private var scrollViewFavourites: some View {
         ScrollView(.horizontal){
             HStack(spacing: 16){
-                if vm.favourites.isEmpty {
+                if cookbook.favorites.isEmpty {
                     Text("It seems you don't have any recipe in your cookbook yet. Start Adding some or browse the community!")
                 } else {
-                    ForEach(vm.favourites, id: \.id) { recipe in
+                    ForEach(cookbook.favorites, id: \.id) { recipe in
                         NavigationLink{
-                            RecipeDetailsView(recipe: recipe, homeViewModel: vm)
+                            RecipeDetailsView(recipe: recipe)
                         }label: {
                             RecipeCardHorizontal(recipe: recipe)
                                 .tint(Color(uiColor: UIColor.label))
@@ -166,9 +169,10 @@ extension HomeView {
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
             HStack(){
-                ForEach(vm.myRecipes) { recipe in
+                // \/ ARRUMA ESSA PORRAAAAAAA \/
+                ForEach(cookbook.ownedRecipes) { recipe in
                     NavigationLink{
-                        RecipeDetailsView(recipe: recipe, homeViewModel: vm)
+                        RecipeDetailsView(recipe: recipe)
                     }label: {
                         RecipeCardVerticalSmall(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
@@ -201,9 +205,9 @@ extension HomeView {
     
     private var scrollViewCommunity: some View {
         VStack{
-            ForEach(vm.community) { recipe in
+            ForEach(cookbook.community) { recipe in
                 NavigationLink{
-                    RecipeDetailsView(recipe: recipe, homeViewModel: vm)
+                    RecipeDetailsView(recipe: recipe)
                 }label: {
                     RecipeCardVerticalBig(recipe: recipe)
                         .padding(.vertical, 8)
