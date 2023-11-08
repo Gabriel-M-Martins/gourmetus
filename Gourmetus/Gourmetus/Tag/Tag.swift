@@ -13,7 +13,7 @@ final class Tag {
     
     var recipes: [Recipe]
     
-    init(id: UUID, name: String, recipes: [Recipe] = []) {
+    init(id: UUID = UUID(), name: String, recipes: [Recipe] = []) {
         self.id = id
         self.name = name
         self.recipes = recipes

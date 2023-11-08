@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     
-    @Injected private var repo: any Repository<Cookbook>
+    @Injected private var cookbookRepo: any Repository<Cookbook>
     
     @StateObject var cookbook: Cookbook = Cookbook()
     
@@ -36,18 +36,18 @@ struct TabBarView: View {
 
         }
         .onAppear(perform: {
-            if let aux = repo.fetch().first {
+            if let aux = cookbookRepo.fetch().first {
                 self.cookbook.id = aux.id
                 self.cookbook.ownedRecipes = aux.ownedRecipes
                 self.cookbook.favorites = aux.favorites
                 self.cookbook.history = aux.history
                 self.cookbook.community = aux.community
             }else{
-                self.cookbook.ownedRecipes = Constants.mockedRecipeArray
+                self.cookbook.ownedRecipes = Constants.mockedRecipes
 //                self.cookbook.favorites = Constants.mockedRecipeArray
-                self.cookbook.history = Constants.mockedRecipeArray
-                self.cookbook.community = Constants.mockedRecipeArray
-                repo.save(cookbook)
+                self.cookbook.history = Constants.mockedRecipes
+                self.cookbook.community = Constants.mockedRecipes
+                cookbookRepo.save(cookbook)
             }
         })
     }
