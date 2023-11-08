@@ -8,24 +8,32 @@
 import Foundation
 import CoreData
 
-struct Cookbook : Hashable{
+final class Cookbook: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
+    }
+    
+    static func == (lhs: Cookbook, rhs: Cookbook) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     var id: UUID
     var favorites: [Recipe]
     var history: [Recipe]
     private var latestSize = 10
     
-    init(id: UUID, favorites: [Recipe], latest: [Recipe], latestSize: Int = 10) {
+    required init(id: UUID, favorites: [Recipe], latest: [Recipe], latestSize: Int = 10) {
         self.id = id
         self.favorites = favorites
         self.history = latest
         self.latestSize = latestSize
     }
     
-    mutating func addFavorite(recipe: Recipe) {
+    func addFavorite(recipe: Recipe) {
         favorites.append(recipe)
     }
     
-    mutating func removeFavorite(recipe: Recipe){
+    func removeFavorite(recipe: Recipe){
         for i in 0...favorites.count {
             if (favorites[i].name == recipe.name){
                 favorites.remove(at: i)
@@ -34,7 +42,7 @@ struct Cookbook : Hashable{
         
     }
     
-    mutating func addLatest(recipe: Recipe){
+    func addLatest(recipe: Recipe){
         if(history.count == latestSize){
             history.remove(at: latestSize)
         }
