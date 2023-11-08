@@ -8,7 +8,7 @@
 import Foundation
 
 extension Cookbook : EntityRepresentable {
-    init?(entityRepresentation: EntityRepresentation) {
+    convenience init?(entityRepresentation: EntityRepresentation) {
         guard let favoritesRepresentations = entityRepresentation.toManyRelationships["favorites"],
               let historyRepresentations = entityRepresentation.toManyRelationships["history"] else { return nil }
         
@@ -30,9 +30,7 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        self.id = entityRepresentation.id
-        self.favorites = favorites
-        self.history = history
+        self.init(id: entityRepresentation.id, favorites: favorites, latest: history)
     }
     
     func encode() -> EntityRepresentation {
