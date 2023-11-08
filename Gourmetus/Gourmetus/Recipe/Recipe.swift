@@ -17,9 +17,10 @@ struct Recipe: Identifiable, Hashable{
     
     var steps: [Step]
     var ingredients: [Ingredient]
+    var tags: [Tag]
     
     
-    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient]) {
+    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = []) {
         self.id = id
         self.name = name
         self.desc = desc
@@ -29,5 +30,7 @@ struct Recipe: Identifiable, Hashable{
         
         self.ingredients = ingredients
         self.ingredients.sort(by: { $0.name.lowercased() < $1.name.lowercased() } )
+        
+        self.tags = tags
     }
 }

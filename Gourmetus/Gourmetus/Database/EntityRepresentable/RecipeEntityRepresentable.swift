@@ -24,11 +24,23 @@ extension Recipe : EntityRepresentable {
         }
         
         guard let ingredientsRepresentations = entityRepresentation.toManyRelationships["ingredients"] else { return nil }
+        
         let ingredients = ingredientsRepresentations.reduce([Ingredient]()) { partialResult, representation in
             guard let ingredient = Ingredient(entityRepresentation: representation) else { return partialResult }
             
             var result = partialResult
             result.append(ingredient)
+            
+            return result
+        }
+        
+        guard let tagsRepresentations = entityRepresentation.toManyRelationships["tags"] else { return nil }
+        
+        let tags = tagsRepresentations.reduce([Tag]()) { partialResult, representation in
+            guard let model = Tag(entityRepresentation: representation) else { return partialResult }
+            
+            var result = partialResult
+            result.append(model)
             
             return result
         }
@@ -41,6 +53,7 @@ extension Recipe : EntityRepresentable {
         
         self.steps = steps.sorted(by: { $0.order < $1.order })
         self.ingredients = ingredients
+        self.tags = tags
     }
     
     func encode() -> EntityRepresentation {
@@ -54,7 +67,8 @@ extension Recipe : EntityRepresentable {
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
             "steps" : self.steps.map({ $0.encode() }),
-            "ingredients" : self.ingredients.map({ $0.encode() })
+            "ingredients" : self.ingredients.map({ $0.encode() }),
+            "tags" : self.tags.map({ $0.encode() }),
         ]
         
         let toOneRelationships: [String : EntityRepresentation] = [:]

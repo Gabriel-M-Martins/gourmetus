@@ -32,6 +32,8 @@
 		7BE0A5AA2AFAAF8B004550D5 /* RecipeCardMiniViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE0A5A92AFAAF8B004550D5 /* RecipeCardMiniViewModel.swift */; };
 		7BE609842AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */; };
 		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
+		A75BE2CD2AFC07DF001C299F /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75BE2CC2AFC07DF001C299F /* Tag.swift */; };
+		A75BE2CF2AFC0818001C299F /* TagEntityRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75BE2CE2AFC0818001C299F /* TagEntityRepresentable.swift */; };
 		A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D364B2AEC2CF3008CB1EA /* Repository.swift */; };
 		A77F458A2AFAD56300FDFB43 /* StepEntityRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77F45892AFAD56300FDFB43 /* StepEntityRepresentable.swift */; };
 		A77F458C2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77F458B2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift */; };
@@ -80,6 +82,8 @@
 		7BE0A5A92AFAAF8B004550D5 /* RecipeCardMiniViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardMiniViewModel.swift; sourceTree = "<group>"; };
 		7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardVerticalBigViewModel.swift; sourceTree = "<group>"; };
 		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
+		A75BE2CC2AFC07DF001C299F /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		A75BE2CE2AFC0818001C299F /* TagEntityRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEntityRepresentable.swift; sourceTree = "<group>"; };
 		A77D364B2AEC2CF3008CB1EA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		A77F45892AFAD56300FDFB43 /* StepEntityRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEntityRepresentable.swift; sourceTree = "<group>"; };
 		A77F458B2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEntityRepresentable.swift; sourceTree = "<group>"; };
@@ -209,6 +213,23 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		A75BE2CA2AFC0103001C299F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */,
+				A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		A75BE2CB2AFC07CE001C299F /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				A75BE2CC2AFC07DF001C299F /* Tag.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		A785B5372AE1C3A0002E1D1F = {
 			isa = PBXGroup;
 			children = (
@@ -233,16 +254,15 @@
 				3050D4C32AEFEE3000D26A87 /* Helpers */,
 				CE4265A62AE8562E00FBD85B /* Cookbook */,
 				A7F16B322AE83A0D00F3ADF3 /* Ingredient */,
-				A7F16B1C2AE8341700F3ADF3 /* Protocols */,
 				A7F16B2F2AE8392900F3ADF3 /* Step */,
 				A7F16B1B2AE833F900F3ADF3 /* Recipe */,
+				A75BE2CB2AFC07CE001C299F /* Tag */,
 				7BE6097E2AF584F20031614A /* Components */,
 				7BE609822AF58A040031614A /* Home */,
 				7BE609812AF589800031614A /* App */,
 				A785B5472AE1C3A2002E1D1F /* Assets.xcassets */,
 				A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */,
 				A785B5522AE1C3A2002E1D1F /* Info.plist */,
-				A7F16B182AE832DA00F3ADF3 /* Gourmetus.xcdatamodeld */,
 				A785B5492AE1C3A2002E1D1F /* Preview Content */,
 			);
 			path = Gourmetus;
@@ -259,10 +279,9 @@
 		A7CA1AEE2AFAD06000BF334D /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				A7CA1AF52AFAD1AA00BF334D /* EntityRepresentable */,
 				A77D364B2AEC2CF3008CB1EA /* Repository.swift */,
-				A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */,
-				A7CA1AEF2AFAD09100BF334D /* EntityRepresentation.swift */,
+				A7CA1AF52AFAD1AA00BF334D /* EntityRepresentable */,
+				A75BE2CA2AFC0103001C299F /* CoreData */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -270,10 +289,12 @@
 		A7CA1AF52AFAD1AA00BF334D /* EntityRepresentable */ = {
 			isa = PBXGroup;
 			children = (
+				A7CA1AEF2AFAD09100BF334D /* EntityRepresentation.swift */,
 				A7CA1AF62AFAD28F00BF334D /* RecipeEntityRepresentable.swift */,
 				A77F45892AFAD56300FDFB43 /* StepEntityRepresentable.swift */,
 				A77F458B2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift */,
 				A77F458D2AFAD79A00FDFB43 /* CookbookEntityRepresentable.swift */,
+				A75BE2CE2AFC0818001C299F /* TagEntityRepresentable.swift */,
 			);
 			path = EntityRepresentable;
 			sourceTree = "<group>";
@@ -287,13 +308,6 @@
 				7BE609802AF588F30031614A /* CreateEdit */,
 			);
 			path = Recipe;
-			sourceTree = "<group>";
-		};
-		A7F16B1C2AE8341700F3ADF3 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A7F16B2F2AE8392900F3ADF3 /* Step */ = {
@@ -402,6 +416,7 @@
 				3050D4C22AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift in Sources */,
 				7BE0A5AA2AFAAF8B004550D5 /* RecipeCardMiniViewModel.swift in Sources */,
 				7BB1448D2AEC0BFA00F67DD2 /* RecipeCardVerticalBig.swift in Sources */,
+				A75BE2CF2AFC0818001C299F /* TagEntityRepresentable.swift in Sources */,
 				CE4265A82AE856A400FBD85B /* Cookbook.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* Step.swift in Sources */,
 				7BE609842AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift in Sources */,
@@ -434,6 +449,7 @@
 				3050D4C52AEFEF5600D26A87 /* CreateEditStepViewModel.swift in Sources */,
 				A7CA1AF02AFAD09100BF334D /* EntityRepresentation.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
+				A75BE2CD2AFC07DF001C299F /* Tag.swift in Sources */,
 				A77F458C2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift in Sources */,
 				CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */,
 			);
