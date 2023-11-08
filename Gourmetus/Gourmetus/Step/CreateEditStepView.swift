@@ -10,7 +10,7 @@ import PhotosUI
 
 struct CreateEditStepView: View {
     
-    @Binding var editingStep: Step?
+    @Binding var editingStep: StepModel?
     @StateObject private var imageViewModel = PhotoPickerViewModel()
     @StateObject var stepViewModel =  CreateEditStepViewModel()
     @ObservedObject var recipeViewModel:  CreateEditRecipeViewModel

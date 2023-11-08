@@ -8,11 +8,11 @@
 import Foundation
 
 class RecipePlayerViewModel: ObservableObject {
-    @Published var recipe: Recipe
-    @Published var currentStep: Step
+    @Published var recipe: RecipeModel
+    @Published var currentStep: StepModel
     @Published var currentStepIndex: Int
     
-    init(recipe: Recipe, initialStepIndex: Int? = nil) {
+    init(recipe: RecipeModel, initialStepIndex: Int? = nil) {
             self.recipe = recipe
             if let initialIndex = initialStepIndex {
                 self.currentStepIndex = initialIndex
