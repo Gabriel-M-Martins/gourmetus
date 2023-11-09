@@ -49,42 +49,15 @@ struct ChipsStack: Layout {
     }
 }
 
-struct ResizableTagGroup: View {
+struct ResizableTagGroup<Content: View>: View {
+    
+    let visualContent: [Content]
+    
     var body: some View {
         ChipsStack {
-           Text("Echo")
-                .padding(6)
-                .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
-            Text("Echo")
-                 .padding(6)
-                 .background(.green, in: .rect(cornerRadius: 6))
+            ForEach(0..<visualContent.count, id: \.self){ index in
+                visualContent[index]
+            }
              
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -93,5 +66,5 @@ struct ResizableTagGroup: View {
 }
 
 #Preview {
-    ResizableTagGroup()
+    ResizableTagGroup(visualContent: [Text("Algo")])
 }

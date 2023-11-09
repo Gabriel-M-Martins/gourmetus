@@ -69,14 +69,17 @@ struct CreateEditStepView: View {
                                     .padding(.bottom,-12)
                                     .padding(.top,6)
                                     .padding(.leading,16)
-                                HStack{
-                                    ForEach(ingredients) { ingredient in
-                                        Text(ingredient.name)
-                                            .padding(6)
-                                            .background(.green, in: .rect(cornerRadius: 6))
-                                    }
-                                    Spacer()
-                                }
+//                                HStack{
+//                                    ForEach(ingredients) { ingredient in
+//                                        Text(ingredient.name)
+//                                            .padding(6)
+//                                            .background(.green, in: .rect(cornerRadius: 6))
+//                                    }
+//                                    Spacer()
+//                                }
+                                ResizableTagGroup(visualContent: ingredients.map({ Text($0.name) 
+                                                                                    .padding(6)
+                                                                                    .background(.green, in: .rect(cornerRadius: 6))})) //[TagView(Tag: "Algo", visualContent: {Text("O")})]
                                 .padding()
                             }
                             .background(.white)

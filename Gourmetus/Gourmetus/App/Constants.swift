@@ -24,11 +24,40 @@ struct Constants {
         Ingredient(id: UUID(), name: "Açucar", quantity: "2", unit: .Cup)
     ]
     
-    static let mockedRecipe: Recipe = Recipe(id: UUID(),name: "Bolo Formigueiro", desc: "Bolo tri bom, vapo", difficulty: 3,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedTags: [Tag] = [
+        Tag(name: "Mexican"),
+        Tag(name: "Japanese"),
+        Tag(name: "Italian"),
+        Tag(name: "Korean"),
+        Tag(name: "French"),
+        Tag(name: "Brazillian"),
+        Tag(name: "For You"),
+        Tag(name: "For the Couple"),
+        Tag(name: "For the Family"),
+        Tag(name: "For the Friend Group"),
+        Tag(name: "Fried"),
+        Tag(name: "Boiled"),
+        Tag(name: "Roasted"),
+        Tag(name: "Cooked"),
+        Tag(name: "Gluten Free"),
+        Tag(name: "Lactose Free"),
+        Tag(name: "Sodium Free"),
+        Tag(name: "Sugar Free"),
+        Tag(name: "Fat Free"),
+        Tag(name: "Low Fat"),
+        Tag(name: "Low Sodium"),
+        Tag(name: "Low Sugar"),
+        Tag(name: "Low Fat"),
+        Tag(name: "Vegetarian"),
+        Tag(name: "Vegan"),
+        Tag(name: "Contains Alcohol"),
+    ]
     
-    static let mockedRecipe1: Recipe = Recipe(id: UUID(),name: "Bala de banana", difficulty: 4,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedRecipe: Recipe = Recipe(id: UUID(),name: "Bolo Formigueiro", desc: "Bolo tri bom, vapo", difficulty: 3,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[4], mockedTags[5], mockedTags[6] ])
+    
+    static let mockedRecipe1: Recipe = Recipe(id: UUID(),name: "Bala de banana", difficulty: 4,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[0], mockedTags[1], mockedTags[3] ])
 
-    static let mockedRecipe2: Recipe = Recipe(id: UUID(),name: "Brigadeiro", difficulty: 1,steps: Self.mockedSteps, ingredients: Self.mockedIngredients)
+    static let mockedRecipe2: Recipe = Recipe(id: UUID(),name: "Brigadeiro", difficulty: 1,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[7], mockedTags[8], mockedTags[9] ])
 
-    static let mockedRecipeArray: [Recipe] = [mockedRecipe,mockedRecipe1,mockedRecipe2]
+    static let mockedRecipes: [Recipe] = [mockedRecipe, mockedRecipe1, mockedRecipe2]
 }
