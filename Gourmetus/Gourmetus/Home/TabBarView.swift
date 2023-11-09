@@ -22,7 +22,7 @@ struct TabBarView: View {
                 }
                 .environmentObject(cookbook)
             
-            RecipesListsView(listType: .RecentlyAccessed, homeViewModel: HomeViewModel())
+            RecipesListsView(listType: .RecentlyAccessed)
                 .tabItem {
                     Label("Cookbook", systemImage: "text.book.closed.fill")
                 }
