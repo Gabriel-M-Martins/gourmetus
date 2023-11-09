@@ -11,10 +11,10 @@ class RecipesListsViewModel: ObservableObject{
     
     @Published var listType: ListType
     
-    @Published var homeViewModel: HomeViewModel
-    
-    init(listType: ListType, homeviewModel: HomeViewModel) {
+    init(listType: ListType) {
         self.listType = listType
-        self.homeViewModel = homeviewModel
     }
+    
+    
+    
 }

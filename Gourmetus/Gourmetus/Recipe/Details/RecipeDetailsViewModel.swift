@@ -9,11 +9,29 @@ import Foundation
 
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: Recipe
-    @Published var homeViewModel: HomeViewModel
     
-    init(recipe: Recipe, homeViewModel: HomeViewModel) {
+    init(recipe: Recipe) {
         self.recipe = recipe
-        self.homeViewModel = homeViewModel
+    }
+    
+    func isFavorite(favorites: [Recipe]) -> Bool{
+        for favorite in favorites{
+            if favorite.id == recipe.id{
+                return true
+            }
+        }
+        return false
+    }
+
+    func toggleFavourite(recipe: Recipe, favorites: [Recipe]) -> [Recipe]{
+        var favoritesAux = Set(favorites)
+        if self.isFavorite(favorites: favorites){
+            favoritesAux.remove(recipe)
+        } else {
+            favoritesAux.insert(recipe)
+        }
+        return Array(favoritesAux)
+        
     }
     
 }

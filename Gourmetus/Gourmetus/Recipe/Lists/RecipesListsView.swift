@@ -11,52 +11,97 @@ struct RecipesListsView: View {
     
     @StateObject var vm : RecipesListsViewModel
     
+    @EnvironmentObject var cookbook: Cookbook
+    
     @State private var searchText = ""
     
-    init(listType: ListType, homeViewModel: HomeViewModel) {
-        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType, homeviewModel: homeViewModel))
-
-        
+    init(listType: ListType) {
+        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
     }
     
     var body: some View {
-            ScrollView{
-                Divider()
-                HStack{
-                    Text(vm.listType.description2)
-                        .font(.title)
-                        .padding(.leading,16)
-                    Spacer()
-                }
-                
-                ForEach(vm.homeViewModel.community) { recipe in
-                    VStack{
-                        if vm.listType == .RecentlyAccessed{
-                            Divider()
-                            HStack{
-                                Text("Completed")
-                                    .foregroundColor(.green)
-                                    .padding(.leading, 16)
-                                Spacer()
-                            }
-                        }
-                        NavigationLink{
-                            RecipeDetailsView(recipe: recipe, homeViewModel: vm.homeViewModel)
-                        }label: {
-                            RecipeCardVerticalBig(recipe: recipe)
-                                .padding(.vertical, 8)
-                                .tint(Color(uiColor: UIColor.label))
-                        }
-                    }
-                }
-                .padding(.horizontal)
+        ScrollView{
+            Divider()
+            HStack{
+                Text(vm.listType.description2)
+                    .font(.title)
+                    .padding(.leading,16)
+                Spacer()
             }
-            .navigationTitle(vm.listType.description)
-            .searchable(text: $searchText, placement: .automatic, prompt: "Search")
             
+            switch vm.listType{
+            case .RecentlyAccessed:
+                historyList
+                    .padding(.horizontal)
+            case .FavouritesRecipes:
+                favoritesList
+                    .padding(.horizontal)
+            case .MyRecipes:
+                ownedList
+                    .padding(.horizontal)
+            }
+        }
+        .navigationTitle(vm.listType.description)
+        .searchable(text: $searchText, placement: .automatic, prompt: "Search")
     }
 }
 
 #Preview {
-    RecipesListsView(listType: .RecentlyAccessed, homeViewModel: HomeViewModel())
+    RecipesListsView(listType: .RecentlyAccessed)
 }
+
+extension RecipesListsView {
+    
+    private var historyList: some View {
+        ForEach(cookbook.history) { recipe in
+            VStack{
+                Divider()
+                HStack{
+                    Text("Completed")
+                        .foregroundColor(.green)
+                        .padding(.leading, 16)
+                    Spacer()
+                }
+                NavigationLink{
+                    RecipeDetailsView(recipe: recipe)
+                }label: {
+                    RecipeCardVerticalBig(recipe: recipe)
+                        .padding(.vertical, 8)
+                        .tint(Color(uiColor: UIColor.label))
+                }
+            }
+        }
+    }
+    
+    private var favoritesList: some View {
+        ForEach(cookbook.favorites) { recipe in
+            VStack{
+                Divider()
+                NavigationLink{
+                    RecipeDetailsView(recipe: recipe)
+                }label: {
+                    RecipeCardVerticalBig(recipe: recipe)
+                        .padding(.vertical, 8)
+                        .tint(Color(uiColor: UIColor.label))
+                }
+            }
+        }
+    }
+    
+    private var ownedList: some View {
+        ForEach(cookbook.ownedRecipes) { recipe in
+            VStack{
+                Divider()
+                NavigationLink{
+                    RecipeDetailsView(recipe: recipe)
+                }label: {
+                    RecipeCardVerticalBig(recipe: recipe)
+                        .padding(.vertical, 8)
+                        .tint(Color(uiColor: UIColor.label))
+                }
+            }
+        }
+    }
+    
+}
+

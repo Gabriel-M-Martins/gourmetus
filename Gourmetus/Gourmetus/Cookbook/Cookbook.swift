@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class Cookbook: Hashable {
+final class Cookbook: Hashable, ObservableObject{
     func hash(into hasher: inout Hasher) {
         hasher.combine(self)
     }
@@ -17,16 +17,29 @@ final class Cookbook: Hashable {
         lhs.id == rhs.id
     }
     
-    var id: UUID
-    var favorites: [Recipe]
-    var history: [Recipe]
-    private var latestSize = 10
+    @Published var id: UUID
+    @Published var ownedRecipes: [Recipe]
+    @Published var favorites: [Recipe]
+    @Published var history: [Recipe]
+    @Published var community: [Recipe]
+    @Published private var latestSize = 10
     
-    required init(id: UUID, favorites: [Recipe], latest: [Recipe], latestSize: Int = 10) {
+    required init(id: UUID, ownedRecipes: [Recipe], favorites: [Recipe], latest: [Recipe], community: [Recipe], latestSize: Int = 10) {
         self.id = id
+        self.ownedRecipes = ownedRecipes
         self.favorites = favorites
         self.history = latest
+        self.community = community
         self.latestSize = latestSize
+    }
+    
+    init(){
+        self.id = UUID()
+        self.ownedRecipes = []
+        self.favorites = []
+        self.history = []
+        self.community = []
+        self.latestSize = 10
     }
     
     func addFavorite(recipe: Recipe) {
