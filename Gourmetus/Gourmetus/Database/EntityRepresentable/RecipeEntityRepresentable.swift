@@ -10,7 +10,8 @@ import Foundation
 extension Recipe : EntityRepresentable {
     init?(entityRepresentation: EntityRepresentation) {
         guard let name = entityRepresentation.values["name"] as? String,
-              let difficulty = entityRepresentation.values["difficulty"] as? Int else { return nil }
+              let difficulty = entityRepresentation.values["difficulty"] as? Int,
+              let duration = entityRepresentation.values["duration"] as? Int else { return nil }
 
         guard let stepsRepresentations = entityRepresentation.toManyRelationships["steps"] else { return nil }
         
@@ -50,6 +51,7 @@ extension Recipe : EntityRepresentable {
         self.desc = entityRepresentation.values["desc"] as? String
         self.difficulty = difficulty
         self.imageData = entityRepresentation.values["image"] as? Data
+        self.duration = duration
         
         self.steps = steps.sorted(by: { $0.order < $1.order })
         self.ingredients = ingredients
@@ -62,7 +64,8 @@ extension Recipe : EntityRepresentable {
             "name" : self.name,
             "desc" : self.desc as Any,
             "difficulty" : self.difficulty as Any,
-            "image" : self.imageData as Any
+            "image" : self.imageData as Any,
+            "duration" : self.duration as Any
         ]
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
