@@ -294,10 +294,10 @@ struct CreateEditRecipeView: View {
                     }
                     .frame(width: geometry.size.width * 0.9, alignment: .leading)
                     .sheet(isPresented: $isPresentingNewSheet) {
-                        CreateEditStepView(editingStep: $editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
+                        CreateEditStepView(editingStep: $editingStep, ingredients: [], recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
                             }
                     .sheet(isPresented: $isPresentingEditSheet) {
-                        CreateEditStepView(editingStep: $editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
+                        CreateEditStepView(editingStep: $editingStep, ingredients: [], recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
                             }
                     .padding()
                     .onAppear(perform: {
@@ -323,8 +323,8 @@ struct CreateEditRecipeView: View {
 
 struct CreateEditRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        //CreateEditRecipeView()
-        Text("oi")
+        CreateEditRecipeView(recipe: .constant(Constants.mockedRecipe))
+        //Text("oi")
     }
 }
 

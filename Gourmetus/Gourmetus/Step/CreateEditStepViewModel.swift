@@ -11,14 +11,15 @@ import SwiftUI
 class CreateEditStepViewModel: ObservableObject {
     @Published var texto = ""
     @Published var tip = ""
+    @Published var title = ""
     @Published var totalTime: Int? = 0
     
     func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
         if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
-            viewModel.steps.append(Step(id: UUID(),texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1))
+            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1))
             imageViewModel.selectedImage = UIImage()
         } else {
-            viewModel.steps.append(Step(id: UUID(),texto: texto, tip: tip ,timer: totalTime, order: -1))
+            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip ,timer: totalTime, order: -1))
         }
     }
     
@@ -26,10 +27,10 @@ class CreateEditStepViewModel: ObservableObject {
         if let index = viewModel.steps.firstIndex(of: editingStep) {
             if (imageViewModel.selectedImage != nil) {
                 let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0)
-                viewModel.steps[index] = Step(id:editingStep.id ,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1)
+                viewModel.steps[index] = Step(id:editingStep.id , title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1)
                 imageViewModel.selectedImage = UIImage()
             } else{
-                viewModel.steps[index] = Step(id:editingStep.id, texto: texto, tip: tip ,timer: totalTime, order: -1)
+                viewModel.steps[index] = Step(id:editingStep.id, title: title, texto: texto, tip: tip ,timer: totalTime, order: -1)
             }
         }
     }
@@ -37,6 +38,7 @@ class CreateEditStepViewModel: ObservableObject {
     func editField(step: Step){
         texto = step.texto ?? ""
         tip = step.tip  ?? ""
+        title = step.title ?? ""
         
         if let tempo = step.timer{
             totalTime = tempo

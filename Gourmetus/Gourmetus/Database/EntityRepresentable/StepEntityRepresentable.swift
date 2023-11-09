@@ -12,6 +12,7 @@ extension Step : EntityRepresentable {
         guard let order = entityRepresentation.values["order"] as? Int else { return nil }
         
         self.id = entityRepresentation.id
+        self.title = entityRepresentation.values["title"] as? String
         self.texto = entityRepresentation.values["texto"] as? String
         self.tip = entityRepresentation.values["tip"] as? String
         self.imageData = entityRepresentation.values["image"] as? Data
@@ -22,6 +23,7 @@ extension Step : EntityRepresentable {
     func encode() -> EntityRepresentation {
         let values: [String : Any] = [
             "id" : self.id,
+            "title" : self.title as Any,
             "texto" : self.texto as Any,
             "tip" : self.tip as Any,
             "timer" : self.timer as Any,

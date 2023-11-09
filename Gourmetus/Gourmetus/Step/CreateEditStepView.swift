@@ -10,83 +10,122 @@ import PhotosUI
 
 struct CreateEditStepView: View {
     
+    var menu = ["Image","Text","Tip","Ingredient","Timer"]
     @Binding var editingStep: Step?
+    var ingredients: [Ingredient] = [
+        Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
+        Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)
+    ]
     @StateObject private var imageViewModel = PhotoPickerViewModel()
     @StateObject var stepViewModel =  CreateEditStepViewModel()
     @ObservedObject var recipeViewModel:  CreateEditRecipeViewModel
     @Binding var showSheet: Bool
+    @State private var selection: String?
+    
+    var emptyF: Bool {
+        imageViewModel.selectedImage == nil && stepViewModel.texto.isEmpty && stepViewModel.tip.isEmpty && ingredients.isEmpty && stepViewModel.totalTime != 0
+    }
  
     var body: some View {
         
-        ScrollView{
+        VStack{
             VStack(alignment: .leading, spacing:16) {
-                
-                if let image = imageViewModel.selectedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 200)
-                        .foregroundColor(.red)
-                        .background(Color.blue)
-                } else {
-                    Image(systemName: "placeholdertext.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 200)
-                        .foregroundColor(.red)
-                        .background(Color.blue)
-                }
-                
-                PhotosPicker(selection: $imageViewModel.imageSelecion,
-                             matching: .any(of: [.images, .not(.screenshots)])) {
-                    Text("Select Photos")
-                }
-                
-
-
-                VStack(alignment: .leading) {
-                    Text("Description")
+                HStack() {
+                    Text("Title")
                         .font(.headline)
-                    TextField("Enter text", text: $stepViewModel.texto)
+                    TextField("Step Title", text: $stepViewModel.title)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
-
-                VStack(alignment: .leading) {
-                    Text("Tip")
-                        .font(.headline)
-                    TextField("Enter tip", text: $stepViewModel.tip)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer()
+                ScrollView{
+                    if(emptyF == true){
+                        Text("Add a component into the editor to build your step.")
+                    }else{
+                        if(imageViewModel.selectedImage != nil){
+                            Image(uiImage: imageViewModel.selectedImage!)
+                                .resizable()
+                                .cornerRadius(8)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 360, height: 100)
+                                .foregroundColor(.red)
+                                .background(Color.gray)
+                        }
+                        
+                        PhotosPicker(selection: $imageViewModel.imageSelecion,
+                                     matching: .any(of: [.images, .not(.screenshots)])) {
+                            Text("Select Photos")
+                        }
+                        
+                        
+                        if(!stepViewModel.texto.isEmpty){
+                            TextField("Enter text", text: $stepViewModel.texto)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        
+                        if(!ingredients.isEmpty){
+                            VStack(alignment: .leading){
+                                Text("Ingredients")
+                                    .foregroundStyle(.gray)
+                                    .padding(.bottom,-12)
+                                    .padding(.top,6)
+                                    .padding(.leading,16)
+                                HStack{
+                                    ForEach(ingredients) { ingredient in
+                                        Text(ingredient.name)
+                                            .padding(6)
+                                            .background(.green, in: .rect(cornerRadius: 6))
+                                    }
+                                    Spacer()
+                                }
+                                .padding()
+                            }
+                            .background(.white)
+                        }
+                        
+                        if(!stepViewModel.tip.isEmpty){
+                            TextField("Enter tip", text: $stepViewModel.tip)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        
+                        if(stepViewModel.totalTime != 0){
+                            VStack(alignment: .leading) {
+                                TimePicker(totalTime: $stepViewModel.totalTime)
+                            }
+                        }
+                    }
                 }
-
-                VStack(alignment: .leading) {
-                    Text("Timer")
-                        .font(.headline)
-                    TimePicker(totalTime: $stepViewModel.totalTime)
-                }
+                .padding()
+                .background(.gray)
                 
-                if (editingStep != nil){
-                    Button(action: {
-                        stepViewModel.editStep(viewModel: recipeViewModel, imageViewModel: imageViewModel ,editingStep: editingStep!)
-                        editingStep = nil
-                        showSheet.toggle()
-                    }) {
-                        Text("Edit Step")
+                VStack(alignment: .leading) {
+                    Text("Components")
+                        .bold()
+                        .foregroundStyle(.gray)
+                    Divider()
+                    List(menu, id: \.self){ option in
+                        HStack {
+                            Text(option)
+                            Spacer()
+                            Button(action: {
+                                
+                            }, label: {
+                                Text("Add")
+                                    .foregroundStyle(.orange)
+                            })
+                        }
                     }
-                } else {
-                    Button(action: {
-                        stepViewModel.addStep(viewModel: recipeViewModel, imageViewModel: imageViewModel)
-                        showSheet.toggle()
-                    }) {
-                        Text("Add Step")
-                    }
+                    .listStyle(.plain)
+                    .frame(height:250)
                 }
+                .padding(.leading)
+                
             }
+                
         }
         .padding()
         .onAppear(perform: {
            
             if (editingStep != nil){
-                print("caiu")
                 if let image = editingStep!.imageData{
                     imageViewModel.selectedImage = UIImage(data: image)
                 }
@@ -102,7 +141,7 @@ struct CreateEditStepView: View {
 }
 
 #Preview {
-    Text("tr")
+    CreateEditStepView(editingStep: .constant(Constants.mockedSteps[0]), recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
 }
 
 
