@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct CookbookView: View {
+    private let scale: CGFloat = UIScreen.main.bounds.width/1.2
+    
+    @EnvironmentObject private var cookbook: Cookbook
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -17,22 +21,22 @@ struct CookbookView: View {
                     Spacer()
                     
                     VStack {
-                        CookbookCard(title: "Recently Accessed", subtitle: "23 Recipes Inside", book: .history, destination: {
+                        CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
                             Text("Recentes")
                         })
-                            .frame(width: UIScreen.main.bounds.width/1.2)
+                            .frame(width: scale)
                         Divider()
                         
-                        CookbookCard(title: "My Recipes", subtitle: "18 Recipes Inside", book: .ownedRecipes, destination: {
+                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
                             Text("Meus")
                         })
-                            .frame(width: UIScreen.main.bounds.width/1.2)
+                            .frame(width: scale)
                         Divider()
                         
-                        CookbookCard(title: "Favorite Recipes", subtitle: "6 Recipes Inside", book: .favorites, destination: {
+                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
                             Text("Favoritas")
                         })
-                            .frame(width: UIScreen.main.bounds.width/1.2)
+                            .frame(width: scale)
                         Divider()
                     }
                     
@@ -49,4 +53,5 @@ struct CookbookView: View {
     NavigationStack {
         CookbookView()
     }
+    .environmentObject(Cookbook(ownedRecipes: Constants.mockedRecipes, favorites: Constants.mockedRecipes, history: Constants.mockedRecipes))
 }
