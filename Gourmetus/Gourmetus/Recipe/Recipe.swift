@@ -14,18 +14,21 @@ struct Recipe: Identifiable, Hashable{
     var desc: String?
     var difficulty: Int
     var imageData: Data?
+    var duration: Int
     
     var steps: [Step]
     var ingredients: [Ingredient]
     var tags: [Tag]
     
     
-    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = []) {
+    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = [], duration: Int = -1) {
         self.id = id
         self.name = name
         self.desc = desc
         self.difficulty = difficulty
         self.imageData = imageData
+        self.duration = duration
+        
         self.steps = steps
         
         self.ingredients = ingredients
