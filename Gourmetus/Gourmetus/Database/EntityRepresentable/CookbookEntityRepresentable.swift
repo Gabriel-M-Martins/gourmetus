@@ -50,7 +50,7 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, ownedRecipes: ownedRecipes, favorites: favorites, latest: history, community: community)
+        self.init(id: entityRepresentation.id, ownedRecipes: ownedRecipes, favorites: favorites, history: history, community: community)
     }
     
     func encode() -> EntityRepresentation {
