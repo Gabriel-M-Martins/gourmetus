@@ -72,7 +72,7 @@ extension HomeView {
     
     private var titleRecentlyAccessed: some View {
         NavigationLink{
-            RecipesListsView(listType: .RecentlyAccessed, homeViewModel: vm)
+            RecipesListsView(listType: .RecentlyAccessed)
         }label: {
             HStack{
                 Text("Recently accessed")
@@ -109,7 +109,7 @@ extension HomeView {
     
     private var titleFavourites: some View {
         NavigationLink{
-            RecipesListsView(listType: .FavouritesRecipes, homeViewModel: vm)
+            RecipesListsView(listType: .FavouritesRecipes)
         }label: {
             HStack{
                 Text("Favourites")
@@ -150,7 +150,7 @@ extension HomeView {
     
     private var titleMyRecipes: some View {
         NavigationLink{
-            RecipesListsView(listType: .MyRecipes, homeViewModel: vm)
+            RecipesListsView(listType: .MyRecipes)
         }label: {
             HStack{
                 Text("My Recipes")
@@ -169,7 +169,6 @@ extension HomeView {
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
             HStack(){
-                // \/ ARRUMA ESSA PORRAAAAAAA \/
                 ForEach(cookbook.ownedRecipes) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
@@ -186,21 +185,14 @@ extension HomeView {
     }
     
     private var titleCommunity: some View {
-        Button{
-            
-        }label: {
-            HStack{
-                Text("Community")
-                    .font(.title2)
-                    .foregroundStyle(.green)
-                    .padding(.leading)
-                Spacer()
-                Text("View all >")
-                    .font(.subheadline)
-                    .foregroundStyle(.orange)
-                    .padding(.trailing)
-            }
+        HStack{
+            Text("Community")
+                .font(.title2)
+                .foregroundStyle(.green)
+                .padding(.leading)
+            Spacer()
         }
+        
     }
     
     private var scrollViewCommunity: some View {

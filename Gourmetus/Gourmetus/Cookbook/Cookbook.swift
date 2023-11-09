@@ -17,12 +17,12 @@ final class Cookbook: Hashable, ObservableObject{
         lhs.id == rhs.id
     }
     
-    var id: UUID
-    var ownedRecipes: [Recipe]
-    var favorites: [Recipe]
-    var history: [Recipe]
-    var community: [Recipe]
-    private var latestSize = 10
+    @Published var id: UUID
+    @Published var ownedRecipes: [Recipe]
+    @Published var favorites: [Recipe]
+    @Published var history: [Recipe]
+    @Published var community: [Recipe]
+    @Published private var latestSize = 10
     
     required init(id: UUID, ownedRecipes: [Recipe], favorites: [Recipe], latest: [Recipe], community: [Recipe], latestSize: Int = 10) {
         self.id = id

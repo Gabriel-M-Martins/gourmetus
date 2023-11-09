@@ -71,7 +71,7 @@ struct RecipeDetailsView: View {
                             Image(systemName: vm.isFavorite(favorites: cookbook.favorites) ? "heart.fill" : "heart")
                         }
                         .buttonStyle(.bordered)
-                        //                        .padding(.leading, 250)
+//                        .padding(.leading, 250)
                         
                     }
                     .padding()
@@ -79,9 +79,6 @@ struct RecipeDetailsView: View {
                 }
                 .padding()
             }
-        }
-        .onAppear{
-            
         }
     }
 }
