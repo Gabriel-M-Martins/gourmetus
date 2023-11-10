@@ -10,6 +10,9 @@
 		3050D4C02AEA8EB000D26A87 /* CreateEditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050D4BF2AEA8EB000D26A87 /* CreateEditStepView.swift */; };
 		3050D4C22AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050D4C12AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift */; };
 		3050D4C52AEFEF5600D26A87 /* CreateEditStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050D4C42AEFEF5600D26A87 /* CreateEditStepViewModel.swift */; };
+		305F2CB32AFE751100AF2AF5 /* DurationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305F2CB22AFE751100AF2AF5 /* DurationPickerView.swift */; };
+		305F2CB52AFE9AAB00AF2AF5 /* CreateEditIngredientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305F2CB42AFE9AAB00AF2AF5 /* CreateEditIngredientViewModel.swift */; };
+		3088FE582AFBFEE900AB369C /* CreateEditIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3088FE572AFBFEE900AB369C /* CreateEditIngredientView.swift */; };
 		30AB481B2AE98C59007EC567 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AB481A2AE98C59007EC567 /* PhotoPicker.swift */; };
 		30CB53AF2AE84E3C0093A21D /* CreateEditRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CB53AE2AE84E3C0093A21D /* CreateEditRecipeView.swift */; };
 		30F09A042AF039CF00C502C2 /* RecipePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F09A032AF039CF00C502C2 /* RecipePlayerView.swift */; };
@@ -65,6 +68,9 @@
 		3050D4BF2AEA8EB000D26A87 /* CreateEditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditStepView.swift; sourceTree = "<group>"; };
 		3050D4C12AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditRecipeViewModel.swift; sourceTree = "<group>"; };
 		3050D4C42AEFEF5600D26A87 /* CreateEditStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditStepViewModel.swift; sourceTree = "<group>"; };
+		305F2CB22AFE751100AF2AF5 /* DurationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationPickerView.swift; sourceTree = "<group>"; };
+		305F2CB42AFE9AAB00AF2AF5 /* CreateEditIngredientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditIngredientViewModel.swift; sourceTree = "<group>"; };
+		3088FE572AFBFEE900AB369C /* CreateEditIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditIngredientView.swift; sourceTree = "<group>"; };
 		30AB481A2AE98C59007EC567 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		30CB53AE2AE84E3C0093A21D /* CreateEditRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditRecipeView.swift; sourceTree = "<group>"; };
 		30F09A032AF039CF00C502C2 /* RecipePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePlayerView.swift; sourceTree = "<group>"; };
@@ -137,6 +143,14 @@
 				30AB481A2AE98C59007EC567 /* PhotoPicker.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		305F2CB12AFE74F900AF2AF5 /* Duration */ = {
+			isa = PBXGroup;
+			children = (
+				305F2CB22AFE751100AF2AF5 /* DurationPickerView.swift */,
+			);
+			path = Duration;
 			sourceTree = "<group>";
 		};
 		30F09A022AF039AB00C502C2 /* Player */ = {
@@ -268,6 +282,7 @@
 		A785B5422AE1C3A0002E1D1F /* Gourmetus */ = {
 			isa = PBXGroup;
 			children = (
+				305F2CB12AFE74F900AF2AF5 /* Duration */,
 				7BDC84042AFD4AC2006F7BF6 /* Design System */,
 				A7CA1AEE2AFAD06000BF334D /* Database */,
 				30F09A022AF039AB00C502C2 /* Player */,
@@ -344,7 +359,9 @@
 		A7F16B322AE83A0D00F3ADF3 /* Ingredient */ = {
 			isa = PBXGroup;
 			children = (
+				3088FE572AFBFEE900AB369C /* CreateEditIngredientView.swift */,
 				A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */,
+				305F2CB42AFE9AAB00AF2AF5 /* CreateEditIngredientViewModel.swift */,
 			);
 			path = Ingredient;
 			sourceTree = "<group>";
@@ -430,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				305F2CB32AFE751100AF2AF5 /* DurationPickerView.swift in Sources */,
 				30AB481B2AE98C59007EC567 /* PhotoPicker.swift in Sources */,
 				A7CA1AF72AFAD28F00BF334D /* RecipeEntityRepresentable.swift in Sources */,
 				A7F16B312AE8394100F3ADF3 /* Step.swift in Sources */,
@@ -464,11 +482,14 @@
 				7B0B67022AF170EA00D6A66C /* RecipesListsView.swift in Sources */,
 				7B0B67042AF1744D00D6A66C /* RecipesListsViewModel.swift in Sources */,
 				7BB1448B2AEB098B00F67DD2 /* RecipeCardVerticalSmall.swift in Sources */,
+				305F2CB52AFE9AAB00AF2AF5 /* CreateEditIngredientViewModel.swift in Sources */,
 				A7CA1AF22AFAD11700BF334D /* DependencyInjection.swift in Sources */,
 				A77F458E2AFAD79A00FDFB43 /* CookbookEntityRepresentable.swift in Sources */,
 				A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */,
 				7BE0A5A82AFAAECD004550D5 /* RecipeCardHorizontalViewModel.swift in Sources */,
 				A785B5442AE1C3A0002E1D1F /* GourmetusApp.swift in Sources */,
+				A7F16B212AE8341700F3ADF3 /* CoreData.swift in Sources */,
+				3088FE582AFBFEE900AB369C /* CreateEditIngredientView.swift in Sources */,
 				7B50B8042AE852B700E00C04 /* RecipeDetailsView.swift in Sources */,
 				7BB063E02AE9C4DF0038EEDA /* RecipeCardMini.swift in Sources */,
 				A7F16B2B2AE837C000F3ADF3 /* Recipe.swift in Sources */,
@@ -614,7 +635,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = RU3T8G764D;
+				DEVELOPMENT_TEAM = 793WGVWJ9W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
@@ -629,7 +650,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.Gourmetus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testedsadasdads;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -646,7 +667,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = RU3T8G764D;
+				DEVELOPMENT_TEAM = 793WGVWJ9W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
@@ -661,7 +682,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.Gourmetus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testedsadasdads;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
