@@ -9,10 +9,12 @@ import Foundation
 
 class RecipesListsViewModel: ObservableObject{
     
-    var listType: ListType
-    
+    @Published var listType: ListType
     
     init(listType: ListType) {
         self.listType = listType
     }
+    
+    
+    
 }

@@ -9,48 +9,52 @@ import SwiftUI
 
 struct RecipeCardVerticalSmall: View {
     
-    var recipe: RecipeModel
+    @StateObject var vm: RecipeCardVerticalSmallViewModel
+    
+    init(recipe: Recipe) {
+        self._vm = StateObject(wrappedValue: RecipeCardVerticalSmallViewModel(recipe: recipe))
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8){
-            if let imgData = recipe.imageData,
+        VStack(alignment: .leading, spacing: 0){
+            if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
-                    .cornerRadius(20)
-                    .padding(.top, 16)
-                    .padding(.horizontal, 16)
+                    .cornerRadius(smooth_radius)
+                    .padding(.top, default_spacing)
+                    .padding(.horizontal, default_spacing)
             }else{
-                Image(systemName: "photo.fill")
+                Image("DefaultRecipeImage")
                     .resizable()
-                    .cornerRadius(20)
-                    .padding(.vertical, 20.5)
-                    .padding(.horizontal, 16)
+                    .cornerRadius(smooth_radius)
+                    .padding(.vertical, default_spacing)
+                    .padding(.horizontal, default_spacing)
             }
-                Text(recipe.name)
-                    .font(.callout)
+            
+            VStack(alignment: .leading, spacing: 8){
+                Text(vm.recipe.name)
+                    .modifier(Paragraph())
                     .lineLimit(1)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(.orange)
+                    .foregroundColor(Color.color_button_container_primary)
                 
                 difficulty
-                    .font(.callout)
-                    .padding(.horizontal, 16)
                 
-                Text("By (Owner)")
-                    .font(.subheadline)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 16)
-                    .foregroundColor(.gray)
-
+                Text("By \(Image.personCircle)")
+                    .modifier(Span())
+                    .foregroundColor(Color.color_text_container_muted)
+                    .lineLimit(1)
                 
+            }
+            .padding(.horizontal, default_spacing)
+            .padding(.bottom, default_spacing)
             
         }
         .frame(width: 212, height: 275)
-        .cornerRadius(20)
+        .cornerRadius(smooth_radius)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(.orange, lineWidth: 3)
+                .strokeBorder(Color.color_card_container_stroke, lineWidth: 2)
         )
     }
 }
@@ -60,12 +64,12 @@ struct RecipeCardVerticalSmall: View {
 }
 
 extension RecipeCardVerticalSmall {
- 
+    
     var difficulty: some View {
         HStack{
-            ForEach(0..<Int(recipe.difficulty)){ index in
-                Image(systemName: "frying.pan.fill")
-                    .foregroundColor(.green)
+            ForEach(0..<Int(vm.recipe.difficulty)){ index in
+                Image.knife
+                    .foregroundColor(Color.color_text_container_highlight)
             }
         }
     }

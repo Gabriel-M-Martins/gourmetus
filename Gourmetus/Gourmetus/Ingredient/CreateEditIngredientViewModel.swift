@@ -12,7 +12,7 @@ class CreateEditIngredientViewModel: ObservableObject {
     @Published var ingredientQuantity = ""
     @Published var ingredientUnit : IngredientUnit = .Kg
     
-    func editField(ingredient: IngredientModel){
+    func editField(ingredient: Ingredient){
         ingredientName = ingredient.name
         ingredientQuantity = ingredient.quantity
         ingredientUnit = ingredient.unit
@@ -20,7 +20,7 @@ class CreateEditIngredientViewModel: ObservableObject {
     
     func addIngredient(recipeViewModel: CreateEditRecipeViewModel){
         
-        recipeViewModel.ingredients.append(IngredientModel(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
+        recipeViewModel.ingredients.append(Ingredient(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
        
         ingredientName = ""
         ingredientQuantity = ""
@@ -29,9 +29,9 @@ class CreateEditIngredientViewModel: ObservableObject {
         recipeViewModel.editingIngredient = nil
     }
     
-    func updateIngredient(recipeViewModel: CreateEditRecipeViewModel, ingredient: IngredientModel) {
+    func updateIngredient(recipeViewModel: CreateEditRecipeViewModel, ingredient: Ingredient) {
         if let index = recipeViewModel.ingredients.firstIndex(of: ingredient) {
-            recipeViewModel.ingredients[index] = IngredientModel(id: ingredient.id, name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit)
+            recipeViewModel.ingredients[index] = Ingredient(id: ingredient.id, name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit)
             ingredientName = ""
             ingredientQuantity = ""
             ingredientUnit = .Kg

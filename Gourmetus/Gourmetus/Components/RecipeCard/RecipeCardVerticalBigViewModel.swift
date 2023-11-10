@@ -7,38 +7,38 @@
 
 import Foundation
 
-class RecipeCardVerticalBigViewModel {
-    @Published var cookBook: CookBookModel?
-    @Published var favourites: Set<RecipeModel> = []
-    @Published var recipe: RecipeModel
+class RecipeCardVerticalBigViewModel: ObservableObject {
     
-    var isFavorite: Bool {
-        for favourite in favourites{
-            if favourite.id == recipe.id{
+    @Published var recipe: Recipe
+    
+    init(recipe: Recipe) {
+        self.recipe = recipe
+    }
+    
+    func isFavorite(favorites: [Recipe]) -> Bool{
+        for favorite in favorites{
+            if favorite.id == recipe.id{
                 return true
             }
         }
         return false
     }
-    
-    init(recipe: RecipeModel) {
-        self.recipe = recipe
-        if let cookModel = CoreDataCookBookRepository.fetch().first{
-            self.cookBook = cookModel
-            self.favourites = Set(cookModel.favorites)
-        }
-    }
-    
-    func toggleFavourite(recipe: RecipeModel){
-        if self.isFavorite{
-            self.favourites.remove(recipe)
+
+    func toggleFavourite(favorites: [Recipe]) -> [Recipe] {
+        var favoritesAux = favorites
+        if self.isFavorite(favorites: favorites){
+            print("Removendo dos favoritos")
+            for i in 0..<favorites.count {
+                if favorites[i].id == recipe.id {
+                    favoritesAux.remove(at: i)
+                    break
+                }
+            }
+            return favoritesAux
         } else {
-            self.favourites.insert(recipe)
+            print("Adicionando nos favoritos")
+            favoritesAux.append(recipe)
+            return favoritesAux
         }
-        if cookBook != nil{
-            CoreDataCookBookRepository.save(cookBook!)
-        }
-        
     }
-    
 }

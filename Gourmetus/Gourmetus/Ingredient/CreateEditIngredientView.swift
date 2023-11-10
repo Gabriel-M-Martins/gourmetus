@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateEditIngredientView: View {
     
     @StateObject var ingredientViewModel =  CreateEditIngredientViewModel()
-    @Binding var editingIngredient: IngredientModel?
+    @Binding var editingIngredient: Ingredient?
     
     @State var texto : String = "texto"
     @State var unidade: IngredientUnit? = nil

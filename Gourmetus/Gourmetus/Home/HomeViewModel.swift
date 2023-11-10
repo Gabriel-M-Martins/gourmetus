@@ -9,44 +9,45 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     
-    var model: CookBookModel
+//    var cookbook: Cookbook? = nil
+//    
+//    @Published var recentlyAccessed: [Recipe] = []
+//    @Published var favourites: [Recipe] = []
+//    @Published var myRecipes: [Recipe] = []
+//    @Published var community: [Recipe] = []
     
-    @Published var recentlyAccessed: [RecipeModel]
-    @Published var favourites: [RecipeModel]
-    @Published var myRecipes: [RecipeModel]
-    @Published var community: [RecipeModel]
+//    @Injected private var repo: any Repository<Cookbook>
     
-    init() {
-        if let cookModel = CoreDataCookBookRepository.fetch().first {
-            self.model = cookModel
-        } else {
-            self.model = CookBookModel(id: UUID(), favorites: [], latest: [])
-        }
-        
-        self.recentlyAccessed = model.latest
-//        self.recentlyAccessed = Constants.mockedRecipeArray
-        self.favourites = model.favorites
-        self.myRecipes = Constants.mockedRecipeArray
-        self.community = Constants.mockedRecipeArray
-    }
     
-    func isFavorited(recipe: RecipeModel) -> Bool{
-        for favourite in favourites{
-            if favourite.id == recipe.id{
-                return true
-            }
-        }
-        return false
-    }
+//    init() {
+//        if let cookbook = repo.fetch().first {
+//            self.cookbook = cookbook
+//        }
+//
+//        self.recentlyAccessed = cookbook?.history ?? self.recentlyAccessed
+//        self.favourites = cookbook?.favorites ?? self.favourites
+//        
+//        self.myRecipes = Constants.mockedRecipeArray
+//        self.community = Constants.mockedRecipeArray
+//    }
     
-    func toggleFavourite(recipe: RecipeModel){
-        if self.isFavorited(recipe: recipe){
-            for index in 0..<self.favourites.count{
-                self.favourites.remove(at: index)
-            }
-        } else {
-            self.favourites.append(recipe)
-        }
-    }
+//    func isFavorited(recipe: Recipe) -> Bool{
+//        for favourite in favourites{
+//            if favourite.id == recipe.id{
+//                return true
+//            }
+//        }
+//        return false
+//    }
+    
+//    func toggleFavourite(recipe: Recipe){
+//        if self.isFavorited(recipe: recipe){
+//            for index in 0..<self.favourites.count{
+//                self.favourites.remove(at: index)
+//            }
+//        } else {
+//            self.favourites.append(recipe)
+//        }
+//    }
     
 }

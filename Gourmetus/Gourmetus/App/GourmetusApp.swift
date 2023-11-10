@@ -12,14 +12,13 @@ struct GourmetusApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let persistenceController = PersistenceController.shared
 
-    @State var recipe: RecipeModel? = Constants.mockedRecipe
-    
-//    @StateObject var cookBook = CookBookModel
+    @State var recipe: Recipe? = Constants.mockedRecipe
     
     var body: some Scene {
         WindowGroup {
             TabBarView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        
     }
 }

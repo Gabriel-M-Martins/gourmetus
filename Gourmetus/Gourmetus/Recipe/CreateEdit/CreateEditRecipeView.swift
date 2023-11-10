@@ -11,7 +11,9 @@ struct CreateEditRecipeView: View {
     @State private var isPresentingIngredientSheet = false
     @State private var isTimePickerPresented = false
     
-    @Binding var recipe: RecipeModel?
+    @State private var editingStep: Step?
+    
+    @Binding var recipe: Recipe?
     
     @State private var selectedDifficulty: Int = 1
     
