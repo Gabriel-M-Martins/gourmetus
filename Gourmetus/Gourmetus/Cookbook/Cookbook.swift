@@ -24,11 +24,11 @@ final class Cookbook: Hashable, ObservableObject{
     @Published var community: [Recipe]
     @Published private var latestSize = 10
     
-    required init(id: UUID, ownedRecipes: [Recipe], favorites: [Recipe], latest: [Recipe], community: [Recipe], latestSize: Int = 10) {
+    required init(id: UUID = UUID(), ownedRecipes: [Recipe] = [], favorites: [Recipe] = [], history: [Recipe] = [], community: [Recipe] = [], latestSize: Int = 10) {
         self.id = id
         self.ownedRecipes = ownedRecipes
         self.favorites = favorites
-        self.history = latest
+        self.history = history
         self.community = community
         self.latestSize = latestSize
     }
