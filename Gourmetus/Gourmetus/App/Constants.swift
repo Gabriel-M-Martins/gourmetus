@@ -62,6 +62,6 @@ struct Constants {
     static let mockedRecipes: [Recipe] = [mockedRecipe, mockedRecipe1, mockedRecipe2]
     
     
-    static let mockedCookbook: Cookbook = Cookbook(id: UUID(), ownedRecipes: [mockedRecipe,mockedRecipe1,mockedRecipe2], favorites: [mockedRecipe,mockedRecipe1,mockedRecipe2], latest: [mockedRecipe,mockedRecipe1,mockedRecipe2], community: [mockedRecipe,mockedRecipe1,mockedRecipe2])
+    static let mockedCookbook: Cookbook = Cookbook(id: UUID(), ownedRecipes: [mockedRecipe,mockedRecipe1,mockedRecipe2], favorites: [mockedRecipe,mockedRecipe1,mockedRecipe2], history: [mockedRecipe,mockedRecipe1,mockedRecipe2], community: [mockedRecipe,mockedRecipe1,mockedRecipe2])
     static let mockedCookbook1: Cookbook = Cookbook()
 }
