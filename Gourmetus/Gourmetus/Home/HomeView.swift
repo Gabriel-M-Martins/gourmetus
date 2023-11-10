@@ -93,7 +93,7 @@ extension HomeView {
     
     private var titleRecentlyAccessed: some View {
         NavigationLink{
-            RecipesListsView(listType: .RecentlyAccessed)
+            RecipesListsView(listType: .History)
         }label: {
             HStack(alignment: .bottom, spacing: default_spacing){
                 Text("Recently accessed")
@@ -131,7 +131,7 @@ extension HomeView {
     
     private var titleFavourites: some View {
         NavigationLink{
-            RecipesListsView(listType: .FavouritesRecipes)
+            RecipesListsView(listType: .Favorites)
         }label: {
             HStack(alignment: .bottom, spacing: default_spacing){
                 Text("Favourites")
@@ -167,7 +167,7 @@ extension HomeView {
     
     private var titleMyRecipes: some View {
         NavigationLink{
-            RecipesListsView(listType: .MyRecipes)
+            RecipesListsView(listType: .Owned)
         }label: {
             HStack(alignment: .bottom, spacing: default_spacing){
                 Text("My Recipes")
