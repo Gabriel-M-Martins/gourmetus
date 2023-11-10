@@ -23,12 +23,15 @@ extension Ingredient : EntityRepresentable {
     
     func encode() -> EntityRepresentation {
         let encoder = JSONEncoder()
-        let values: [String : Any] = [
+        var values: [String : Any] = [
             "id" : self.id,
             "name" : self.name as Any,
             "quantity" : self.quantity as Any,
-            "unit" : (try? encoder.encode(self.unit)) as Any
         ]
+        
+        if let unit = try? encoder.encode(self.unit) {
+            values["unit"] = unit
+        }
         
         let toManyRelationships: [String : [EntityRepresentation]] = [:]
         
