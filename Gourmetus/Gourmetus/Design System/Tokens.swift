@@ -67,7 +67,7 @@ struct Header: ViewModifier {
             .font(.custom("SF Pro", size: headerFontSize)).fontWeight(.medium)
     }
 }
-struct Body: ViewModifier {
+struct Paragraph: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("SF Pro", size: bodyFontSize)).fontWeight(.regular)
