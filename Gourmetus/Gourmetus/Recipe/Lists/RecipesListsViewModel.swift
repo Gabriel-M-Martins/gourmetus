@@ -15,6 +15,4 @@ class RecipesListsViewModel: ObservableObject{
         self.listType = listType
     }
     
-    
-    
 }
