@@ -13,13 +13,14 @@ class CreateEditStepViewModel: ObservableObject {
     @Published var tip = ""
     @Published var title = ""
     @Published var totalTime: Int? = 0
+    @Published var ingredientsAdded: Set<Ingredient> = []
     
     func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
         if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
-            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1))
+            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, ingredientsAdded: ingredientsAdded, order: -1))
             imageViewModel.selectedImage = UIImage()
         } else {
-            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip ,timer: totalTime, order: -1))
+            viewModel.steps.append(Step(id: UUID(), title: title,texto: texto, tip: tip ,timer: totalTime, ingredientsAdded: ingredientsAdded, order: -1))
         }
     }
     
@@ -27,10 +28,10 @@ class CreateEditStepViewModel: ObservableObject {
         if let index = viewModel.steps.firstIndex(of: editingStep) {
             if (imageViewModel.selectedImage != nil) {
                 let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0)
-                viewModel.steps[index] = Step(id:editingStep.id , title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1)
+                viewModel.steps[index] = Step(id:editingStep.id , title: title,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, ingredientsAdded: ingredientsAdded, order: -1)
                 imageViewModel.selectedImage = UIImage()
             } else{
-                viewModel.steps[index] = Step(id:editingStep.id, title: title, texto: texto, tip: tip ,timer: totalTime, order: -1)
+                viewModel.steps[index] = Step(id:editingStep.id, title: title, texto: texto, tip: tip ,timer: totalTime, ingredientsAdded: ingredientsAdded, order: -1)
             }
         }
     }
@@ -43,6 +44,10 @@ class CreateEditStepViewModel: ObservableObject {
         if let tempo = step.timer{
             totalTime = tempo
         }
+    }
+    
+    func addIngredient(ingredient: Ingredient){
+        ingredientsAdded.insert(ingredient)
     }
 
 }
