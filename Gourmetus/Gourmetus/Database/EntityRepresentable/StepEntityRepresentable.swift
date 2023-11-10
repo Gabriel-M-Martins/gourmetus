@@ -20,14 +20,26 @@ extension Step : EntityRepresentable {
     }
     
     func encode() -> EntityRepresentation {
-        let values: [String : Any] = [
+        var values: [String : Any] = [
             "id" : self.id,
-            "texto" : self.texto as Any,
-            "tip" : self.tip as Any,
-            "timer" : self.timer as Any,
-            "image" : self.imageData as Any,
-            "order" : self.order as Any
+            "order" : self.order
         ]
+        
+        if self.texto != nil {
+            values["texto"] = self.texto!
+        }
+        
+        if self.tip != nil {
+            values["tip"] = self.tip!
+        }
+        
+        if self.imageData != nil {
+            values["image"] = self.imageData!
+        }
+        
+        if self.timer != nil {
+            values["timer"] = self.timer!
+        }
         
         let toManyRelationships: [String : [EntityRepresentation]] = [:]
         
