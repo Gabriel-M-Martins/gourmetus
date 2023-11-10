@@ -8,323 +8,277 @@ struct CreateEditRecipeView: View {
     
     @State private var isPresentingNewSheet = false
     @State private var isPresentingEditSheet = false
-    
-    @State private var editingStep: StepModel?
+    @State private var isPresentingIngredientSheet = false
+    @State private var isTimePickerPresented = false
     
     @Binding var recipe: RecipeModel?
     
     @State private var selectedDifficulty: Int = 1
     
+    @FocusState private var isFocused: Bool
+    
+    @State var hourSelection = 0
+    @State var minuteSelection = 0
+    
+    
+    @State private var selectedTime = Date()
+    
     var body: some View {
-        NavigationView {
-            GeometryReader { geometry in
-                ScrollView{
-                    VStack(alignment: .leading, spacing: 30) {
-                        VStack(alignment: .leading) {
-                            Text("Title")
-                                .font(.headline)
-                            TextField("Enter title", text: $createEditViewModel.recipeTitle)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
 
-                        if let image = imageViewModel.selectedImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 300, height: 200)
-                                .foregroundColor(.red)
-                                .background(Color.blue)
-                        } else {
-                            Image(systemName: "placeholdertext.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 300, height: 200)
-                                .foregroundColor(.red)
-                                .background(Color.blue)
+            GeometryReader { geometry in
+                List{
+                    
+                    Section {
+                        HStack{
+                            Text("Title")
+                                .bold()
+                            TextField("Enter title", text: $createEditViewModel.recipeTitle)
+                                
                         }
+                                        
+                    } header: {
+                        Text("title")
+                    }
                         
-                        
-                        
+                    
+                    Section {
                         PhotosPicker(selection: $imageViewModel.imageSelecion,
                                      matching: .any(of: [.images, .not(.screenshots)])) {
-                            Text("Select Photos")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color(.blue))
-                                .cornerRadius(10)
-                        }
-                        
-
-
-                        VStack(alignment: .leading) {
-                            Text("Description")
-                                .font(.headline)
-                            TextField("Enter description", text: $createEditViewModel.desc)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-                        
-                        
-                        VStack(alignment: .leading) {
-                            Text("Difficulty")
-                                .font(.headline)
-                            HStack {
-                                ForEach(1..<6, id: \.self) { difficulty in
-                                    Image(systemName: difficulty <= createEditViewModel.difficulty ? "star.fill" : "star")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .onTapGesture {
-                                            createEditViewModel.difficulty = difficulty
-                                        }
-                                }
+                            if let image = imageViewModel.selectedImage {
+                                Image(uiImage: image)
+                                    
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame( width: 330, height: 200)
+                                    .foregroundColor(.red)
+                                    
+                                    .background(Color.blue)
+                                    .cornerRadius(10)
+                                    .padding(0)
+                                    
+                            } else {
+                                Image(systemName: "placeholdertext.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 330, height: 200)
+                                    .foregroundColor(.red)
+                                    .background(Color.blue)
+                                    .listRowInsets(EdgeInsets())
                             }
                         }
-                        
 
-                        // Add Ingredient Button
-                        VStack(alignment: .leading,spacing:10){
-                            
-                            Text("Ingredients")
-                                .font(.headline)
-                            // Ingredients List
-                            if createEditViewModel.ingredients.isEmpty {
-                                Text("No ingredients added.")
-                            } else {
+                                        
+                    }header: {
+                        Text("image")
+                    }
+                        
+                       
+                    
+                    Section {
+                        HStack{
+                            Text("Duration")
+                            Spacer()
+                            Text("\(createEditViewModel.hourSelection) hours and \(createEditViewModel.minuteSelection) minutes")
+                        }
+                            .sheet(isPresented: $isTimePickerPresented) {
+                                DurationPickerView(recipeViewModel: createEditViewModel,showSheet: $isTimePickerPresented)
+                                    .presentationDetents([.fraction(0.3)])
+                            }
+                                .onTapGesture {
+                                    print(isTimePickerPresented)
+                                    isTimePickerPresented.toggle()
+                                    print(isTimePickerPresented)
+                                }
+                        
+                        VStack{
+                            Picker("Difficulty", selection: $createEditViewModel.difficulty) {
                                 
-                                ForEach(createEditViewModel.ingredients) { ingredient in
-
-                                    if(!createEditViewModel.ingredientsBeingEdited.contains(ingredient)){
-                                        HStack {
-                                            Text(ingredient.name)
-                                            Text(ingredient.quantity)
-                                            Text(ingredient.unit.description)
-                                                
-                                                //Botao de editar
-                                                Button(action: {
-                                                    
-                                                    createEditViewModel.toggleIngredientEditing(ingredient: ingredient)
-                                                   
-                                                }) {
-                                                    Image(systemName: "pencil")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: 10, height: 10)
-                                                        .foregroundColor(.red)
-                                                }
-    
-                                                //Botao de deletar
-                                                Button(action: {
-                                                    createEditViewModel.deleteIngredient(ingredient: ingredient)
-                                                    
-                                                }) {
-                                                    Image(systemName: "trash")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: 10, height: 10)
-                                                        .foregroundColor(.red)
-                                                }
-                                            }
-                                        } else {
-                                            VStack {
-                                                HStack {
-                                                    TextField("Ingredient Name", text: $createEditViewModel.ingredientName)
-                                                    TextField("Quantity", text: $createEditViewModel.ingredientQuantity)
-                                                    
-                                                    Picker("Unit", selection: $createEditViewModel.ingredientUnit) {
-                                                        ForEach(IngredientUnit.allCases) { unit in
-                                                            Text(unit.description)
-                                                            }
-                                                    }
-                                                    .pickerStyle(DefaultPickerStyle())
-                                                }
-                                                Button(action: {
-                                                   
-                                                    createEditViewModel.updateIngredient(ingredient: ingredient)
-                                                    
-                                                   
-                                                }) {
-                                                    Text("Save Ingredient")
-                                                        .foregroundColor(.white)
-                                                        .padding(10)
-                                                        .background(Color(.blue))
-                                                        .cornerRadius(10)
-                                                }
-                                            }
-                                        }
-                                    }
-                               
+                                Text("1").tag(1)
+                                Text("2").tag(2)
+                                Text("3").tag(3)
+                                Text("4").tag(4)
+                                Text("5").tag(5)
                             }
                             
-                            if createEditViewModel.isAddingIngredient {
-                                VStack {
-                                    HStack {
-                                        TextField("Ingredient Name", text: $createEditViewModel.ingredientName)
-                                        TextField("Quantity", text: $createEditViewModel.ingredientQuantity)
-                                        Picker("Unit", selection: $createEditViewModel.ingredientUnit) {
-                                            ForEach(IngredientUnit.allCases) { unit in
-                                                Text(unit.description)
-                                                }
-                                        }
-                                        .pickerStyle(DefaultPickerStyle())
-                                    }
-                                    Button(action: {
-                                        
-                                        createEditViewModel.addIngredient()
-                                    }) {
-                                        Text("Save Ingredient")
-                                            .foregroundColor(.white)
-                                            .padding(10)
-                                            .background(Color(.blue))
-                                            .cornerRadius(10)
-                                    }
-                                }
-                            } else {
-                                Button(action: {
-                                    createEditViewModel.isAddingIngredient = true
-                                }) {
-                                    Text("Add Ingredient")
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color(.blue))
-                                        .cornerRadius(10)
-                                }
-                            }
+                            .pickerStyle(DefaultPickerStyle())
                         }
                         
+                                        
+                    }header: {
+                        Text("General Information")
+                        Divider()
+                    }
+                        .padding(0)
+                        .listStyle(.plain)
+                    
+                    Section {
+                      
                         
-                        // Add Steps
-                        VStack(alignment: .leading,spacing:10){
-                            Text("Steps")
-                                .font(.headline)
-                            // Ingredients List
-                            if createEditViewModel.steps.isEmpty {
-                                Text("No steps added.")
-                            } else {
-                                ForEach(createEditViewModel.steps, id: \.self) { step in
-                                    HStack{
-                                        //Botoes mudanca de ordem
-                                        HStack{
-                                            Button(action: {
-                                                createEditViewModel.swapWithPrevious(step: step)
-                                                
-                                            }) {
-                                                Image(systemName: "arrow.up")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 10, height: 10)
-                                                    .foregroundColor(.red)
-                                            }
-                                            
-                                            Button(action: {
-                                                createEditViewModel.swapWithNext(step: step)
-                                                
-                                            }) {
-                                                Image(systemName: "arrow.down")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 10, height: 10)
-                                                    .foregroundColor(.red)
-                                            }
-                                        }
-                                        
-                                        Text(step.texto ?? "vazio")
-                                        Text(step.tip ?? "vazio" )
-                                        //Text(step.timer ?? "vazio" )
-                                        
-                                        //Botao de editar
-                                        Button(action: {
-                                            editingStep = step
-                                            print(editingStep)
-                                            isPresentingEditSheet.toggle()
-     
-                                        }) {
-                                            Image(systemName: "pencil")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 10, height: 10)
-                                                .foregroundColor(.red)
-                                        }
-                                        
-                                        Button(action: {
-                                            createEditViewModel.deleteStep(step: step)
-                                            
-                                        }) {
-                                            Image(systemName: "trash")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 10, height: 10)
-                                                .foregroundColor(.red)
-                                        }
-                                    }
-                                }
+                        TextEditor(text: $createEditViewModel.desc)
+                            .frame(height: 100)
+                          
+                    }header: {
+                        Text("Description")
+                    }
+            
+                    
+                    Section {
+                        
+                        HStack{
+                            Text("Add Ingredient")
+                                .foregroundColor(.accentColor)
+                            Spacer()
+                            Text("+")
+                                .foregroundColor(.accentColor)
+                        }
+                        .onTapGesture{
+                            isPresentingIngredientSheet.toggle()
+                        }
+                        
+                    } header: {
+                        Text("Ingredients")
+                    }
+                    
+                    
+                    Section {
+                        
+                        ForEach(createEditViewModel.ingredients) { ingredient in
+                            HStack{
+                                Text(ingredient.name)
+                                Spacer()
+                                Text(ingredient.quantity)
+                                    .foregroundColor(.secondary)
+                                Text(ingredient.unit.description)
+                                    .foregroundColor(.secondary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
                             }
                             
-                            Button(action: {
-                                isPresentingNewSheet.toggle()
-                            }) {
-                                Text("Add Step")
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.blue))
-                                    .cornerRadius(10)
-                            }
+                                .onTapGesture{
+                                    createEditViewModel.editingIngredient = ingredient
+                                    isPresentingIngredientSheet.toggle()
+                                }
+                                
+                        }
+                        .onDelete { indexSet in
+                            createEditViewModel.ingredients.remove(atOffsets: indexSet)
                         }
                         
-                        if(recipe != nil){
-                            Button(action: {
-                                //Funcao de editar receita
-                            }) {
-                                Text("Edit Recipe")
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.blue))
-                                    .cornerRadius(10)
-                            }
-                        } else {
-                            Button(action: {
-                               //Funcao de criar receita
-                            }) {
-                                Text("Create Recipe")
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color(.blue))
-                                    .cornerRadius(10)
-                            }
-                        }
                         
                     }
-                    .frame(width: geometry.size.width * 0.9, alignment: .leading)
-                    .sheet(isPresented: $isPresentingNewSheet) {
-                        CreateEditStepView(editingStep: $editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
-                            }
-                    .sheet(isPresented: $isPresentingEditSheet) {
-                        CreateEditStepView(editingStep: $editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
-                            }
-                    .padding()
-                    .onAppear(perform: {
-                        if (recipe != nil){
-                            print("caiu")
-                            createEditViewModel.editRecipe(recipe: recipe!)
-                            if let imageData = recipe!.imageData {
-                               imageViewModel.selectedImage = UIImage(data: imageData)
-                           } else {
-                               // If recipe has no image data, use the default image
-                               imageViewModel.selectedImage = UIImage(named: "DefaultRecipeImage")
-                           }
-                        } else {
-                            imageViewModel.selectedImage = UIImage(named: "DefaultRecipeImage")
+                    
+                    Section {
+                        
+                        HStack{
+                            Text("Add Steps")
+                                .foregroundColor(.accentColor)
+                            Spacer()
+                            Text("+")
+                                .foregroundColor(.accentColor)
                         }
-                    })
+                        .onTapGesture{
+                            createEditViewModel.editingStep = nil
+                            isPresentingEditSheet.toggle()
+                        }
+                        
+                    } header: {
+                        Text("Steps")
+                    }
+                    
+                    Section {
+                        ForEach(createEditViewModel.steps) { step in
+                            HStack{
+                                Text(step.tip ?? "texto default")
+                                Spacer()
+//                                Text(ingredient.quantity)
+//                                Text(ingredient.unit.description)
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.accentColor)
+                            }
+                            
+                                .onTapGesture{
+                                    createEditViewModel.editingStep = step
+                                    isPresentingEditSheet.toggle()
+                                }
+                        }
+                        .onMove(perform: { from, to in
+                            createEditViewModel.steps.move(fromOffsets: from, toOffset: to)
+
+                        })
+                        .onDelete { indexSet in
+                            createEditViewModel.steps.remove(atOffsets: indexSet)
+                        }
+                        
+                        
+                    }
+                    
+                   
+                    
+                    
                 }
+                .sheet(isPresented: $isPresentingNewSheet) {
+                    CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
+                        }
+                .sheet(isPresented: $isPresentingEditSheet) {
+                    CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
+                        }
+                .sheet(isPresented: $isPresentingIngredientSheet) {
+                    ZStack {
+                        Color(.systemGray6).edgesIgnoringSafeArea(.all)
+                            CreateEditIngredientView(editingIngredient: $createEditViewModel.editingIngredient,recipeViewModel: createEditViewModel, showSheet: $isPresentingIngredientSheet)
+                        }
+                    
+                        .presentationDetents([.fraction(0.3)])
+                        }
+
+                .listStyle(.insetGrouped)
+                .scrollDismissesKeyboard(.immediately)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(recipe != nil ? "Edit Recipe" : "Add Recipe")
+                                .toolbar {
+                                
+
+                                    if(recipe != nil){
+                                        Button(action: {
+                                            //Funcao de editar receita
+                                        }) {
+                                            Text("Save")
+                                                
+                                        }
+                                    } else {
+                                        Button(action: {
+                                           //Funcao de criar receita
+                                        }) {
+                                            Text("Save")
+                                                
+                                        }
+                                    }
+                                }
+                
                 }
-            }
+            .onAppear(perform: {
+                if (recipe != nil){
+                    createEditViewModel.editRecipe(recipe: recipe!)
+                    if let imageData = recipe!.imageData {
+                       imageViewModel.selectedImage = UIImage(data: imageData)
+                   } else {
+                       imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
+                   }
+                } else {
+                    imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
+                }
+                
+                
+            })
         }
     
 }
 
 struct CreateEditRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        //CreateEditRecipeView()
-        Text("oi")
+        CreateEditRecipeView(recipe: .constant(Constants.mockedRecipe))
+        
     }
 }
+
 
