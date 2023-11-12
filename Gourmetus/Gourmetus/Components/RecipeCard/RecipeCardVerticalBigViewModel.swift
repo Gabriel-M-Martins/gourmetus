@@ -24,17 +24,21 @@ class RecipeCardVerticalBigViewModel: ObservableObject {
         return false
     }
 
-    func toggleFavourite(recipe: Recipe, favorites: [Recipe]) -> [Recipe]{
-        var favoritesAux = Set(favorites)
+    func toggleFavourite(favorites: [Recipe]) -> [Recipe] {
+        var favoritesAux = favorites
         if self.isFavorite(favorites: favorites){
             print("Removendo dos favoritos")
-            favoritesAux.remove(recipe)
+            for i in 0..<favorites.count {
+                if favorites[i].id == recipe.id {
+                    favoritesAux.remove(at: i)
+                    break
+                }
+            }
+            return favoritesAux
         } else {
             print("Adicionando nos favoritos")
-            favoritesAux.insert(recipe)
+            favoritesAux.append(recipe)
+            return favoritesAux
         }
-        return Array(favoritesAux)
-        
     }
-    
 }

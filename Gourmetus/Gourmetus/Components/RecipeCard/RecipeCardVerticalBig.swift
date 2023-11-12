@@ -25,74 +25,82 @@ struct RecipeCardVerticalBig: View {
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
-                    .cornerRadius(20)
-                    .padding(.top, 16)
-                    .padding(.horizontal, 16)
+                    .cornerRadius(smooth_radius)
+                    .padding(.top, default_spacing)
+                    .padding(.horizontal, default_spacing)
             }else{
-                Image(systemName: "photo.fill")
+                Image("DefaultRecipeImage")
                     .resizable()
-                    .cornerRadius(20)
-                    .padding(.top, 16)
-                    .padding(.horizontal, 16)
+                    .cornerRadius(smooth_radius)
+                    .padding(.top, default_spacing)
+                    .padding(.horizontal, default_spacing)
+                    .frame(height: 145)
             }
-            
-            VStack(alignment: .leading, spacing: 8){
+            ZStack {
                 HStack{
-                    Text(vm.recipe.name)
-                        .foregroundColor(.orange)
-                        .font(.subheadline)
-                        .lineLimit(1)
-                    Spacer()
-                }
-                
-                difficulty
-                    .font(.subheadline)
-                Text("\(Image(systemName: "star.fill")) \(vm.recipe.difficulty.formatted())")
-                    .font(.subheadline)
-                    .foregroundStyle(.yellow)
-                HStack{
-                    Text("By \(Image(systemName: "person.circle")) (Owner)")
-                        .font(.footnote)
-                        .foregroundStyle(.gray)
+                    VStack(alignment: .leading, spacing: 8){
+                        
+                        Text(vm.recipe.name)
+                            .modifier(Paragraph())
+                            .foregroundColor(Color.color_button_container_primary)
+                            .lineLimit(1)
+                        
+                        difficulty
+                        
+                        Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
+                            .modifier(Paragraph())
+                            .foregroundStyle(Color.color_text_review_primary)
+                        Text("By \(Image.personCircle)")
+                            .modifier(Span())
+                            .foregroundColor(Color.color_text_container_muted)
+                            .truncationMode(.tail)
+                            .lineLimit(1)
+                            
+                        
+                    }
                     
                     Spacer()
-                    Button{
-                        cookbook.favorites = vm.toggleFavourite(recipe: vm.recipe, favorites: cookbook.favorites)
-                        repo.save(cookbook)
-                    }label: {
-                        ZStack{
-                            Circle()
-                                .fill(vm.isFavorite(favorites: cookbook.favorites) ? .orange : .white)
-                                .shadow(radius: 5)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(.orange, lineWidth: 3)
-                                )
+                }
+ 
+                VStack{
+                    Spacer()
+                    
+                    HStack{
+                        Spacer()
+                        Button{
+                            cookbook.favorites = vm.toggleFavourite(favorites: cookbook.favorites)
+                            repo.save(cookbook)
+                        }label: {
+                            ZStack{
+                                Circle()
+                                    .fill(vm.isFavorite(favorites: cookbook.favorites) ? Color.color_button_container_primary : Color.color_background_container_primary)
+                                    .modifier(cardShadow())
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: smooth_radius)
+                                            .strokeBorder(.orange, lineWidth: 2)
+                                    )
+                                Image.heartFill
+                                    .foregroundColor(vm.isFavorite(favorites: cookbook.favorites) ? Color.color_background_container_primary : Color.color_button_container_primary)
                                 
-                            Image(systemName: "heart.fill" )
-                                .foregroundColor(vm.isFavorite(favorites: cookbook.favorites) ? .white : .orange)
-
-                            
+                            }
+                            .frame(width: 37, height: 36)
                         }
-                        .foregroundColor(.orange)
                     }
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
+
+            .padding(.horizontal, default_spacing)
+            .padding(.bottom, default_spacing)
+            
         }
-        .frame(width: 357, height: 275)
-        .cornerRadius(20)
+        .frame(width: 357, height: 260)
+        .cornerRadius(smooth_radius)
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(.gray, lineWidth: 3)
+            RoundedRectangle(cornerRadius: smooth_radius)
+                .strokeBorder(Color.color_card_container_stroke, lineWidth: 2)
         )
         
     }
-}
-
-#Preview {
-    RecipeCardVerticalBig(recipe: Constants.mockedRecipe)
 }
 
 extension RecipeCardVerticalBig {
@@ -108,10 +116,15 @@ extension RecipeCardVerticalBig {
     var difficulty: some View {
         HStack{
             ForEach(0..<Int(vm.recipe.difficulty)){ index in
-                Image(systemName: "frying.pan.fill")
-                    .foregroundColor(.green)
+                Image.knife
+                    .foregroundColor(Color.color_text_container_highlight)
             }
         }
     }
     
+}
+
+#Preview {
+    RecipeCardVerticalBig(recipe: Constants.mockedRecipe)
+        .environmentObject(Constants.mockedCookbook)
 }

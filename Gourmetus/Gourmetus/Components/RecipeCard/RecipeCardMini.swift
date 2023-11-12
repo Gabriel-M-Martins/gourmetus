@@ -16,24 +16,45 @@ struct RecipeCardMini: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading, spacing: half_spacing){
             if let imgData = vm.recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
-            }else{
-                Image(systemName: "square")
                     .resizable()
-                    .frame(width: 123, height: 60)
+//                    .scaledToFill()
+                    .frame(height: 60)
+//                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(hard_radius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: hard_radius)
+                            .strokeBorder(Color.color_button_container_primary, lineWidth: 2)
+                    )
+            }else{
+                Image("DefaultRecipeImage")
+                    .resizable()
+//                    .scaledToFill()
+                    .frame(height: 60)
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(hard_radius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: hard_radius)
+                            .strokeBorder(Color.color_button_container_primary, lineWidth: 2)
+                    )
+                    
             }
             Text(vm.recipe.name)
-                .font(.callout)
-            Text("Status")
-                .font(.footnote)
+                .modifier(Paragraph())
+                .lineLimit(1)
+
+            Text("Completed")
+                .foregroundColor(Color.color_text_container_highlight)
+                .modifier(Paragraph())
         }
-        .frame(width: 123, height: 104)
+        .frame(width: 123)
     }
 }
 
 #Preview {
-    RecipeCardMini(recipe: Constants.mockedRecipe)
+    HomeView()
+        .environmentObject(Constants.mockedCookbook)
 }
