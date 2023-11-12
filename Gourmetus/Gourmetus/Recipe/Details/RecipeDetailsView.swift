@@ -82,45 +82,44 @@ struct RecipeDetailsView: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
             
-            Section {
-                // TODO: Usar infos da recipe
-                Text(
-                    """
-                    A sweet and delicious shortbread recipe that is easy to make. Get your ingredients ready and let's start cooking this delicious biscuit that is loved by many all around the world!
-
-                    If you like our recipes, check out our profile to view more of what we have made.
-
-                    This recipe is beginner friendly, so any skill level can take a shot at it.
-                    """
-                )
-            } header: {
-                Text("Description")
+            if let description = vm.recipe.desc {
+                Section {
+                    Text(description)
+                } header: {
+                    Text("Description")
+                }
             }
             
             Section {
-                // TODO: ForEach ingredient in ingredients da recipe
-                HStack {
-                    Text("Coe")
-                    
-                    Spacer()
-                    
-                    Text("Tantos kg")
-                        .foregroundStyle(Color.color_text_container_muted)
+                ForEach(vm.recipe.ingredients) { ingredient in
+                    HStack {
+                        Text(ingredient.name)
+                        
+                        Spacer()
+                        
+                        Text("\(ingredient.quantity) \(ingredient.unit.description)")
+                            .foregroundStyle(Color.color_text_container_muted)
+                    }
                 }
             } header: {
                 Text("Ingredients")
             }
             
             Section {
-                // TODO: ForEach step in steps da recipe
-                HStack {
-                    Text("Let's start the recipe")
-                        .foregroundStyle(Color.color_text_container_highlight)
-                    
-                    Spacer()
-                    
-                    Image.chevronRight
-                        .foregroundColor(Color.color_button_container_primary)
+                ForEach(vm.recipe.steps) { step in
+                    HStack {
+                        Text(step.title)
+                            .foregroundStyle(Color.color_text_container_highlight)
+                        
+                        Spacer()
+                        
+                        Image.chevronRight
+                            .foregroundColor(Color.color_button_container_primary)
+                    }
+                    .background(
+                        // TODO: Ir para o player no passo escolhido
+                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe), label: {})
+                    )
                 }
             } header: {
                 Text("Steps")
@@ -131,8 +130,10 @@ struct RecipeDetailsView: View {
 }
 
 #Preview {
-    RecipeDetailsView(recipe: Constants.mockedRecipe)
-        .environmentObject(Cookbook())
+    NavigationStack {
+        RecipeDetailsView(recipe: Constants.mockedRecipe)
+            .environmentObject(Cookbook())
+    }
 }
 
 extension Binding {
