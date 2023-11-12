@@ -20,129 +20,119 @@ struct RecipeDetailsView: View {
     }
     
     var body: some View {
-        NavigationStack{
-            GeometryReader{ reader in
-                VStack{
-                    ScrollView{
-                        HStack{
-                            image
-                            VStack{
-                                HStack(alignment: .bottom) {
-                                    //difficulty
-                                    Text("texto")
-                                        .padding(.bottom)
-                                }
+        List {
+            
+            Section {
+                VStack(alignment: .center, spacing: default_spacing) {
+                    Image.bookFavourites
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: UIScreen.main.bounds.width/2.5)
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: smooth_radius, height: smooth_radius)))
+                    
+                    
+                    
+                    VStack(alignment: .center, spacing: half_spacing) {
+                        HStack(alignment: .top) {
+                            Spacer()
+                            
+                            HStack {
+                                Image.clockFill
+                                Text("00:40 MIN")
                             }
-                        }
-//                    owner
-//                    tags
-                        
-                        HStack{
-                            Text("Ingredients")
-                                .font(.title2)
-                                .padding(.horizontal)
+                            
+                            Text("・")
+                            
+                            HStack {
+                                Text("BY")
+                                Image.personCircle
+                                Text("YOU")
+                            }
+                            
                             Spacer()
                         }
+                        .foregroundStyle(Color.color_text_container_muted)
                         
-                        ingredients
-                    }
-                    HStack{
-                        NavigationLink{
-                            CreateEditRecipeView(recipe: $vm.recipe.toOptional())
-                        }label: {
-                            Text("Editar")
-                        }
-                        NavigationLink{
-                            //Action goes here
-                            RecipePlayerView(recipe: vm.recipe)
-                        }label: {
-                            Text("Start")
-                                .frame(width: 150, height: 40)
-                                .background(.green)
-                                .cornerRadius(5)
-                                .foregroundColor(.black)
+                        HStack(alignment: .center) {
+                            Spacer()
                             
+                            HStack {
+                                // TODO: foreach de dificuldade || componente de dificuldade
+                                Image.knife
+                            }
+                            
+                            Text("・")
+                            
+                            HStack {
+                                Image.starFill
+                                Text("4.0")
+                            }
+                            .foregroundStyle(Color.color_text_review_primary)
+                            
+                            Spacer()
                         }
-                        
-                        Button{
-                            cookbook.favorites = vm.toggleFavourite(recipe: vm.recipe, favorites: cookbook.favorites)
-                            repo.save(cookbook)
-                        }label: {
-                            Image(systemName: vm.isFavorite(favorites: cookbook.favorites) ? "heart.fill" : "heart")
-                        }
-                        .buttonStyle(.bordered)
-//                        .padding(.leading, 250)
-                        
                     }
-                    .padding()
-                    .navigationTitle(vm.recipe.name)
+                    .modifier(Span())
+                    
+                    // TODO: componente de resizable tag collection
+                    
+                    Divider()
                 }
-                .padding()
             }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+            
+            Section {
+                // TODO: Usar infos da recipe
+                Text(
+                    """
+                    A sweet and delicious shortbread recipe that is easy to make. Get your ingredients ready and let's start cooking this delicious biscuit that is loved by many all around the world!
+
+                    If you like our recipes, check out our profile to view more of what we have made.
+
+                    This recipe is beginner friendly, so any skill level can take a shot at it.
+                    """
+                )
+            } header: {
+                Text("Description")
+            }
+            
+            Section {
+                // TODO: ForEach ingredient in ingredients da recipe
+                HStack {
+                    Text("Coe")
+                    
+                    Spacer()
+                    
+                    Text("Tantos kg")
+                        .foregroundStyle(Color.color_text_container_muted)
+                }
+            } header: {
+                Text("Ingredients")
+            }
+            
+            Section {
+                // TODO: ForEach step in steps da recipe
+                HStack {
+                    Text("Let's start the recipe")
+                        .foregroundStyle(Color.color_text_container_highlight)
+                    
+                    Spacer()
+                    
+                    Image.chevronRight
+                        .foregroundColor(Color.color_button_container_primary)
+                }
+            } header: {
+                Text("Steps")
+            }
+            
         }
     }
 }
 
 #Preview {
     RecipeDetailsView(recipe: Constants.mockedRecipe)
-}
-
-extension RecipeDetailsView {
-    
-    private func floatIsInteger(num: Float) -> Bool{
-        if num.truncatingRemainder(dividingBy: 1) == 0 {
-            return true
-        }else{
-            return false
-        }
-    }
-    
-    private var image: some View {
-        
-        if let imgData = vm.recipe.imageData,
-           let img = UIImage(data: imgData){
-            return Image(uiImage: img)
-                .resizable()
-                .frame(width: 180,height: 100)
-                .padding()
-        } else {
-            return Image(systemName: "square.fill")
-                .resizable()
-                .frame(width: 180,height: 100)
-                .padding()
-        }
-    }
-    
-    private var owner: some View {
-        HStack{
-            Text("Por (Nome da pessoa)")
-                .padding(.horizontal)
-                .padding(.bottom, 8)
-            Spacer()
-        }
-    }
-    
-    private var tags: some View {
-        HStack{
-            Text("(Tag1) (Tag2) (Tag3)")
-                .padding(.horizontal)
-                .padding(.bottom)
-            Spacer()
-        }
-    }
-    
-    private var ingredients: some View {
-        ForEach(vm.recipe.ingredients) { ingredient in
-            HStack{
-                Text("\(ingredient.quantity) \(ingredient.unit.description) x \(ingredient.name)")
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-                Spacer()
-            }
-        }
-    }
-    
-    
+        .environmentObject(Cookbook())
 }
 
 extension Binding {
