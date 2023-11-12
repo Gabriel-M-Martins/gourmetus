@@ -14,7 +14,7 @@ struct Constants {
         Step(id: UUID(), texto: "passo 2", order: 1),
         Step(id: UUID(), texto: "passo 3", order: 2),
         Step(id: UUID(), timer: 10, order: 3),
-        Step(id: UUID(), texto: "passo 4", order: 4)
+        Step(id: UUID(), texto: "passo 4", imageData: UIImage(named: "Knife")?.pngData(), order: 4)
     ]
     
     static let mockedIngredients: [Ingredient] = [
