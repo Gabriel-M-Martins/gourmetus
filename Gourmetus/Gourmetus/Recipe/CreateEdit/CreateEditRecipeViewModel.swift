@@ -26,12 +26,28 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var editingStep: Step?
     @Published var editingIngredient: Ingredient?
     
+    @Injected private var repo: any Repository<Recipe>
+    
     func addIngredient(){
         ingredients.append(Ingredient(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
         isAddingIngredient = false
         ingredientName = ""
         ingredientQuantity = ""
         ingredientUnit = .Kg
+    }
+    
+    func saveRepo(recipe: Recipe?){
+        
+        var calculatedDuration = hourSelection * 60 + minuteSelection
+      
+        if (recipe != nil){
+            let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            repo.save(rec)
+            print(repo.fetch(id: recipe!.id))
+        } else {
+            let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            repo.save(rec)
+        }
     }
     
     func deleteIngredient(ingredient: Ingredient){
@@ -97,7 +113,9 @@ class CreateEditRecipeViewModel: ObservableObject {
         ingredients = recipe.ingredients
         steps = recipe.steps
         difficulty = recipe.difficulty
-        //hourSelection = recipe.
+        hourSelection = recipe.duration / 60
+        minuteSelection = recipe.duration % 60
+        print(recipe.duration)
         
     }
 }

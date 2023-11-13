@@ -11,7 +11,9 @@ import SwiftUI
 class CreateEditStepViewModel: ObservableObject {
     @Published var texto = ""
     @Published var tip = ""
+    @Published var title = ""
     @Published var totalTime: Int? = 0
+    @Published var ingredientsAdded: Set<Ingredient> = []
     
     func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
         if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
@@ -37,10 +39,15 @@ class CreateEditStepViewModel: ObservableObject {
     func editField(step: Step){
         texto = step.texto ?? ""
         tip = step.tip  ?? ""
+        title = step.title ?? ""
         
         if let tempo = step.timer{
             totalTime = tempo
         }
+    }
+    
+    func addIngredient(ingredient: Ingredient){
+        ingredientsAdded.insert(ingredient)
     }
 
 }
