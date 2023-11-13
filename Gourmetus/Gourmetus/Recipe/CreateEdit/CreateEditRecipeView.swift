@@ -53,7 +53,6 @@ struct CreateEditRecipeView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame( width: 330, height: 200)
                                     .foregroundColor(.red)
-                                    
                                     .background(Color.blue)
                                     .cornerRadius(10)
                                     .padding(0)
@@ -237,26 +236,13 @@ struct CreateEditRecipeView: View {
                 .scrollDismissesKeyboard(.immediately)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(recipe != nil ? "Edit Recipe" : "Add Recipe")
-                                .toolbar {
-                                
-
-                                    if(recipe != nil){
-                                        Button(action: {
-                                            //Funcao de editar receita
-                                        }) {
-                                            Text("Save")
-                                                
-                                        }
-                                    } else {
-                                        Button(action: {
-                                           //Funcao de criar receita
-                                        }) {
-                                            Text("Save")
-                                                
-                                        }
-                                    }
-                                }
-                
+                    .toolbar {
+                        Button(action: {
+                            createEditViewModel.saveRepo(recipe: recipe)
+                        }) {
+                            Text("Save")
+                        }
+                    }
                 }
             .onAppear(perform: {
                 if (recipe != nil){
@@ -269,8 +255,6 @@ struct CreateEditRecipeView: View {
                 } else {
                     imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
                 }
-                
-                
             })
         }
     

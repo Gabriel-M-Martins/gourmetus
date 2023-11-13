@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    
-    @Injected private var repo: any Repository<Cookbook>
-    
     @StateObject var vm: RecipeDetailsViewModel
     
     @EnvironmentObject var cookbook: Cookbook
+    @State private var isNextViewActivated: Bool = false
     
     init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
@@ -21,7 +19,6 @@ struct RecipeDetailsView: View {
     
     var body: some View {
         List {
-            
             Section {
                 VStack(alignment: .center, spacing: default_spacing) {
                     Image.bookFavourites
@@ -38,6 +35,7 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.clockFill
+                                // TODO: Usar a duration da receita
                                 Text("00:40 MIN")
                             }
                             
@@ -56,8 +54,8 @@ struct RecipeDetailsView: View {
                         HStack(alignment: .center) {
                             Spacer()
                             
+                            // TODO: foreach de dificuldade || componente de dificuldade
                             HStack {
-                                // TODO: foreach de dificuldade || componente de dificuldade
                                 Image.knife
                             }
                             
@@ -65,6 +63,7 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.starFill
+                                // TODO: Usar avaliação da receita
                                 Text("4.0")
                             }
                             .foregroundStyle(Color.color_text_review_primary)
@@ -90,6 +89,7 @@ struct RecipeDetailsView: View {
                 }
             }
             
+            // TODO: Empty state de ingredients
             Section {
                 ForEach(vm.recipe.ingredients) { ingredient in
                     HStack {
@@ -105,6 +105,7 @@ struct RecipeDetailsView: View {
                 Text("Ingredients")
             }
             
+            // TODO: Empty state de steps
             Section {
                 ForEach(0..<vm.recipe.steps.count) { idx in
                     HStack {
@@ -126,6 +127,56 @@ struct RecipeDetailsView: View {
                 Text("Steps")
             }
             
+            HStack {
+                Spacer()
+                
+                Button(action: { isNextViewActivated = true }) {
+                    Text("Start")
+                        .frame(width: UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.width * 0.075)
+                        .foregroundStyle(Color.color_general_fixed_light)
+                        .modifier(Header())
+                    
+                }
+                .tint(.color_button_container_primary)
+                .buttonStyle(.borderedProminent)
+                .overlay(
+                    GeometryReader { proxy in
+                        Button("") {
+                            vm.toggleFavourite()
+                        }
+                            .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
+                            .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
+                    }
+                )
+                
+                Spacer()
+            }
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
+        }
+        .toolbarRole(.editor)
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    ForEach(RecipeDetailsViewModel.MenuOption.allCases, id: \.self) { option in
+                        Button(role: option.isDestructive ? ButtonRole.destructive : nil) {
+                            vm.menuButtonClicked(option)
+                        } label: {
+                            Text(option.description)
+                        }
+                    }
+                } label: {
+                    Image.ellipsisCircle
+                        .foregroundStyle(Color.color_button_container_primary)
+                }
+            }
+        })
+        .navigationTitle(vm.recipe.name)
+        .navigationDestination(isPresented: $isNextViewActivated) {
+            RecipePlayerView(recipe: self.vm.recipe)
+        }
+        .onAppear {
+            self.vm.populateCookbook(cookbook: self.cookbook)
         }
     }
 }
