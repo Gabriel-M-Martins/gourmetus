@@ -159,14 +159,12 @@ struct RecipeDetailsView: View {
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    ForEach(RecipeDetailsViewModel.MenuOptions.allCases, id: \.self) { option in
+                    ForEach(RecipeDetailsViewModel.MenuOption.allCases, id: \.self) { option in
                         Button(role: option.isDestructive ? ButtonRole.destructive : nil) {
-                            
+                            vm.menuButtonClicked(option)
                         } label: {
                             Text(option.description)
                         }
-                        
-
                     }
                 } label: {
                     Image.ellipsisCircle

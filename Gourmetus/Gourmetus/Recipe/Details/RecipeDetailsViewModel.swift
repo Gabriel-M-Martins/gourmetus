@@ -11,7 +11,7 @@ import SwiftUI
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: Recipe
     
-    let menuOptions: [MenuOptions] = [
+    let menuOptions: [MenuOption] = [
         .Edit,
         .Delete
     ]
@@ -40,7 +40,20 @@ class RecipeDetailsViewModel: ObservableObject{
         
     }
     
-    enum MenuOptions: CaseIterable {
+    func menuButtonClicked(_ option: MenuOption) {
+        switch option {
+        case .Duplicate:
+            break
+        case .Edit:
+            break
+        case .Delete:
+            break
+        case .Report:
+            break
+        }
+    }
+    
+    enum MenuOption: CaseIterable {
         case Duplicate
         case Edit
         case Delete
