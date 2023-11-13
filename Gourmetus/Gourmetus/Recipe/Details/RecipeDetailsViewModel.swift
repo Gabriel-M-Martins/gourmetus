@@ -11,6 +11,9 @@ import SwiftUI
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: Recipe
     
+    var isFavorite: Bool = false
+    var cookbook: Cookbook = Cookbook()
+    
     let menuOptions: [MenuOption] = [
         .Edit,
         .Delete
@@ -20,24 +23,19 @@ class RecipeDetailsViewModel: ObservableObject{
         self.recipe = recipe
     }
     
-    func isFavorite(favorites: [Recipe]) -> Bool{
-        for favorite in favorites{
-            if favorite.id == recipe.id{
-                return true
-            }
-        }
-        return false
+    func populateCookbook(cookbook: Cookbook) {
+        self.cookbook = cookbook
+        self.isFavorite = cookbook.favorites.contains(where: { $0.id == recipe.id })
     }
-
-    func toggleFavourite(recipe: Recipe, favorites: [Recipe]) -> [Recipe]{
-        var favoritesAux = Set(favorites)
-        if self.isFavorite(favorites: favorites){
-            favoritesAux.remove(recipe)
+    
+    func toggleFavourite() {
+        if isFavorite {
+            cookbook.favorites.removeAll(where: { $0.id == recipe.id })
         } else {
-            favoritesAux.insert(recipe)
+            cookbook.favorites.append(recipe)
         }
-        return Array(favoritesAux)
         
+        isFavorite.toggle()
     }
     
     func menuButtonClicked(_ option: MenuOption) {
