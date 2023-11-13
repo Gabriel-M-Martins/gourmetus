@@ -10,83 +10,151 @@ import PhotosUI
 
 struct CreateEditStepView: View {
     
+    @State var menu = ["Image" : false, "Text": false, "Tip": false, "Timer": false]
     @Binding var editingStep: Step?
+    @State var ingredients: [Ingredient] = []
     @StateObject private var imageViewModel = PhotoPickerViewModel()
     @StateObject var stepViewModel =  CreateEditStepViewModel()
     @ObservedObject var recipeViewModel:  CreateEditRecipeViewModel
     @Binding var showSheet: Bool
- 
+    @State private var selection: String?
+    @State var selectedIngediant: Ingredient = Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg)
+    
+    var menuKeys: [String] {
+        Array($menu.wrappedValue.keys).sorted()
+    }
+    
+    var isEmptyState: Bool {
+        true
+    }
+    
     var body: some View {
         
-        ScrollView{
-            VStack(alignment: .leading, spacing:16) {
-                
-                if let image = imageViewModel.selectedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 200)
-                        .foregroundColor(.red)
-                        .background(Color.blue)
+        VStack(alignment: .leading, spacing:16) {
+            HStack() {
+                Text("Title")
+                    .font(.headline)
+                TextField("Step Title", text: $stepViewModel.title)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            .padding(.leading,16)
+            .padding(.trailing,16)
+            
+            ScrollView{
+                if isEmptyState {
+                    Text("Add a component into the editor to build your step.")
+                        .padding()
+                        .fixedSize(horizontal: true, vertical: true)
                 } else {
-                    Image(systemName: "placeholdertext.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 200)
-                        .foregroundColor(.red)
-                        .background(Color.blue)
-                }
-                
-                PhotosPicker(selection: $imageViewModel.imageSelecion,
-                             matching: .any(of: [.images, .not(.screenshots)])) {
-                    Text("Select Photos")
-                }
-                
-
-
-                VStack(alignment: .leading) {
-                    Text("Description")
-                        .font(.headline)
-                    TextField("Enter text", text: $stepViewModel.texto)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-
-                VStack(alignment: .leading) {
-                    Text("Tip")
-                        .font(.headline)
-                    TextField("Enter tip", text: $stepViewModel.tip)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-
-                VStack(alignment: .leading) {
-                    Text("Timer")
-                        .font(.headline)
-                    TimePicker(totalTime: $stepViewModel.totalTime)
-                }
-                
-                if (editingStep != nil){
-                    Button(action: {
-                        stepViewModel.editStep(viewModel: recipeViewModel, imageViewModel: imageViewModel ,editingStep: editingStep!)
-                        editingStep = nil
-                        showSheet.toggle()
-                    }) {
-                        Text("Edit Step")
+                    if($menu["Image"].wrappedValue ?? false){
+                        VStack {
+                            Image(uiImage: imageViewModel.selectedImage!)
+                                .resizable()
+                                .cornerRadius(8)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 360, height: 100)
+                                .foregroundColor(.red)
+                                .background(Color(.brandWhite))
+                            
+                            PhotosPicker(selection: $imageViewModel.imageSelecion,
+                                         matching: .any(of: [.images, .not(.screenshots)])) {
+                                Text("Select Photos")
+                            }
+                        }
                     }
-                } else {
-                    Button(action: {
-                        stepViewModel.addStep(viewModel: recipeViewModel, imageViewModel: imageViewModel)
-                        showSheet.toggle()
-                    }) {
-                        Text("Add Step")
+                    
+                    
+                    if ($menu["Text"].wrappedValue ?? false) {
+                        TextField("Enter text", text: $stepViewModel.texto,axis: .vertical)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .lineLimit(4)
+                            .background(Color(.brandWhite))
+                        
+                    }
+                    
+                    if (stepViewModel.ingredientsAdded != []) {
+                        VStack(alignment: .leading) {
+                            Text("Ingredients")
+                                .foregroundStyle(.gray)
+                                .padding(.bottom,-12)
+                                .padding(.top,6)
+                                .padding(.leading,16)
+                            ResizableTagGroup(visualContent: stepViewModel.ingredientsAdded.map({ Text($0.name)
+                                    .padding(6)
+                                    .foregroundColor(.white)
+                                .background(Color(.brandGreen), in: .rect(cornerRadius: 6))})) //[TagView(Tag: "Algo", visualContent: {Text("O")})]
+                            .padding()
+                        }
+                        .background(Color(.brandWhite))
+                    }
+                    
+                    if ($menu["Tip"].wrappedValue ?? false) {
+                        TextField("Enter tip", text: $stepViewModel.tip,axis: .vertical)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .lineLimit(4)
+                            .background(Color(.brandWhite))
+                    }
+                    
+                    if ($menu["Timer"].wrappedValue ?? false) {
+                        VStack(alignment: .leading) {
+                            TimePicker(totalTime: $stepViewModel.totalTime)
+                        }
                     }
                 }
             }
+            .background(Color(.brandLightGray))
+            
+            VStack(alignment: .leading) {
+                List{
+                    Section{
+                        ForEach(menuKeys, id: \.self) { key in
+                            HStack {
+                                Text(key)
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    menu[key] = !(menu[key] ?? true)
+                                }, label: {
+                                    Text("Add")
+                                        .foregroundStyle(.orange)
+                                })
+                                
+                            }
+                        }
+                        
+                        HStack {
+                            Text("Ingredient")
+                            
+                            Spacer()
+                            
+                            Menu("Add"){
+                                ForEach(ingredients){ ingredient in
+                                    Button(ingredient.name) {
+                                        stepViewModel.addIngredient(ingredient: ingredient)
+                                    }
+                                }
+                            }
+                            .foregroundStyle(.orange)
+                        }
+                    } header: {
+                        Text("Components")
+                    }
+                    
+                    
+                    
+                }
+                .listStyle(.insetGrouped)
+                .background(Color(.brandWhite))
+                .scrollContentBackground(.hidden)
+                .frame(height:250)
+            }
+            
         }
-        .padding()
+        .background(Color(.brandWhite))
         .onAppear(perform: {
-           
+            
             if (editingStep != nil){
-                print("caiu")
                 if let image = editingStep!.imageData{
                     imageViewModel.selectedImage = UIImage(data: image)
                 }
@@ -102,7 +170,8 @@ struct CreateEditStepView: View {
 }
 
 #Preview {
-    Text("tr")
+    CreateEditStepView(editingStep: .constant(Constants.mockedSteps[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
+                                                                                      Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)], recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
 }
 
 
@@ -112,7 +181,7 @@ struct TimePicker: View {
     @State var selectedMinute: Int = 0
     @State private var isHourPickerVisible = false
     @State private var isMinutePickerVisible = false
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -128,7 +197,7 @@ struct TimePicker: View {
             .onTapGesture {
                 isHourPickerVisible.toggle()
             }
-
+            
             if isHourPickerVisible {
                 Picker("", selection: $selectedHour) {
                     ForEach(0..<24, id: \.self) { i in
@@ -137,7 +206,7 @@ struct TimePicker: View {
                 }
                 .pickerStyle(DefaultPickerStyle())
             }
-
+            
             HStack {
                 Text("Minute: \(selectedMinute) min")
                 Spacer()
@@ -151,7 +220,7 @@ struct TimePicker: View {
             .onTapGesture {
                 isMinutePickerVisible.toggle()
             }
-
+            
             if isMinutePickerVisible {
                 Picker("", selection: $selectedMinute) {
                     ForEach(0..<60, id: \.self) { i in
@@ -174,7 +243,7 @@ struct TimePicker: View {
             }
         }
     }
-
+    
     private func updateTotalTimeInMinutes() {
         totalTime = (selectedHour * 60) + selectedMinute
     }

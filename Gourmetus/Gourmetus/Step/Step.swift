@@ -15,5 +15,6 @@ struct Step: Identifiable, Hashable {
     var tip: String?
     var imageData: Data?
     var timer: Int?
+    var ingredientsAdded: Set<Ingredient>?
     var order: Int
 }
