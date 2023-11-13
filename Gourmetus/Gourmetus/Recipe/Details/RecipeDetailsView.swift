@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    
-    @Injected private var repo: any Repository<Cookbook>
-    
     @StateObject var vm: RecipeDetailsViewModel
     
     @EnvironmentObject var cookbook: Cookbook
@@ -22,7 +19,6 @@ struct RecipeDetailsView: View {
     
     var body: some View {
         List {
-            
             Section {
                 VStack(alignment: .center, spacing: default_spacing) {
                     Image.bookFavourites
@@ -144,8 +140,10 @@ struct RecipeDetailsView: View {
                 .buttonStyle(.borderedProminent)
                 .overlay(
                     GeometryReader { proxy in
-                        Button("") {}
-                            .buttonStyle(FavoriteButtonStyle())
+                        Button("") {
+                            vm.toggleFavourite()
+                        }
+                            .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
                             .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
                     }
                 )
@@ -174,7 +172,10 @@ struct RecipeDetailsView: View {
         })
         .navigationTitle(vm.recipe.name)
         .navigationDestination(isPresented: $isNextViewActivated) {
-            Text("")
+            RecipePlayerView(recipe: self.vm.recipe)
+        }
+        .onAppear {
+            self.vm.populateCookbook(cookbook: self.cookbook)
         }
     }
 }
