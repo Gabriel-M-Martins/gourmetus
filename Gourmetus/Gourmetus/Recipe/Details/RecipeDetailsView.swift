@@ -107,9 +107,9 @@ struct RecipeDetailsView: View {
             
             // TODO: Empty state de steps
             Section {
-                ForEach(vm.recipe.steps) { step in
+                ForEach(0..<vm.recipe.steps.count) { idx in
                     HStack {
-                        Text(step.title)
+                        Text(vm.recipe.steps[idx].title)
                             .foregroundStyle(Color.color_text_container_highlight)
                         
                         Spacer()
@@ -119,7 +119,8 @@ struct RecipeDetailsView: View {
                     }
                     .background(
                         // TODO: Ir para o player no passo escolhido
-                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe), label: {})
+                        
+                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe, step: idx), label: {})
                     )
                 }
             } header: {
