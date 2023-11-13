@@ -57,10 +57,12 @@ struct RecipesListsView: View {
         .navigationTitle(vm.listType.description)
         .searchable(text: $searchText, placement: .automatic, prompt: "Search")
         .navigationBarItems(trailing: NavigationLink{
-            var recipe: Binding<Recipe?> = .constant(nil)
+            let recipe: Binding<Recipe?> = .constant(nil)
             CreateEditRecipeView(recipe: recipe)
         }label: {
-            Image.plus
+            if vm.listType == .Owned {
+                Image.plus
+            }
         }
         )
     }

@@ -23,12 +23,18 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var hourSelection = 0
     @Published var minuteSelection = 0
     
+    
     var cookbook: Cookbook = Cookbook()
     
     @Published var editingStep: Step?
     @Published var editingIngredient: Ingredient?
     
     @Injected private var repo: any Repository<Recipe>
+    @Injected private var repoCookbook: any Repository<Cookbook>
+    
+    func populateCookbook(cookbook: Cookbook) {
+        self.cookbook = cookbook
+    }
     
     func addIngredient(){
         ingredients.append(Ingredient(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
@@ -39,29 +45,29 @@ class CreateEditRecipeViewModel: ObservableObject {
     }
     
     func saveRepo(recipe: Recipe?){
-        
         var calculatedDuration = hourSelection * 60 + minuteSelection
-      
         if (recipe != nil){
             let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
             repo.save(rec)
             print(repo.fetch(id: recipe!.id))
         } else {
             let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            cookbook.ownedRecipes.append(rec)
             repo.save(rec)
+            repoCookbook.save(cookbook)
         }
     }
     
     func deleteIngredient(ingredient: Ingredient){
         if let index = ingredients.firstIndex(of: ingredient) {
             ingredients.remove(at: index)
-                    }
+        }
     }
     
     func deleteStep(step: Step){
         if let index = steps.firstIndex(of: step) {
             steps.remove(at: index)
-                    }
+        }
     }
     
     func toggleIngredientEditing(ingredient: Ingredient){
@@ -80,25 +86,25 @@ class CreateEditRecipeViewModel: ObservableObject {
             
             steps.swapAt(index, index + 1)
             
-                    }
-            
         }
+        
+    }
     
     func swapWithPrevious(step: Step) {
         if let index = steps.firstIndex(of: step) {
             guard index > 0 else { return } // Ensure there is a previous item to swap with.
-
+            
             steps.swapAt(index, index - 1)
         }
     }
-
+    
     
     func updateIngredient(ingredient: Ingredient) {
         if let index = ingredients.firstIndex(of: ingredient) {
             
             if let indexEdited = ingredientsBeingEdited.firstIndex(of: ingredient) {
                 ingredientsBeingEdited.remove(at: indexEdited)
-                        }
+            }
             ingredients[index] = Ingredient(id: ingredient.id, name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit)
             ingredientName = ""
             ingredientQuantity = ""

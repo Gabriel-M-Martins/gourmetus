@@ -22,7 +22,7 @@ struct TabBarView: View {
                 }
                 .environmentObject(cookbook)
             
-            RecipesListsView(listType: .History)
+            CookbookView()
                 .tabItem {
                     Label("Cookbook", systemImage: "text.book.closed.fill")
                 }

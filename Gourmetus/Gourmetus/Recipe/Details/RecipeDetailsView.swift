@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
+    
+    enum Destination {
+        case Player
+        case Edit
+    }
+    
     @StateObject var vm: RecipeDetailsViewModel
     
     @EnvironmentObject var cookbook: Cookbook
     @State private var isNextViewActivated: Bool = false
-    
+    @State private var destination: Destination = .Player
+
     init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
     }
@@ -36,7 +43,7 @@ struct RecipeDetailsView: View {
                             HStack {
                                 Image.clockFill
                                 // TODO: Usar a duration da receita
-                                Text("00:40 MIN")
+                                Text(vm.convertHoursMinutes())
                             }
                             
                             Text("・")
@@ -56,7 +63,7 @@ struct RecipeDetailsView: View {
                             
                             // TODO: foreach de dificuldade || componente de dificuldade
                             HStack {
-                                Image.knife
+                                KnifeView(recipe: vm.recipe)
                             }
                             
                             Text("・")
@@ -129,7 +136,10 @@ struct RecipeDetailsView: View {
             HStack {
                 Spacer()
                 
-                Button(action: { isNextViewActivated = true }) {
+                Button(action: { 
+                    isNextViewActivated = true
+                    self.destination = .Player
+                }) {
                     Text("Start")
                         .frame(width: UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.width * 0.075)
                         .foregroundStyle(Color.color_general_fixed_light)
@@ -172,18 +182,25 @@ struct RecipeDetailsView: View {
         })
         .navigationTitle(vm.recipe.name)
         .navigationDestination(isPresented: $isNextViewActivated) {
-            RecipePlayerView(recipe: self.vm.recipe)
+            switch destination {
+            case .Player:
+                RecipePlayerView(recipe: self.vm.recipe)
+            case .Edit:
+                CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
+            }
+            
         }
         .onAppear {
             self.vm.populateCookbook(cookbook: self.cookbook)
+            self.vm.delegate = self
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        RecipeDetailsView(recipe: Constants.mockedRecipe)
-            .environmentObject(Cookbook())
+//        RecipeDetailsView(vm: RecipeDetailsViewModel(recipe: Constants.mockedRecipe))
+//            .environmentObject(Cookbook())
     }
 }
 
@@ -194,5 +211,13 @@ extension Binding {
         } set: { val in
             self.wrappedValue = val ?? self.wrappedValue
         }
+    }
+}
+
+extension RecipeDetailsView: RecipeDetailsDelegate {
+    
+    func editRecipe() {
+        self.destination = .Edit
+        self.isNextViewActivated = true
     }
 }

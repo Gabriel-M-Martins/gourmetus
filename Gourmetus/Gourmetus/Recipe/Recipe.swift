@@ -8,7 +8,15 @@
 import Foundation
 import CoreData
 
-struct Recipe: Identifiable, Hashable{
+final class Recipe: Identifiable, Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
+    }
+    
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     var id: UUID
     var name: String
     var desc: String?
@@ -21,7 +29,7 @@ struct Recipe: Identifiable, Hashable{
     var tags: [Tag]
     
     
-    init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = [], duration: Int = -1) {
+    required init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = [], duration: Int) {
         self.id = id
         self.name = name
         self.desc = desc
