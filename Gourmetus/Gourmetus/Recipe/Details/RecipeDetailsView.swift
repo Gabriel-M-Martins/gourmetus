@@ -185,7 +185,7 @@ struct RecipeDetailsView: View {
         .navigationDestination(isPresented: $isNextViewActivated) {
             switch destination {
             case .Player:
-                RecipePlayerView(recipe: self.vm.recipe)
+                RecipePlayerView(recipe: self.vm.recipe, step: 0)
             case .Edit:
                 CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
             }
