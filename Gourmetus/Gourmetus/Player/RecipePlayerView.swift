@@ -11,8 +11,9 @@ struct RecipePlayerView: View {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     
-    init(recipe: Recipe) {
-        self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe))
+    
+    init(recipe: Recipe, step: Int) {
+        self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
     }
     
     var body: some View {
@@ -75,9 +76,14 @@ struct RecipePlayerView: View {
             
             HStack{
                 ForEach(0..<playerViewModel.recipe.steps.count, id: \.self) { page in
-                    Circle()
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(page == playerViewModel.currentStepIndex ? Color.blue : Color.white)
+                    Button {
+                        playerViewModel.currentStepIndex = page
+                        playerViewModel.currentStep = playerViewModel.recipe.steps[page]
+                    } label: {
+                        Circle()
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(page == playerViewModel.currentStepIndex ? Color.blue : Color.white)
+                    }
                 }
             }
         }
@@ -89,5 +95,5 @@ struct RecipePlayerView: View {
 }
 
 #Preview {
-    RecipePlayerView(recipe: Constants.mockedRecipe)
+    RecipePlayerView(recipe: Constants.mockedRecipe, step: 0)
 }
