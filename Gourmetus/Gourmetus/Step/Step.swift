@@ -10,9 +10,11 @@ import CoreData
 
 struct Step: Identifiable, Hashable {
     var id: UUID
+    var title: String
     var texto: String?
     var tip: String?
     var imageData: Data?
     var timer: Int?
+    var ingredientsAdded: Set<Ingredient>?
     var order: Int
 }

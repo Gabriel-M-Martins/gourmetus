@@ -8,23 +8,23 @@
 import Foundation
 
 enum ListType: String, Codable {
-    case RecentlyAccessed
-    case MyRecipes
-    case FavouritesRecipes
+    case History
+    case Owned
+    case Favorites
     
     var description: String {
         switch self {
-        case .RecentlyAccessed: return "Recently Accessed"
-        case .MyRecipes: return "My Recipes"
-        case .FavouritesRecipes: return "Favourites Recipes"
+        case .History: return "Recently Accessed"
+        case .Owned: return "My Recipes"
+        case .Favorites: return "Favourites Recipes"
         }
     }
     
     var description2: String {
         switch self {
-        case .RecentlyAccessed: return "History of Recipes"
-        case .MyRecipes: return "Your Recipes"
-        case .FavouritesRecipes: return "Added to Favourites"
+        case .History: return "History of Recipes"
+        case .Owned: return "Your Recipes"
+        case .Favorites: return "Added to Favourites"
         }
     }
     

@@ -66,11 +66,6 @@ extension Recipe : EntityRepresentable {
             "duration" : self.duration as Any
         ]
         
-        /*
-         "desc" : self.desc as Any,
-         "image" : self.imageData as Any,
-         */
-        
         if self.desc != nil {
             values["desc"] = self.desc!
         }
