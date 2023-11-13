@@ -22,8 +22,11 @@ struct CreateEditRecipeView: View {
     @State var hourSelection = 0
     @State var minuteSelection = 0
     
+    @EnvironmentObject var cookbook: Cookbook
     
     @State private var selectedTime = Date()
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
 
@@ -238,7 +241,10 @@ struct CreateEditRecipeView: View {
                 .navigationTitle(recipe != nil ? "Edit Recipe" : "Add Recipe")
                     .toolbar {
                         Button(action: {
+                            createEditViewModel.populateCookbook(cookbook: cookbook)
                             createEditViewModel.saveRepo(recipe: recipe)
+                            isPresentingNewSheet = false
+                            dismiss()
                         }) {
                             Text("Save")
                         }
@@ -255,6 +261,7 @@ struct CreateEditRecipeView: View {
                 } else {
                     imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
                 }
+                self.createEditViewModel.populateCookbook(cookbook: self.cookbook)
             })
         }
     

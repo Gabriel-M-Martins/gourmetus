@@ -8,7 +8,7 @@
 import Foundation
 
 extension Recipe : EntityRepresentable {
-    init?(entityRepresentation: EntityRepresentation) {
+    convenience init?(entityRepresentation: EntityRepresentation) {
         guard let name = entityRepresentation.values["name"] as? String,
               let difficulty = entityRepresentation.values["difficulty"] as? Int,
               let duration = entityRepresentation.values["duration"] as? Int else { return nil }
@@ -46,16 +46,7 @@ extension Recipe : EntityRepresentable {
             return result
         }
         
-        self.id = entityRepresentation.id
-        self.name = name
-        self.desc = entityRepresentation.values["desc"] as? String
-        self.difficulty = difficulty
-        self.imageData = entityRepresentation.values["image"] as? Data
-        self.duration = duration
-        
-        self.steps = steps.sorted(by: { $0.order < $1.order })
-        self.ingredients = ingredients
-        self.tags = tags
+        self.init(id: entityRepresentation.id, name: name, desc: entityRepresentation.values["desc"] as? String, difficulty: difficulty, imageData: entityRepresentation.values["image"] as? Data, steps: steps.sorted(by: { $0.order < $1.order }), ingredients: ingredients, tags: tags, duration: duration)
     }
     
     func encode() -> EntityRepresentation {
