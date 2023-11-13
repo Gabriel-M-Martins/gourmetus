@@ -102,7 +102,6 @@ struct CreateEditStepView: View {
                     }
                 }
             }
-            .frame(width: .infinity)
             .background(Color(.brandLightGray))
             
             VStack(alignment: .leading) {

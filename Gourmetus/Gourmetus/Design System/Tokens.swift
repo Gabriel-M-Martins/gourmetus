@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 var hugeFontSize = 50.0
-var titleFontSize = 36.0
+var titleFontSize = 32.0
 var headerFontSize = 20.0
 var bodyFontSize = 14.0
 var spanFontSize = 10.0
@@ -67,7 +67,7 @@ struct Header: ViewModifier {
             .font(.custom("SF Pro", size: headerFontSize)).fontWeight(.medium)
     }
 }
-struct Body: ViewModifier {
+struct Paragraph: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("SF Pro", size: bodyFontSize)).fontWeight(.regular)
@@ -88,7 +88,7 @@ struct Huge: ViewModifier {
 struct Title: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.custom("SF Pro", size: titleFontSize)).fontWeight(.light)
+            .font(.custom("Helvetica", size: titleFontSize)).fontWeight(.light)
     }
 }
 

@@ -21,44 +21,47 @@ struct RecipeCardHorizontal: View {
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
-                    .cornerRadius(20)
+                    .cornerRadius(smooth_radius)
                     .padding(.vertical, 20.5)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, default_spacing)
             }else{
-                Image(systemName: "photo.fill")
+                Image("DefaultRecipeImage")
                     .resizable()
-                    .cornerRadius(20)
+                    .cornerRadius(smooth_radius)
                     .padding(.vertical, 20.5)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, default_spacing)
+                
             }
             
             VStack(alignment: .leading, spacing: 8){
                 HStack{
                     Text(vm.recipe.name)
+                        .modifier(Paragraph())
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
-                        .font(.subheadline)
+                        
                     Spacer()
                 }
-                
                 difficulty
                     .font(.subheadline)
-                Text("\(Image(systemName: "star.fill")) \(vm.recipe.difficulty.formatted())")
-                    .font(.subheadline)
-                    .foregroundStyle(.yellow)
-                Text("By \(Image(systemName: "person.circle")) (Owner)")
-                    .font(.footnote)
+                Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
+                    .modifier(Paragraph())
+                    .foregroundStyle(Color.color_text_review_primary)
+                Text("By \(Image.personCircle)")
+                    .modifier(Paragraph())
+                    .foregroundColor(Color.color_text_container_muted)
+                    .lineLimit(1)
             }
             .frame(width: 180)
             .padding(.vertical, 14.5)
-            .padding(.trailing, 16)
+            .padding(.trailing, default_spacing)
         }
         .frame(width: 351, height: 136)
-        .cornerRadius(20)
+        .cornerRadius(smooth_radius)
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(.orange, lineWidth: 3)
+            RoundedRectangle(cornerRadius: smooth_radius)
+                .strokeBorder(Color.color_button_container_primary, lineWidth: 2)
         )
         
     }
@@ -81,8 +84,8 @@ extension RecipeCardHorizontal {
     var difficulty: some View {
         HStack{
             ForEach(0..<Int(vm.recipe.difficulty)){ index in
-                Image(systemName: "frying.pan.fill")
-                    .foregroundColor(.green)
+                Image.knife
+                    .foregroundColor(Color.color_text_container_highlight)
             }
         }
     }

@@ -20,8 +20,11 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var ingredientQuantity = ""
     @Published var ingredientUnit : IngredientUnit = .Kg
     @Published var ingredientsBeingEdited: [Ingredient] = []
+    @Published var hourSelection = 0
+    @Published var minuteSelection = 0
     
-    
+    @Published var editingStep: Step?
+    @Published var editingIngredient: Ingredient?
     
     func addIngredient(){
         ingredients.append(Ingredient(id: UUID() ,name: ingredientName, quantity: ingredientQuantity, unit: ingredientUnit))
@@ -94,6 +97,7 @@ class CreateEditRecipeViewModel: ObservableObject {
         ingredients = recipe.ingredients
         steps = recipe.steps
         difficulty = recipe.difficulty
+        //hourSelection = recipe.
         
     }
 }

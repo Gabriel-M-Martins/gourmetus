@@ -59,14 +59,20 @@ extension Recipe : EntityRepresentable {
     }
     
     func encode() -> EntityRepresentation {
-        let values: [String : Any] = [
+        var values: [String : Any] = [
             "id" : self.id,
             "name" : self.name,
-            "desc" : self.desc as Any,
             "difficulty" : self.difficulty as Any,
-            "image" : self.imageData as Any,
             "duration" : self.duration as Any
         ]
+        
+        if self.desc != nil {
+            values["desc"] = self.desc!
+        }
+        
+        if self.imageData != nil {
+            values["image"] = self.imageData!
+        }
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
             "steps" : self.steps.map({ $0.encode() }),

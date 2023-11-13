@@ -10,11 +10,11 @@ import UIKit
 
 struct Constants {
     static let mockedSteps: [Step] = [
-        Step(id: UUID(), title: "Colocar no liquidificador",texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "DefaultRecipeImage")!.pngData(), order: 0 ),
-        Step(id: UUID(), texto: "passo 2", order: 1),
-        Step(id: UUID(), texto: "passo 3", order: 2),
-        Step(id: UUID(), timer: 10, order: 3),
-        Step(id: UUID(), texto: "passo 4", order: 4)
+        Step(id: UUID(), title: "passo 1", texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "banner-placeholder")!.pngData(), order: 0 ),
+        Step(id: UUID(), title: "passo 2", texto: "passo 2", order: 1),
+        Step(id: UUID(), title: "passo 3", texto: "passo 3", order: 2),
+        Step(id: UUID(), title: "passo 4", timer: 10, order: 3),
+        Step(id: UUID(), title: "passo 5", texto: "passo 4", imageData: UIImage(named: "Knife")?.pngData(), order: 4)
     ]
     
     static let mockedIngredients: [Ingredient] = [
@@ -57,7 +57,11 @@ struct Constants {
     
     static let mockedRecipe1: Recipe = Recipe(id: UUID(),name: "Bala de banana", difficulty: 4,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[0], mockedTags[1], mockedTags[3] ])
 
-    static let mockedRecipe2: Recipe = Recipe(id: UUID(),name: "Brigadeiro", difficulty: 1,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[7], mockedTags[8], mockedTags[9] ])
+    static let mockedRecipe2: Recipe = Recipe(id: UUID(),name: "Brigadeiro de chocolate branco nadnsndasnhguyguguyguygdnasdnasndas", difficulty: 1,steps: Self.mockedSteps, ingredients: Self.mockedIngredients, tags: [ mockedTags[7], mockedTags[8], mockedTags[9] ])
 
     static let mockedRecipes: [Recipe] = [mockedRecipe, mockedRecipe1, mockedRecipe2]
+    
+    
+    static let mockedCookbook: Cookbook = Cookbook(id: UUID(), ownedRecipes: [mockedRecipe,mockedRecipe1,mockedRecipe2], favorites: [mockedRecipe,mockedRecipe1,mockedRecipe2], history: [mockedRecipe,mockedRecipe1,mockedRecipe2], community: [mockedRecipe,mockedRecipe1,mockedRecipe2])
+    static let mockedCookbook1: Cookbook = Cookbook()
 }

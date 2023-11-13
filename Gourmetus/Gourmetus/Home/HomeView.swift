@@ -18,52 +18,73 @@ struct HomeView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                Button(action: {
-                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                        if success {
-                            print("All set!")
-                        } else if let error = error {
-                            print(error.localizedDescription)
+                VStack(spacing: 0){
+                    //                Button(action: {
+                    //                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    //                        if success {
+                    //                            print("All set!")
+                    //                        } else if let error = error {
+                    //                            print(error.localizedDescription)
+                    //                        }
+                    //                    }
+                    //                }, label: {
+                    //                    Text("Button")
+                    //                })
+                    //                    Divider()
+                    
+                    //History
+                    VStack(spacing: 0){
+                        titleRecentlyAccessed
+                        if cookbook.history.isEmpty {
+                            emptyState
+                        } else {
+                            scrollViewRecentlyAccessed
                         }
                     }
-                }, label: {
-                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                })
-                Divider()
-                titleRecentlyAccessed
-                if cookbook.history.isEmpty {
+                    .padding(.bottom, default_spacing)
                     
-                } else {
-                    scrollViewRecentlyAccessed
-                }
-                Divider()
-                    .padding(.vertical, 8)
-                titleFavourites
-                if cookbook.favorites.isEmpty {
+                    Divider()
                     
-                } else {
-                    scrollViewFavourites
-                }
-                Divider()
-                    .padding(.vertical, 8)
-                titleMyRecipes
-                if cookbook.ownedRecipes.isEmpty {
+                    //Favorites
+                    VStack(spacing: 0){
+                        titleFavourites
+                        if cookbook.favorites.isEmpty {
+                            emptyState
+                        } else {
+                            scrollViewFavourites
+                        }
+                    }
+                    .padding(.bottom, default_spacing)
                     
-                } else {
-                    scrollViewMyRecipes
-                }
-                Divider()
-                    .padding(.vertical, 8)
-                titleCommunity
-                if cookbook.community.isEmpty{
+                    Divider()
                     
-                }else{
-                    scrollViewCommunity
+                    //Owned
+                    VStack(spacing: 0){
+                        titleMyRecipes
+                        if cookbook.ownedRecipes.isEmpty {
+                            emptyState
+                        } else {
+                            scrollViewMyRecipes
+                        }
+                    }
+                    .padding(.bottom, default_spacing)
+                    
+                    Divider()
+                    
+                    //Community
+                    VStack(spacing: 0){
+                        titleCommunity
+                        if cookbook.community.isEmpty{
+                            emptyState
+                        }else{
+                            scrollViewCommunity
+                        }
+                    }
+                    
                 }
-                
+                .navigationTitle("Menu")
+                .searchable(text: $searchText, placement: .automatic, prompt: "Search")
             }
-            .navigationTitle("Menu")
-            .searchable(text: $searchText, placement: .automatic, prompt: "Search")
         }
     }
 }
@@ -72,103 +93,99 @@ extension HomeView {
     
     private var titleRecentlyAccessed: some View {
         NavigationLink{
-            RecipesListsView(listType: .RecentlyAccessed)
+            RecipesListsView(listType: .History)
         }label: {
-            HStack{
+            HStack(alignment: .bottom, spacing: default_spacing){
                 Text("Recently accessed")
-                    .font(.title2)
-                    .foregroundStyle(.green)
-                    .padding(.leading)
+                    .modifier(Header())
+                    .foregroundStyle(Color.color_text_container_highlight)
                 Spacer()
-                Text("View all >")
-                    .font(.subheadline)
-                    .foregroundStyle(.orange)
-                    .padding(.trailing)
+                Text("View all \(Image.chevronRight)")
+                    .modifier(Span())
+                    .foregroundStyle(Color.color_button_container_primary)
             }
+            
         }
+        .padding(.horizontal, default_spacing)
+        .padding(.vertical, default_spacing)
         
     }
     
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
-            HStack(spacing: 16){
+            HStack(spacing: default_spacing){
                 ForEach(cookbook.history) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
-                        
                     }label: {
                         RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
             }
-            .padding(.horizontal)
+            
+            .padding(.horizontal, default_spacing)
         }
         .scrollIndicators(.hidden)
     }
     
     private var titleFavourites: some View {
         NavigationLink{
-            RecipesListsView(listType: .FavouritesRecipes)
+            RecipesListsView(listType: .Favorites)
         }label: {
-            HStack{
+            HStack(alignment: .bottom, spacing: default_spacing){
                 Text("Favourites")
-                    .font(.title2)
-                    .foregroundStyle(.green)
-                    .padding(.leading)
+                    .modifier(Header())
+                    .foregroundStyle(Color.color_text_container_highlight)
                 Spacer()
-                Text("View all >")
-                    .font(.subheadline)
-                    .foregroundStyle(.orange)
-                    .padding(.trailing)
+                Text("View all \(Image.chevronRight)")
+                    .modifier(Span())
+                    .foregroundStyle(Color.color_button_container_primary)
             }
         }
+        .padding(.horizontal, default_spacing)
+        .padding(.vertical, default_spacing)
     }
     
     private var scrollViewFavourites: some View {
         ScrollView(.horizontal){
-            HStack(spacing: 16){
-                if cookbook.favorites.isEmpty {
-                    Text("It seems you don't have any recipe in your cookbook yet. Start Adding some or browse the community!")
-                } else {
-                    ForEach(cookbook.favorites, id: \.id) { recipe in
-                        NavigationLink{
-                            RecipeDetailsView(recipe: recipe)
-                        }label: {
-                            RecipeCardHorizontal(recipe: recipe)
-                                .tint(Color(uiColor: UIColor.label))
-                        }
+            HStack(spacing: default_spacing){
+                ForEach(cookbook.favorites) { recipe in
+                    NavigationLink{
+                        RecipeDetailsView(recipe: recipe)
+                    }label: {
+                        RecipeCardHorizontal(recipe: recipe)
+                            .tint(Color(uiColor: UIColor.label))
                     }
                 }
+                
             }
-            .padding(.horizontal)
-            .padding(.vertical, 2)
+            .padding(.horizontal, default_spacing)
         }
-        .frame(height: 136)
         .scrollIndicators(.hidden)
     }
     
     private var titleMyRecipes: some View {
         NavigationLink{
-            RecipesListsView(listType: .MyRecipes)
+            RecipesListsView(listType: .Owned)
         }label: {
-            HStack{
+            HStack(alignment: .bottom, spacing: default_spacing){
                 Text("My Recipes")
-                    .font(.title2)
-                    .foregroundStyle(.green)
-                    .padding(.leading)
+                    .modifier(Header())
+                    .foregroundStyle(Color.color_text_container_highlight)
                 Spacer()
-                Text("View all >")
-                    .font(.subheadline)
-                    .foregroundStyle(.orange)
-                    .padding(.trailing)
+                Text("View all \(Image.chevronRight)")
+                    .modifier(Span())
+                    .foregroundStyle(Color.color_button_container_primary)
             }
         }
+        .padding(.horizontal, default_spacing)
+        .padding(.vertical, default_spacing)
     }
     
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
-            HStack(){
+            HStack(spacing: default_spacing){
                 ForEach(cookbook.ownedRecipes) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
@@ -178,36 +195,42 @@ extension HomeView {
                     }
                 }
             }
-            .padding(.horizontal)
-            .padding(.vertical, 2)
+            .padding(.horizontal, default_spacing)
+
         }
         .scrollIndicators(.hidden)
     }
     
     private var titleCommunity: some View {
-        HStack{
+        HStack(alignment: .bottom, spacing: default_spacing){
             Text("Community")
-                .font(.title2)
-                .foregroundStyle(.green)
-                .padding(.leading)
+                .modifier(Header())
+                .foregroundStyle(Color.color_text_container_highlight)
             Spacer()
         }
-        
+        .padding(.horizontal, default_spacing)
+        .padding(.vertical, default_spacing)
     }
     
     private var scrollViewCommunity: some View {
-        VStack{
+        VStack(spacing: default_spacing){
             ForEach(cookbook.community) { recipe in
                 NavigationLink{
                     RecipeDetailsView(recipe: recipe)
                 }label: {
                     RecipeCardVerticalBig(recipe: recipe)
-                        .padding(.vertical, 8)
                         .tint(Color(uiColor: UIColor.label))
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, default_spacing)
         }
+    }
+    
+    private var emptyState: some View {
+        Text("It seems you don't have any recipe in your cookbook yet. Start adding someor browse the community!")
+            .modifier(Paragraph())
+            .padding(.horizontal,default_spacing)
+            .padding(.bottom,default_spacing)
     }
     
 }
@@ -216,4 +239,5 @@ extension HomeView {
 
 #Preview {
     HomeView()
+        .environmentObject(Constants.mockedCookbook)
 }

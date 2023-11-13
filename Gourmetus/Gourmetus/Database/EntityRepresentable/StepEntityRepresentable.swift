@@ -9,10 +9,11 @@ import Foundation
 
 extension Step : EntityRepresentable {
     init?(entityRepresentation: EntityRepresentation) {
-        guard let order = entityRepresentation.values["order"] as? Int else { return nil }
+        guard let order = entityRepresentation.values["order"] as? Int,
+              let title = entityRepresentation.values["title"] as? String else { return nil }
         
         self.id = entityRepresentation.id
-        self.title = entityRepresentation.values["title"] as? String
+        self.title = title
         self.texto = entityRepresentation.values["texto"] as? String
         self.tip = entityRepresentation.values["tip"] as? String
         self.imageData = entityRepresentation.values["image"] as? Data
@@ -21,15 +22,27 @@ extension Step : EntityRepresentable {
     }
     
     func encode() -> EntityRepresentation {
-        let values: [String : Any] = [
+        var values: [String : Any] = [
             "id" : self.id,
-            "title" : self.title as Any,
-            "texto" : self.texto as Any,
-            "tip" : self.tip as Any,
-            "timer" : self.timer as Any,
-            "image" : self.imageData as Any,
-            "order" : self.order as Any
+            "title" : self.title,
+            "order" : self.order
         ]
+        
+        if self.texto != nil {
+            values["texto"] = self.texto!
+        }
+        
+        if self.tip != nil {
+            values["tip"] = self.tip!
+        }
+        
+        if self.imageData != nil {
+            values["image"] = self.imageData!
+        }
+        
+        if self.timer != nil {
+            values["timer"] = self.timer!
+        }
         
         let toManyRelationships: [String : [EntityRepresentation]] = [:]
         
