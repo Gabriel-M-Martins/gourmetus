@@ -43,6 +43,8 @@ struct CreateEditStepView: View {
             ScrollView{
                 if isEmptyState {
                     Text("Add a component into the editor to build your step.")
+                        .padding()
+                        .fixedSize(horizontal: true, vertical: true)
                 } else {
                     if($menu["Image"].wrappedValue ?? false){
                         VStack {
