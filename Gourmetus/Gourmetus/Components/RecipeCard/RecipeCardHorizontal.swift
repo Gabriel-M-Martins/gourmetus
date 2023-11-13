@@ -43,8 +43,7 @@ struct RecipeCardHorizontal: View {
                         
                     Spacer()
                 }
-                difficulty
-                    .font(.subheadline)
+                KnifeView(recipe: vm.recipe)
                 Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
                     .modifier(Paragraph())
                     .foregroundStyle(Color.color_text_review_primary)
@@ -78,15 +77,6 @@ extension RecipeCardHorizontal {
             return true
         }else{
             return false
-        }
-    }
-    
-    var difficulty: some View {
-        HStack{
-            ForEach(0..<Int(vm.recipe.difficulty)){ index in
-                Image.knife
-                    .foregroundColor(Color.color_text_container_highlight)
-            }
         }
     }
     

@@ -23,6 +23,8 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var hourSelection = 0
     @Published var minuteSelection = 0
     
+    var cookbook: Cookbook = Cookbook()
+    
     @Published var editingStep: Step?
     @Published var editingIngredient: Ingredient?
     

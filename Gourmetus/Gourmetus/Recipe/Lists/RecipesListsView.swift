@@ -33,21 +33,21 @@ struct RecipesListsView: View {
             switch vm.listType{
             case .History:
                 if cookbook.history.isEmpty{
-                emptyState
+                    emptyState
                 }else{
                     historyList
                         .padding(.horizontal, default_spacing)
                 }
             case .Favorites:
                 if cookbook.favorites.isEmpty{
-                emptyState
+                    emptyState
                 }else{
                     favoritesList
                         .padding(.horizontal, default_spacing)
                 }
             case .Owned:
                 if cookbook.ownedRecipes.isEmpty{
-                emptyState
+                    emptyState
                 }else{
                     ownedList
                         .padding(.horizontal, default_spacing)
@@ -56,6 +56,13 @@ struct RecipesListsView: View {
         }
         .navigationTitle(vm.listType.description)
         .searchable(text: $searchText, placement: .automatic, prompt: "Search")
+        .navigationBarItems(trailing: NavigationLink{
+            var recipe: Binding<Recipe?> = .constant(nil)
+            CreateEditRecipeView(recipe: recipe)
+        }label: {
+            Image.plus
+        }
+        )
     }
 }
 
@@ -119,8 +126,8 @@ extension RecipesListsView {
             Spacer()
         }
         .frame(height: 515)
-//        .padding(.horizontal, default_spacing)
-//        .background(.blue)
+        //        .padding(.horizontal, default_spacing)
+        //        .background(.blue)
     }
     
 }

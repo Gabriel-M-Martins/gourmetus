@@ -38,7 +38,7 @@ struct RecipeCardVerticalSmall: View {
                     .lineLimit(1)
                     .foregroundColor(Color.color_button_container_primary)
                 
-                difficulty
+                KnifeView(recipe: vm.recipe)
                 
                 Text("By \(Image.personCircle)")
                     .modifier(Span())
@@ -61,17 +61,4 @@ struct RecipeCardVerticalSmall: View {
 
 #Preview {
     RecipeCardVerticalSmall(recipe: Constants.mockedRecipe)
-}
-
-extension RecipeCardVerticalSmall {
-    
-    var difficulty: some View {
-        HStack{
-            ForEach(0..<Int(vm.recipe.difficulty)){ index in
-                Image.knife
-                    .foregroundColor(Color.color_text_container_highlight)
-            }
-        }
-    }
-    
 }
