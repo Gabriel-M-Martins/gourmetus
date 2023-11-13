@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: Recipe
+    
+    let menuOptions: [MenuOptions] = [
+        .Edit,
+        .Delete
+    ]
     
     init(recipe: Recipe) {
         self.recipe = recipe
@@ -34,4 +40,36 @@ class RecipeDetailsViewModel: ObservableObject{
         
     }
     
+    enum MenuOptions: CaseIterable {
+        case Duplicate
+        case Edit
+        case Delete
+        case Report
+        
+        var description: String {
+            switch self {
+            case .Duplicate:
+                return "Duplicate"
+            case .Edit:
+                return "Edit"
+            case .Delete:
+                return "Delete"
+            case .Report:
+                return "Report"
+            }
+        }
+        
+        var isDestructive: Bool {
+            switch self {
+            case .Duplicate:
+                return false
+            case .Edit:
+                return false
+            case .Delete:
+                return true
+            case .Report:
+                return true
+            }
+        }
+    }
 }
