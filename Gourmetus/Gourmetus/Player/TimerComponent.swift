@@ -11,19 +11,33 @@ import Foundation
 
 struct TimerView: View {
     @State private var isRunning = false
+    @State private var initialTime: Int
     @State var remainingTime: Int
     @State var timer: Timer?
     
     @State var notificationId: UUID? = nil
     
+    init(remainingTime: Int) {
+           self._initialTime = State(initialValue: remainingTime)
+           self._remainingTime = State(initialValue: remainingTime)
+       }
+    
     var body: some View {
-        VStack {
-            Text(" Timer")
-                .font(.headline)
+        VStack (spacing: 4){
+            HStack(spacing: 0){
+                Image(systemName: "timer")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height:10)
+                Text(" Timer")
+                    .modifier(Span())
+            }
+            .foregroundColor(Color.color_text_container_muted)
+            
             
             HStack{
                 Text(timeFormatted)
-                    .font(.title)
+                    .modifier(Title())
                 
                 Button(action: {
                     isRunning.toggle()
@@ -33,17 +47,39 @@ struct TimerView: View {
                         stopTimer()
                     }
                 }) {
-                    Text(isRunning ? "Pause" : "Start")
-                        .font(.headline)
-                        .padding(5)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    Image(systemName: isRunning ? "pause.circle" : "play.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height:20)
+                        .foregroundColor(Color.color_button_container_primary)
+                    
+                    
+                   
                 }
+                
+                
+                    Button(action: {
+                        stopTimer()
+                        remainingTime = initialTime
+                        startTimer()
+                 
+                            
+                        
+                    }) {
+                        Image(systemName: "repeat.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height:20)
+                            .foregroundColor(Color.color_button_container_primary)
+          
+                    }
+                
+                
+                
             }
             
         }
-        .padding(10)
+        .padding(0)
         .background(Color.white)
         .cornerRadius(5)
     }
@@ -65,6 +101,8 @@ struct TimerView: View {
                 //print("rodando")
             } else {
                 stopTimer()
+                isRunning = false
+                remainingTime = initialTime
             }
         }
     }
