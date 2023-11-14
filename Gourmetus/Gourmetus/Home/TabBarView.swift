@@ -28,7 +28,9 @@ struct TabBarView: View {
                 }
                 .environmentObject(cookbook)
             
-            HomeView()
+            Text("Nothing to see here yet.")
+                .modifier(Title())
+                .foregroundStyle(Color.color_text_container_highlight)
                 .tabItem {
                     Label("My Kitchen", systemImage: "stove.fill")
                 }

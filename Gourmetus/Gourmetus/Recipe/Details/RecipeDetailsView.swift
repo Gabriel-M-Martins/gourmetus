@@ -19,7 +19,7 @@ struct RecipeDetailsView: View {
     @EnvironmentObject var cookbook: Cookbook
     @State private var isNextViewActivated: Bool = false
     @State private var destination: Destination = .Player
-
+    
     init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
     }
@@ -36,7 +36,7 @@ struct RecipeDetailsView: View {
                     
                     
                     
-                    VStack(alignment: .center, spacing: half_spacing) {
+                    VStack(alignment: .subCenter, spacing: half_spacing) {
                         HStack(alignment: .top) {
                             Spacer()
                             
@@ -47,6 +47,7 @@ struct RecipeDetailsView: View {
                             }
                             
                             Text("・")
+                                .alignmentGuide(.subCenter) { d in d.width/2 }
                             
                             HStack {
                                 Text("BY")
@@ -67,6 +68,7 @@ struct RecipeDetailsView: View {
                             }
                             
                             Text("・")
+                                .alignmentGuide(.subCenter) { d in d.width/2 }
                             
                             HStack {
                                 Image.starFill
@@ -81,12 +83,23 @@ struct RecipeDetailsView: View {
                     .modifier(Span())
                     
                     // TODO: componente de resizable tag collection
-                    
+                    ScrollView{
+                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
+                            TagView(Tag: tag.name) {
+                                Text("Nothing to see here yet.")
+                                    .modifier(Title())
+                                    .foregroundStyle(Color.color_text_container_highlight)
+                            }
+                        }))
+                    }
+                    .frame(width: UIScreen.main.bounds.width/1.5)
                     Divider()
                 }
+                
             }
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
+            
             
             if let description = vm.recipe.desc {
                 Section {
@@ -137,7 +150,7 @@ struct RecipeDetailsView: View {
             HStack {
                 Spacer()
                 
-                Button(action: { 
+                Button(action: {
                     isNextViewActivated = true
                     self.destination = .Player
                 }) {
@@ -154,8 +167,8 @@ struct RecipeDetailsView: View {
                         Button("") {
                             vm.toggleFavourite()
                         }
-                            .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
-                            .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
+                        .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
+                        .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
                     }
                 )
                 
@@ -200,8 +213,8 @@ struct RecipeDetailsView: View {
 
 #Preview {
     NavigationStack {
-//        RecipeDetailsView(vm: RecipeDetailsViewModel(recipe: Constants.mockedRecipe))
-//            .environmentObject(Cookbook())
+        RecipeDetailsView(recipe: Constants.mockedRecipe)
+            .environmentObject(Cookbook())
     }
 }
 
@@ -221,4 +234,14 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
         self.destination = .Edit
         self.isNextViewActivated = true
     }
+}
+
+extension HorizontalAlignment {
+    enum SubCenter: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[HorizontalAlignment.center]
+        }
+    }
+    
+    static let subCenter = HorizontalAlignment(SubCenter.self)
 }
