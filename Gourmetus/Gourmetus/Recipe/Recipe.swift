@@ -21,6 +21,7 @@ final class Recipe: Identifiable, Hashable {
     var name: String
     var desc: String?
     var difficulty: Int
+    var rating: Float
     var imageData: Data?
     var duration: Int
     
@@ -34,6 +35,7 @@ final class Recipe: Identifiable, Hashable {
         self.name = name
         self.desc = desc
         self.difficulty = difficulty
+        self.rating = 5.0
         self.imageData = imageData
         self.duration = duration
         
