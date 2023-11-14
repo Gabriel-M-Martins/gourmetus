@@ -11,6 +11,7 @@ class RecipePlayerViewModel: ObservableObject {
     @Published var recipe: Recipe
     @Published var currentStep: Step
     @Published var currentStepIndex: Int
+   
     
     init(recipe: Recipe, initialStepIndex: Int? = nil) {
             self.recipe = recipe
