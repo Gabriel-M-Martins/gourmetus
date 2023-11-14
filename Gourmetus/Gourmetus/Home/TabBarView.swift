@@ -22,13 +22,15 @@ struct TabBarView: View {
                 }
                 .environmentObject(cookbook)
             
-            RecipesListsView(listType: .History)
+            CookbookView()
                 .tabItem {
                     Label("Cookbook", systemImage: "text.book.closed.fill")
                 }
                 .environmentObject(cookbook)
             
-            HomeView()
+            Text("Nothing to see here yet.")
+                .modifier(Title())
+                .foregroundStyle(Color.color_text_container_highlight)
                 .tabItem {
                     Label("My Kitchen", systemImage: "stove.fill")
                 }

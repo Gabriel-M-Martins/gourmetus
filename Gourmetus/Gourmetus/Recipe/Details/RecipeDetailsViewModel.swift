@@ -8,8 +8,17 @@
 import Foundation
 import SwiftUI
 
+protocol RecipeDetailsDelegate {
+    func editRecipe()
+}
+
+
 class RecipeDetailsViewModel: ObservableObject{
     @Published var recipe: Recipe
+    
+    var isFavorite: Bool = false
+    var cookbook: Cookbook = Cookbook()
+    var delegate: RecipeDetailsDelegate?
     
     let menuOptions: [MenuOption] = [
         .Edit,
@@ -20,24 +29,23 @@ class RecipeDetailsViewModel: ObservableObject{
         self.recipe = recipe
     }
     
-    func isFavorite(favorites: [Recipe]) -> Bool{
-        for favorite in favorites{
-            if favorite.id == recipe.id{
-                return true
-            }
-        }
-        return false
+    func populateCookbook(cookbook: Cookbook) {
+        self.cookbook = cookbook
+        self.isFavorite = cookbook.favorites.contains(where: { $0.id == recipe.id })
     }
-
-    func toggleFavourite(recipe: Recipe, favorites: [Recipe]) -> [Recipe]{
-        var favoritesAux = Set(favorites)
-        if self.isFavorite(favorites: favorites){
-            favoritesAux.remove(recipe)
+    
+    func convertHoursMinutes() -> String{
+        return String(format: "%02d:%02d", self.recipe.duration/60, self.recipe.duration%60)
+    }
+    
+    func toggleFavourite() {
+        if isFavorite {
+            cookbook.favorites.removeAll(where: { $0.id == recipe.id })
         } else {
-            favoritesAux.insert(recipe)
+            cookbook.favorites.append(recipe)
         }
-        return Array(favoritesAux)
         
+        isFavorite.toggle()
     }
     
     func menuButtonClicked(_ option: MenuOption) {
@@ -45,7 +53,7 @@ class RecipeDetailsViewModel: ObservableObject{
         case .Duplicate:
             break
         case .Edit:
-            break
+            delegate?.editRecipe()
         case .Delete:
             break
         case .Report:

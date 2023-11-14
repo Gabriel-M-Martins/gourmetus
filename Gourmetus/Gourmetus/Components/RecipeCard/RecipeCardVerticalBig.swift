@@ -45,7 +45,7 @@ struct RecipeCardVerticalBig: View {
                             .foregroundColor(Color.color_button_container_primary)
                             .lineLimit(1)
                         
-                        difficulty
+                        KnifeView(recipe: vm.recipe)
                         
                         Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
                             .modifier(Paragraph())
@@ -110,15 +110,6 @@ extension RecipeCardVerticalBig {
             return true
         }else{
             return false
-        }
-    }
-    
-    var difficulty: some View {
-        HStack{
-            ForEach(0..<Int(vm.recipe.difficulty)){ index in
-                Image.knife
-                    .foregroundColor(Color.color_text_container_highlight)
-            }
         }
     }
     

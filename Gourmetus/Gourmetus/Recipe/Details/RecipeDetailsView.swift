@@ -9,12 +9,16 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     
-    @Injected private var repo: any Repository<Cookbook>
+    enum Destination {
+        case Player
+        case Edit
+    }
     
     @StateObject var vm: RecipeDetailsViewModel
     
     @EnvironmentObject var cookbook: Cookbook
     @State private var isNextViewActivated: Bool = false
+    @State private var destination: Destination = .Player
     
     init(recipe: Recipe) {
         self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
@@ -22,7 +26,6 @@ struct RecipeDetailsView: View {
     
     var body: some View {
         List {
-            
             Section {
                 VStack(alignment: .center, spacing: default_spacing) {
                     Image.bookFavourites
@@ -33,17 +36,18 @@ struct RecipeDetailsView: View {
                     
                     
                     
-                    VStack(alignment: .center, spacing: half_spacing) {
+                    VStack(alignment: .subCenter, spacing: half_spacing) {
                         HStack(alignment: .top) {
                             Spacer()
                             
                             HStack {
                                 Image.clockFill
                                 // TODO: Usar a duration da receita
-                                Text("00:40 MIN")
+                                Text(vm.convertHoursMinutes())
                             }
                             
                             Text("・")
+                                .alignmentGuide(.subCenter) { d in d.width/2 }
                             
                             HStack {
                                 Text("BY")
@@ -60,10 +64,11 @@ struct RecipeDetailsView: View {
                             
                             // TODO: foreach de dificuldade || componente de dificuldade
                             HStack {
-                                Image.knife
+                                KnifeView(recipe: vm.recipe)
                             }
                             
                             Text("・")
+                                .alignmentGuide(.subCenter) { d in d.width/2 }
                             
                             HStack {
                                 Image.starFill
@@ -78,12 +83,23 @@ struct RecipeDetailsView: View {
                     .modifier(Span())
                     
                     // TODO: componente de resizable tag collection
-                    
+                    ScrollView{
+                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
+                            TagView(Tag: tag.name) {
+                                Text("Nothing to see here yet.")
+                                    .modifier(Title())
+                                    .foregroundStyle(Color.color_text_container_highlight)
+                            }
+                        }))
+                    }
+                    .frame(width: UIScreen.main.bounds.width/1.5)
                     Divider()
                 }
+                
             }
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
+            
             
             if let description = vm.recipe.desc {
                 Section {
@@ -111,9 +127,9 @@ struct RecipeDetailsView: View {
             
             // TODO: Empty state de steps
             Section {
-                ForEach(vm.recipe.steps) { step in
+                ForEach(0..<vm.recipe.steps.count) { idx in
                     HStack {
-                        Text(step.title)
+                        Text(vm.recipe.steps[idx].title)
                             .foregroundStyle(Color.color_text_container_highlight)
                         
                         Spacer()
@@ -123,7 +139,8 @@ struct RecipeDetailsView: View {
                     }
                     .background(
                         // TODO: Ir para o player no passo escolhido
-                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe), label: {})
+                        
+                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe, step: idx), label: {})
                     )
                 }
             } header: {
@@ -133,7 +150,10 @@ struct RecipeDetailsView: View {
             HStack {
                 Spacer()
                 
-                Button(action: { isNextViewActivated = true }) {
+                Button(action: {
+                    isNextViewActivated = true
+                    self.destination = .Player
+                }) {
                     Text("Start")
                         .frame(width: UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.width * 0.075)
                         .foregroundStyle(Color.color_general_fixed_light)
@@ -144,9 +164,11 @@ struct RecipeDetailsView: View {
                 .buttonStyle(.borderedProminent)
                 .overlay(
                     GeometryReader { proxy in
-                        Button("") {}
-                            .buttonStyle(FavoriteButtonStyle())
-                            .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
+                        Button("") {
+                            vm.toggleFavourite()
+                        }
+                        .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
+                        .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
                     }
                 )
                 
@@ -174,7 +196,17 @@ struct RecipeDetailsView: View {
         })
         .navigationTitle(vm.recipe.name)
         .navigationDestination(isPresented: $isNextViewActivated) {
-            Text("")
+            switch destination {
+            case .Player:
+                RecipePlayerView(recipe: self.vm.recipe, step: 0)
+            case .Edit:
+                CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
+            }
+            
+        }
+        .onAppear {
+            self.vm.populateCookbook(cookbook: self.cookbook)
+            self.vm.delegate = self
         }
     }
 }
@@ -194,4 +226,22 @@ extension Binding {
             self.wrappedValue = val ?? self.wrappedValue
         }
     }
+}
+
+extension RecipeDetailsView: RecipeDetailsDelegate {
+    
+    func editRecipe() {
+        self.destination = .Edit
+        self.isNextViewActivated = true
+    }
+}
+
+extension HorizontalAlignment {
+    enum SubCenter: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[HorizontalAlignment.center]
+        }
+    }
+    
+    static let subCenter = HorizontalAlignment(SubCenter.self)
 }

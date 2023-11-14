@@ -15,8 +15,9 @@ struct RecipePlayerView: View {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     
-    init(recipe: Recipe) {
-        self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe))
+    
+    init(recipe: Recipe, step: Int) {
+        self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
@@ -262,7 +263,7 @@ struct RecipePlayerView: View {
 }
 
 #Preview {
-    RecipePlayerView(recipe: Constants.mockedRecipe)
+    RecipePlayerView(recipe: Constants.mockedRecipe, step: 0)
 }
 
 struct RotatingView<Content:View>:View{
