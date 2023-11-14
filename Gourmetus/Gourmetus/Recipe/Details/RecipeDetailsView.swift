@@ -42,7 +42,6 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.clockFill
-                                // TODO: Usar a duration da receita
                                 Text(vm.convertHoursMinutes())
                             }
                             
@@ -72,8 +71,7 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.starFill
-                                // TODO: Usar avaliação da receita
-                                Text("4.0")
+                                Text("\(String(format: "%.1f", vm.recipe.rating))")
                             }
                             .foregroundStyle(Color.color_text_review_primary)
                             
