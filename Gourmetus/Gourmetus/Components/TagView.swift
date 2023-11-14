@@ -10,24 +10,24 @@ import SwiftUI
 struct TagView<Content: View>: View{
     
     @State var Tag : String
-    @ViewBuilder let visualContent: Content
+    @ViewBuilder let destination: Content
     var width : CGFloat = 10
     var height : CGFloat = 40
     
     var body: some View {
         NavigationLink {
-            visualContent
+            destination
         } label: {
             Text(Tag)
                 .foregroundStyle(.black)
                 .frame(width: 50 + width*CGFloat(Tag.count),height: height)
                 .lineLimit(1)
                 .overlay(RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.orange, lineWidth: 3))
+                        .strokeBorder(Color.orange, lineWidth: 3))
         }
     }
 }
 
     #Preview {
-        TagView(Tag: "EASY", visualContent: {Text("Algo")})
+        TagView(Tag: "EASY", destination: {Text("Algo")})
     }

@@ -63,6 +63,7 @@ struct HomeView: View {
                         titleMyRecipes
                         if cookbook.ownedRecipes.isEmpty {
                             emptyState
+                            createRecipeButton
                         } else {
                             scrollViewMyRecipes
                         }
@@ -231,11 +232,25 @@ extension HomeView {
             .modifier(Paragraph())
             .padding(.horizontal,default_spacing)
             .padding(.bottom,default_spacing)
+        
     }
     
+    private var createRecipeButton: some View {
+        NavigationLink{
+            let recipe: Binding<Recipe?> = .constant(nil)
+            CreateEditRecipeView(recipe: recipe)
+        } label: {
+            Text("Add recipe")
+                .frame(width: UIScreen.main.bounds.width * 0.55, height: UIScreen.main.bounds.width * 0.075)
+                .foregroundStyle(Color.color_general_fixed_light)
+                .modifier(Header())
+            
+        }
+        .tint(.color_button_container_primary)
+        .buttonStyle(.borderedProminent)
+
+    }
 }
-
-
 
 #Preview {
     HomeView()
