@@ -23,6 +23,7 @@ struct TimerView: View {
        }
     
     var body: some View {
+<<<<<<< Updated upstream
         VStack (spacing: 4){
             HStack(spacing: 0){
                 Image(systemName: "timer")
@@ -34,6 +35,11 @@ struct TimerView: View {
             }
             .foregroundColor(Color.color_text_container_muted)
             
+=======
+        VStack {
+            Text("Timer")
+                .font(.headline)
+>>>>>>> Stashed changes
             
             HStack{
                 Text(timeFormatted)
