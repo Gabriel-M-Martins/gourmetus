@@ -8,7 +8,7 @@
 import Foundation
 
 /// The half-way between the structs used on the app views and business logic and the entities stored on databases.
-struct EntityRepresentation {
+class EntityRepresentation {
     /// Shared Id between databases to ensure data consistency.
     let id: UUID
     /// Name of the entity stored on the databases. All databases used should share the same entity names.
@@ -24,6 +24,14 @@ struct EntityRepresentation {
     /// This should **only** map to children relationships and **never** to parent relationships as to avoid
     /// infinite mapping loops.
     let toManyRelationships: [String : [EntityRepresentation]]
+    
+    init(id: UUID, entityName: String, values: [String : Any], toOneRelationships: [String : EntityRepresentation], toManyRelationships: [String : [EntityRepresentation]]) {
+        self.id = id
+        self.entityName = entityName
+        self.values = values
+        self.toOneRelationships = toOneRelationships
+        self.toManyRelationships = toManyRelationships
+    }
 }
 
 /// Structs that are going to be stored in a database should implement this protocol to proper map the communication with *any* database.

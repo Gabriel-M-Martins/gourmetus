@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct RecipeCardMini: View {
-        
-    @StateObject var vm: RecipeCardMiniViewModel
     
-    init(recipe: Recipe) {
-        self._vm = StateObject(wrappedValue: RecipeCardMiniViewModel(recipe: recipe))
-    }
+    var recipe: Recipe
     
     var body: some View {
         VStack(alignment: .leading, spacing: half_spacing){
-            if let imgData = vm.recipe.imageData,
+            if let imgData = recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
@@ -42,7 +38,7 @@ struct RecipeCardMini: View {
                     )
                     
             }
-            Text(vm.recipe.name)
+            Text(recipe.name)
                 .modifier(Paragraph())
                 .lineLimit(1)
 
@@ -55,6 +51,5 @@ struct RecipeCardMini: View {
 }
 
 #Preview {
-    HomeView()
-        .environmentObject(Constants.mockedCookbook)
+    RecipeCardMini(recipe: Constants.mockedRecipe)
 }

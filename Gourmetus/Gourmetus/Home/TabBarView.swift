@@ -9,47 +9,40 @@ import SwiftUI
 
 struct TabBarView: View {
     
-    @Injected private var cookbookRepo: any Repository<Cookbook>
-    
-    @StateObject var cookbook: Cookbook = Cookbook()
+    @StateObject private var cookbook: Cookbook = Cookbook()
     
     var body: some View {
         TabView{
             
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-                .environmentObject(cookbook)
-            
-            CookbookView()
-                .tabItem {
-                    Label("Cookbook", systemImage: "text.book.closed.fill")
-                }
-                .environmentObject(cookbook)
-            
-            HomeView()
-                .tabItem {
-                    Label("My Kitchen", systemImage: "stove.fill")
-                }
-                .environmentObject(cookbook)
-
-        }
-        .onAppear(perform: {
-            if let aux = cookbookRepo.fetch().first {
-                self.cookbook.id = aux.id
-                self.cookbook.ownedRecipes = aux.ownedRecipes
-                self.cookbook.favorites = aux.favorites
-                self.cookbook.history = aux.history
-                self.cookbook.community = aux.community
-            }else{
-                self.cookbook.ownedRecipes = Constants.mockedRecipes
-//                self.cookbook.favorites = Constants.mockedRecipeArray
-                self.cookbook.history = Constants.mockedRecipes
-                self.cookbook.community = Constants.mockedRecipes
-                cookbookRepo.save(cookbook)
+            NavigationStack {
+                HomeView()
+                    .environmentObject(cookbook)
             }
-        })
+            .tabItem {
+                Label("Home", systemImage: "house")
+            }
+            
+            NavigationStack {
+                CookbookView()
+                    .environmentObject(cookbook)
+            }
+            .tabItem {
+                Label("Cookbook", systemImage: "text.book.closed.fill")
+            }
+            
+            NavigationStack {
+                SearchView()
+                    .environmentObject(cookbook)
+            }
+            .tabItem {
+                Label("My Kitchen", systemImage: "stove.fill")
+            }
+            
+        }
+        .tint(Color.color_button_container_primary)
+        .onAppear {
+            cookbook.fetch()
+        }
     }
 }
 

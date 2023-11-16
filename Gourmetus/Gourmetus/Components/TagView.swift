@@ -7,27 +7,31 @@
 
 import SwiftUI
 
-struct TagView<Content: View>: View{
+struct TagView: View{
     
-    @State var Tag : String
-    @ViewBuilder let visualContent: Content
-    var width : CGFloat = 10
-    var height : CGFloat = 40
+    @State var text : String
+
+    @Binding var selected: Bool
     
     var body: some View {
-        NavigationLink {
-            visualContent
-        } label: {
-            Text(Tag)
-                .foregroundStyle(.black)
-                .frame(width: 50 + width*CGFloat(Tag.count),height: height)
-                .lineLimit(1)
-                .overlay(RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.orange, lineWidth: 3))
-        }
+        Text(text)
+            .modifier(Span())
+            .foregroundStyle(selected ? Color.color_general_fixed_light : Color.color_text_container_primary)
+            .padding(.vertical, half_spacing)
+            .padding(.horizontal, default_spacing)
+            .lineLimit(1)
+            .background {
+                if selected {
+                    RoundedRectangle(cornerRadius: hard_radius)
+                        .fill(Color.color_button_container_primary)
+                } else {
+                    RoundedRectangle(cornerRadius: hard_radius)
+                        .strokeBorder(Color.color_button_container_primary, lineWidth: 2)
+                }
+            }
     }
 }
 
-    #Preview {
-        TagView(Tag: "EASY", visualContent: {Text("Algo")})
-    }
+#Preview {
+    TagView(text: "fo caralho porra", selected: .constant(true))
+}

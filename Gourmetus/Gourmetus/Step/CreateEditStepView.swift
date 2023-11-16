@@ -170,7 +170,7 @@ struct CreateEditStepView: View {
 }
 
 #Preview {
-    CreateEditStepView(editingStep: .constant(Constants.mockedSteps[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
+    CreateEditStepView(editingStep: .constant(Constants.mockedSteps1[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
                                                                                       Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)], recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
 }
 

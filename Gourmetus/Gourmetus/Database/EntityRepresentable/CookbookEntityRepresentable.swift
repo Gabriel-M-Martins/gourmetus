@@ -67,7 +67,7 @@ extension Cookbook : EntityRepresentable {
         
         let toOneRelationships: [String : EntityRepresentation] = [:]
         
-        return EntityRepresentation(id: self.id, entityName: "RecipeEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        return EntityRepresentation(id: self.id, entityName: "CookbookEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
     }
 }
 

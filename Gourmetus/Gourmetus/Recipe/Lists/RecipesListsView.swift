@@ -8,63 +8,56 @@
 import SwiftUI
 
 struct RecipesListsView: View {
-    
-    @StateObject var vm : RecipesListsViewModel
+    var listType: ListType
     
     @EnvironmentObject var cookbook: Cookbook
-    
     @State private var searchText = ""
     
-    init(listType: ListType) {
-        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
-    }
-    
     var body: some View {
-        ScrollView{
+        ScrollView {
             Divider()
-            HStack{
-                Text(vm.listType.description2)
+            HStack {
+                Text(listType.description2)
                     .modifier(Header())
                     .padding(.leading, default_spacing)
                 Spacer()
             }
             .padding(.vertical ,default_spacing)
             
-            switch vm.listType{
+            switch listType {
             case .History:
-                if cookbook.history.isEmpty{
+                if cookbook.history.isEmpty {
                     emptyState
-                }else{
+                } else {
                     historyList
                         .padding(.horizontal, default_spacing)
                 }
             case .Favorites:
-                if cookbook.favorites.isEmpty{
+                if cookbook.favorites.isEmpty {
                     emptyState
-                }else{
+                } else {
                     favoritesList
                         .padding(.horizontal, default_spacing)
                 }
             case .Owned:
-                if cookbook.ownedRecipes.isEmpty{
+                if cookbook.ownedRecipes.isEmpty {
                     emptyState
-                }else{
+                } else {
                     ownedList
                         .padding(.horizontal, default_spacing)
                 }
             }
         }
-        .navigationTitle(vm.listType.description)
+        .navigationTitle(listType.description)
         .searchable(text: $searchText, placement: .automatic, prompt: "Search")
-        .navigationBarItems(trailing: NavigationLink{
-            let recipe: Binding<Recipe?> = .constant(nil)
-            CreateEditRecipeView(recipe: recipe)
-        }label: {
-            if vm.listType == .Owned {
-                Image.plus
+        .toolbar {
+            if listType == .Owned {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image.plus
+                        .foregroundStyle(Color.color_button_container_primary)
+                }
             }
         }
-        )
     }
 }
 
@@ -83,8 +76,11 @@ extension RecipesListsView {
                 NavigationLink{
                     RecipeDetailsView(recipe: recipe)
                 }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
+                    RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
+                        _ = cookbook.toggleFavourite(recipe: recipe)
+                    } })
+                    .tint(Color(uiColor: UIColor.label))
+                    .padding(.bottom, default_spacing)
                 }
                 .padding(.bottom, half_spacing)
             }
@@ -97,9 +93,11 @@ extension RecipesListsView {
                 NavigationLink{
                     RecipeDetailsView(recipe: recipe)
                 }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
-                        .padding(.bottom, default_spacing)
+                    RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
+                        _ = cookbook.toggleFavourite(recipe: recipe)
+                    } })
+                    .tint(Color(uiColor: UIColor.label))
+                    .padding(.bottom, default_spacing)
                 }
             }
         }
@@ -111,9 +109,11 @@ extension RecipesListsView {
                 NavigationLink{
                     RecipeDetailsView(recipe: recipe)
                 }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
-                        .padding(.bottom, default_spacing)
+                    RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
+                        _ = cookbook.toggleFavourite(recipe: recipe)
+                    } })
+                    .tint(Color(uiColor: UIColor.label))
+                    .padding(.bottom, default_spacing)
                 }
             }
         }
@@ -137,5 +137,4 @@ extension RecipesListsView {
 
 #Preview {
     RecipesListsView(listType: .Favorites)
-        .environmentObject(Constants.mockedCookbook1)
 }

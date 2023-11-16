@@ -9,82 +9,76 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var vm: HomeViewModel = HomeViewModel()
-    
     @EnvironmentObject var cookbook: Cookbook
     
-    @State private var searchText = ""
-    
     var body: some View {
-        NavigationStack{
-            ScrollView{
+        ScrollView{
+            VStack(spacing: 0){
+                //                Button(action: {
+                //                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                //                        if success {
+                //                            print("All set!")
+                //                        } else if let error = error {
+                //                            print(error.localizedDescription)
+                //                        }
+                //                    }
+                //                }, label: {
+                //                    Text("Button")
+                //                })
+                //                    Divider()
+                
+                //History
                 VStack(spacing: 0){
-                    //                Button(action: {
-                    //                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    //                        if success {
-                    //                            print("All set!")
-                    //                        } else if let error = error {
-                    //                            print(error.localizedDescription)
-                    //                        }
-                    //                    }
-                    //                }, label: {
-                    //                    Text("Button")
-                    //                })
-                    //                    Divider()
-                    
-                    //History
-                    VStack(spacing: 0){
-                        titleRecentlyAccessed
-                        if cookbook.history.isEmpty {
-                            emptyState
-                        } else {
-                            scrollViewRecentlyAccessed
-                        }
+                    titleRecentlyAccessed
+                    if cookbook.history.isEmpty {
+                        emptyState
+                    } else {
+                        scrollViewRecentlyAccessed
                     }
-                    .padding(.bottom, default_spacing)
-                    
-                    Divider()
-                    
-                    //Favorites
-                    VStack(spacing: 0){
-                        titleFavourites
-                        if cookbook.favorites.isEmpty {
-                            emptyState
-                        } else {
-                            scrollViewFavourites
-                        }
-                    }
-                    .padding(.bottom, default_spacing)
-                    
-                    Divider()
-                    
-                    //Owned
-                    VStack(spacing: 0){
-                        titleMyRecipes
-                        if cookbook.ownedRecipes.isEmpty {
-                            emptyState
-                        } else {
-                            scrollViewMyRecipes
-                        }
-                    }
-                    .padding(.bottom, default_spacing)
-                    
-                    Divider()
-                    
-                    //Community
-                    VStack(spacing: 0){
-                        titleCommunity
-                        if cookbook.community.isEmpty{
-                            emptyState
-                        }else{
-                            scrollViewCommunity
-                        }
-                    }
-                    
                 }
-                .navigationTitle("Menu")
-                .searchable(text: $searchText, placement: .automatic, prompt: "Search")
+                .padding(.bottom, default_spacing)
+                
+                Divider()
+                
+                //Favorites
+                VStack(spacing: 0){
+                    titleFavourites
+                    if cookbook.favorites.isEmpty {
+                        emptyState
+                    } else {
+                        scrollViewFavourites
+                    }
+                }
+                .padding(.bottom, default_spacing)
+                
+                Divider()
+                
+                //Owned
+                VStack(spacing: 0){
+                    titleMyRecipes
+                    if cookbook.ownedRecipes.isEmpty {
+                        emptyState
+                    } else {
+                        scrollViewMyRecipes
+                    }
+                }
+                .padding(.bottom, default_spacing)
+                
+                Divider()
+                
+                //Community
+                VStack(spacing: 0){
+                    titleCommunity
+                    if cookbook.community.isEmpty {
+                        emptyState
+                    }else{
+                        scrollViewCommunity
+                    }
+                }
+                
             }
+            .navigationTitle("Menu")
+            .searchable(text: .constant(""), placement: .automatic, prompt: "Search")
         }
     }
 }
@@ -114,11 +108,11 @@ extension HomeView {
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing){
-                ForEach(cookbook.history) { recipe in
+                ForEach(0..<cookbook.history.count, id:\.self) { idx in
                     NavigationLink{
-                        RecipeDetailsView(recipe: recipe)
+                        RecipeDetailsView(recipe: cookbook.history[idx])
                     }label: {
-                        RecipeCardMini(recipe: recipe)
+                        RecipeCardMini(recipe: $cookbook.history[idx].wrappedValue)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -149,12 +143,12 @@ extension HomeView {
     
     private var scrollViewFavourites: some View {
         ScrollView(.horizontal){
-            HStack(spacing: default_spacing){
+            HStack(spacing: default_spacing) {
                 ForEach(cookbook.favorites) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
-                        RecipeCardHorizontal(recipe: recipe)
+                        RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -168,7 +162,7 @@ extension HomeView {
     private var titleMyRecipes: some View {
         NavigationLink{
             RecipesListsView(listType: .Owned)
-        }label: {
+        } label: {
             HStack(alignment: .bottom, spacing: default_spacing){
                 Text("My Recipes")
                     .modifier(Header())
@@ -190,13 +184,13 @@ extension HomeView {
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
-                        RecipeCardVerticalSmall(recipe: recipe)
+                        RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
             }
             .padding(.horizontal, default_spacing)
-
+            
         }
         .scrollIndicators(.hidden)
     }
@@ -215,11 +209,14 @@ extension HomeView {
     private var scrollViewCommunity: some View {
         VStack(spacing: default_spacing){
             ForEach(cookbook.community) { recipe in
-                NavigationLink{
+                NavigationLink {
                     RecipeDetailsView(recipe: recipe)
-                }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
+                } label: {
+                    RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
+                        _ = cookbook.toggleFavourite(recipe: recipe)
+                    } })
+                    .tint(Color(uiColor: UIColor.label))
+                    .padding(.bottom, default_spacing)
                 }
             }
             .padding(.horizontal, default_spacing)
@@ -229,8 +226,8 @@ extension HomeView {
     private var emptyState: some View {
         Text("It seems you don't have any recipe in your cookbook yet. Start adding someor browse the community!")
             .modifier(Paragraph())
-            .padding(.horizontal,default_spacing)
-            .padding(.bottom,default_spacing)
+            .padding(.horizontal, default_spacing)
+            .padding(.bottom, default_spacing)
     }
     
 }
@@ -238,6 +235,7 @@ extension HomeView {
 
 
 #Preview {
-    HomeView()
-        .environmentObject(Constants.mockedCookbook)
+    NavigationStack {
+        HomeView()
+    }
 }

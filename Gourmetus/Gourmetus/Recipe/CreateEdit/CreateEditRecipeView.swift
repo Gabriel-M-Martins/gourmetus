@@ -13,7 +13,7 @@ struct CreateEditRecipeView: View {
     
     @State private var editingStep: Step?
     
-    @Binding var recipe: Recipe?
+    var recipe: Recipe?
     
     @State private var selectedDifficulty: Int = 1
     
@@ -269,7 +269,7 @@ struct CreateEditRecipeView: View {
 
 struct CreateEditRecipeView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateEditRecipeView(recipe: .constant(Constants.mockedRecipe))
+        CreateEditRecipeView(recipe: Constants.mockedRecipe)
         
     }
 }
