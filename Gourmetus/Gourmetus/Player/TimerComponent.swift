@@ -37,6 +37,10 @@ struct TimerView: View {
 //            Text("Timer")
 //                .font(.headline)
             
+        VStack {
+            Text("Timer")
+                .font(.headline)
+            
             HStack{
                 Text(timeFormatted)
                     .modifier(Title())
@@ -56,27 +60,27 @@ struct TimerView: View {
                         .foregroundColor(Color.color_button_container_primary)
                     
                     
-                   
+                    
                 }
                 
                 
-                    Button(action: {
-                        stopTimer()
-                        remainingTime = initialTime
-                        startTimer()
-                 
-                            
-                        
-                    }) {
-                        Image(systemName: "repeat.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height:20)
-                            .foregroundColor(Color.color_button_container_primary)
-          
-                    }
+                Button(action: {
+                    stopTimer()
+                    remainingTime = initialTime
+                    startTimer()
+                    
+                    
+                    
+                }) {
+                    Image(systemName: "repeat.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height:20)
+                        .foregroundColor(Color.color_button_container_primary)
+                    
+                }
                 
-                
+            }
                 
             }
             

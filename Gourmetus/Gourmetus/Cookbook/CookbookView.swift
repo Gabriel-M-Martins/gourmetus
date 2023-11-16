@@ -24,6 +24,9 @@ struct CookbookView: View {
                             CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
                                 RecipesListsView(listType: .History)
                             })
+                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
+                            Text("Mine")
+                        })
                             .frame(width: scale)
                             Divider()
                             
@@ -38,7 +41,14 @@ struct CookbookView: View {
                             })
                             .frame(width: scale)
                         }
+                        
                         Spacer()
+
+                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
+                            Text("Favorites")
+                        })
+                            .frame(width: scale)
+                        Divider()
                     }
                 }
             }

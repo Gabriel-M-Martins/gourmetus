@@ -201,6 +201,8 @@ struct RecipeDetailsView: View {
                 CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
             }
 
+            RecipePlayerView(recipe: self.vm.recipe,step: 0)
+
         }
         .onAppear {
             self.vm.populateCookbook(cookbook: self.cookbook)
