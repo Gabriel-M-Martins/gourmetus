@@ -14,6 +14,7 @@ struct RecipesListsView: View {
     @EnvironmentObject var cookbook: Cookbook
     
     @State private var searchText = ""
+//    @ObservedObject var searchBarResponder = SearchBarResponder()
     
     init(listType: ListType) {
         self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
@@ -21,6 +22,7 @@ struct RecipesListsView: View {
     
     var body: some View {
         ScrollView{
+//            CurstomSearchBar(text: $searchText, isFirstResponder: searchBarResponder.isActive)
             Divider()
             HStack{
                 Text(vm.listType.description2)
@@ -65,10 +67,17 @@ struct RecipesListsView: View {
             }
         }
         )
+//        .onAppear{
+//            activateSearch()
+//        }
     }
 }
 
 extension RecipesListsView {
+    
+//    func activateSearch() {
+//            searchBarResponder.isActive = true
+//    }
     
     private var historyList: some View {
         ForEach(cookbook.history) { recipe in
