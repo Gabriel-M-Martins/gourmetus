@@ -13,7 +13,7 @@ struct HomeView: View {
     
     @EnvironmentObject var cookbook: Cookbook
     
-    @State private var searchText = ""
+    @State private var isShowing: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -33,11 +33,18 @@ struct HomeView: View {
                     //                    Divider()
                     
                     //History
+                    NavigationLink{
+//                        self.isShowing = true
+                        RecipesListsView(listType: .Owned)
+                    } label: {
+                        SearchBarView()
+                    }
+                    .fullScreenCover(isPresented: $isShowing) {
+                        RecipesListsView(listType: .Owned)
+                    }
                     VStack(spacing: 0){
-                        titleRecentlyAccessed
-                        if cookbook.history.isEmpty {
-                            emptyState
-                        } else {
+                        if !cookbook.history.isEmpty {
+                            titleRecentlyAccessed
                             scrollViewRecentlyAccessed
                         }
                     }
@@ -47,10 +54,9 @@ struct HomeView: View {
                     
                     //Favorites
                     VStack(spacing: 0){
-                        titleFavourites
-                        if cookbook.favorites.isEmpty {
-                            emptyState
-                        } else {
+                        
+                        if !cookbook.favorites.isEmpty {
+                            titleFavourites
                             scrollViewFavourites
                         }
                     }
@@ -74,17 +80,16 @@ struct HomeView: View {
                     
                     //Community
                     VStack(spacing: 0){
-                        titleCommunity
-                        if cookbook.community.isEmpty{
-                            emptyState
-                        }else{
+                        
+                        if !cookbook.community.isEmpty{
+                            titleCommunity
                             scrollViewCommunity
                         }
                     }
                     
                 }
                 .navigationTitle("Menu")
-                .searchable(text: $searchText, placement: .automatic, prompt: "Search")
+                //                .searchable(text: $searchText, placement: .automatic, prompt: "Search")
             }
         }
     }
@@ -197,7 +202,7 @@ extension HomeView {
                 }
             }
             .padding(.horizontal, default_spacing)
-
+            
         }
         .scrollIndicators(.hidden)
     }
@@ -248,7 +253,7 @@ extension HomeView {
         }
         .tint(.color_button_container_primary)
         .buttonStyle(.borderedProminent)
-
+        
     }
 }
 
