@@ -20,7 +20,10 @@ struct CookbookView: View {
                     
                     HStack {
                         Spacer()
+<<<<<<< Updated upstream
                         
+=======
+>>>>>>> Stashed changes
                         VStack {
                             CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
                                 RecipesListsView(listType: .History)
@@ -38,9 +41,11 @@ struct CookbookView: View {
                                 RecipesListsView(listType: .Favorites)
                             })
                             .frame(width: scale)
-                            Divider()
                         }
+<<<<<<< Updated upstream
                         
+=======
+>>>>>>> Stashed changes
                         Spacer()
                     }
                 }

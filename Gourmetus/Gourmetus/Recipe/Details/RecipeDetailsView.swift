@@ -194,6 +194,10 @@ struct RecipeDetailsView: View {
         })
         .navigationTitle(vm.recipe.name)
         .navigationDestination(isPresented: $isNextViewActivated) {
+<<<<<<< Updated upstream
+=======
+//<<<<<<< Updated upstream
+>>>>>>> Stashed changes
             switch destination {
             case .Player:
                 RecipePlayerView(recipe: self.vm.recipe, step: 0)
@@ -201,6 +205,12 @@ struct RecipeDetailsView: View {
                 CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
             }
             
+<<<<<<< Updated upstream
+=======
+//=======
+//            RecipePlayerView(recipe: self.vm.recipe,step: 0)
+//>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         }
         .onAppear {
             self.vm.populateCookbook(cookbook: self.cookbook)
