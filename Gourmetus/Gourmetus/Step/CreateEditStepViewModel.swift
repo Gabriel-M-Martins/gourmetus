@@ -14,6 +14,7 @@ class CreateEditStepViewModel: ObservableObject {
     @Published var title = ""
     @Published var totalTime: Int? = 0
     @Published var ingredientsAdded: Set<Ingredient> = []
+    @Published var menu = ["Image" : false, "Text": false, "Tip": false, "Timer": false]
     
     func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
         if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
@@ -46,8 +47,12 @@ class CreateEditStepViewModel: ObservableObject {
         }
     }
     
-    func addIngredient(ingredient: Ingredient){
-        ingredientsAdded.insert(ingredient)
+    func toggleIngredient(ingredient: Ingredient){
+        if(ingredientsAdded.contains(ingredient)){
+            ingredientsAdded.remove(ingredient)
+        } else{
+            ingredientsAdded.insert(ingredient)
+        }
     }
 
 }

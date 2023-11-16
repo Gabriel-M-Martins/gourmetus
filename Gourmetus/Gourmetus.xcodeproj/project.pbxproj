@@ -62,6 +62,7 @@
 		A7F16B312AE8394100F3ADF3 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B302AE8394100F3ADF3 /* Step.swift */; };
 		A7F16B342AE83A1A00F3ADF3 /* IngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */; };
 		A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F16B352AE83B0300F3ADF3 /* Constants.swift */; };
+		CE2298F22B02B5FD00D34B2D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CE2298F12B02B5FD00D34B2D /* Localizable.xcstrings */; };
 		CE22A9702AFC06760064EEAB /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22A96F2AFC06760064EEAB /* TagView.swift */; };
 		CE22A9722AFD5C000064EEAB /* ResizableTagGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22A9712AFD5C000064EEAB /* ResizableTagGroup.swift */; };
 		CE4265A82AE856A400FBD85B /* Cookbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265A72AE856A400FBD85B /* Cookbook.swift */; };
@@ -128,6 +129,7 @@
 		A7F16B302AE8394100F3ADF3 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		A7F16B332AE83A1A00F3ADF3 /* IngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientModel.swift; sourceTree = "<group>"; };
 		A7F16B352AE83B0300F3ADF3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE2298F12B02B5FD00D34B2D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		CE22A96F2AFC06760064EEAB /* TagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		CE22A9712AFD5C000064EEAB /* ResizableTagGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableTagGroup.swift; sourceTree = "<group>"; };
 		CE4265A72AE856A400FBD85B /* Cookbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cookbook.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 		A785B5422AE1C3A0002E1D1F /* Gourmetus */ = {
 			isa = PBXGroup;
 			children = (
+				CE2298F12B02B5FD00D34B2D /* Localizable.xcstrings */,
 				305F2CB12AFE74F900AF2AF5 /* Duration */,
 				7BDC84042AFD4AC2006F7BF6 /* Design System */,
 				A7CA1AEE2AFAD06000BF334D /* Database */,
@@ -433,6 +436,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = A785B5372AE1C3A0002E1D1F;
 			productRefGroup = A785B5412AE1C3A0002E1D1F /* Products */;
@@ -450,6 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B98BD332AFD4695007E4F76 /* Design Assets.xcassets in Resources */,
+				CE2298F22B02B5FD00D34B2D /* Localizable.xcstrings in Resources */,
 				A785B54B2AE1C3A2002E1D1F /* Preview Assets.xcassets in Resources */,
 				A785B5482AE1C3A2002E1D1F /* Assets.xcassets in Resources */,
 			);
