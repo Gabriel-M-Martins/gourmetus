@@ -19,7 +19,8 @@ struct TagView<Content: View>: View{
             destination
         } label: {
             Text(Tag)
-                .foregroundStyle(.black)
+//                .foregroundStyle(Color.color_general_fixed_dark)
+                .tint(Color(uiColor: UIColor.label))
                 .frame(width: 50 + width*CGFloat(Tag.count),height: height)
                 .lineLimit(1)
                 .overlay(RoundedRectangle(cornerRadius: 8)
