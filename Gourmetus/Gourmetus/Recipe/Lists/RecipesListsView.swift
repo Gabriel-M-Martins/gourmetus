@@ -35,14 +35,18 @@ struct RecipesListsView: View {
     }
     
     var recipes: [Recipe] {
+        var result: [Recipe] = []
+        
         switch self.listType {
         case .History:
-            return filterRecipes(cookbook.history)
+            result = cookbook.history
         case .Owned:
-            return filterRecipes(cookbook.ownedRecipes)
+            result = cookbook.ownedRecipes
         case .Favorites:
-            return filterRecipes(cookbook.favorites)
+            result = cookbook.favorites
         }
+        
+        return filterRecipes(result)
     }
     
     var body: some View {
@@ -133,7 +137,7 @@ struct RecipesListsView: View {
 
 #Preview {
     NavigationStack {
-        RecipesListsView(listType: .Owned)
+        RecipesListsView(listType: .History)
     }
     .environmentObject(Constants.mockedCookbook)
         

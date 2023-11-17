@@ -219,8 +219,6 @@ struct RecipeDetailsView: View {
                 CreateEditRecipeView(recipe: recipe)
             }
 
-            RecipePlayerView(recipe: recipe, step: 0)
-
         }
         .onAppear {
             self.vm.delegate = self
