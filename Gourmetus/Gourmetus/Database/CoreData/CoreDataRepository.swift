@@ -67,6 +67,12 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
         
         try? entity.managedObjectContext?.save()
     }
+    
+    func save(_ models: [Model]) {
+        for model in models {
+            save(model)
+        }
+    }
 }
 
 extension CoreDataRepository {

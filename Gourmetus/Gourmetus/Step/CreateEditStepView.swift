@@ -10,7 +10,6 @@ import PhotosUI
 
 struct CreateEditStepView: View {
     
-    @State var menu = ["Image" : false, "Text": false, "Tip": false, "Timer": false]
     @Binding var editingStep: Step?
     @State var ingredients: [Ingredient] = []
     @StateObject private var imageViewModel = PhotoPickerViewModel()
@@ -21,38 +20,41 @@ struct CreateEditStepView: View {
     @State var selectedIngediant: Ingredient = Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg)
     
     var menuKeys: [String] {
-        Array($menu.wrappedValue.keys).sorted()
+        Array($stepViewModel.menu.wrappedValue.keys).sorted()
     }
     
     var isEmptyState: Bool {
-        true
+        $stepViewModel.menu["Image"].wrappedValue == false && $stepViewModel.menu["Text"].wrappedValue == false && stepViewModel.ingredientsAdded == [] && $stepViewModel.menu["Tip"].wrappedValue == false && $stepViewModel.menu["Timer"].wrappedValue == false
     }
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing:16) {
+        VStack(alignment: .leading, spacing:default_spacing) {
             HStack() {
                 Text("Title")
                     .font(.headline)
                 TextField("Step Title", text: $stepViewModel.title)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-            .padding(.leading,16)
-            .padding(.trailing,16)
+            .padding(.leading,default_spacing)
+            .padding(.trailing,default_spacing)
             
-            ScrollView{
+            ScrollView {
                 if isEmptyState {
-                    Text("Add a component into the editor to build your step.")
-                        .padding()
-                        .fixedSize(horizontal: true, vertical: true)
+                    HStack {
+                        Text("Add a component into the editor to build your step.")
+                            .padding()
+                        Spacer()
+                    }
+                        //.fixedSize(horizontal: true, vertical: true)
                 } else {
-                    if($menu["Image"].wrappedValue ?? false){
+                    if($stepViewModel.menu["Image"].wrappedValue ?? false) {
                         VStack {
                             Image(uiImage: imageViewModel.selectedImage!)
                                 .resizable()
-                                .cornerRadius(8)
+                                .cornerRadius(half_spacing)
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 360, height: 100)
+//                                .frame(width: 360, height: 100)
                                 .foregroundColor(.red)
                                 .background(Color(.brandWhite))
                             
@@ -61,60 +63,75 @@ struct CreateEditStepView: View {
                                 Text("Select Photos")
                             }
                         }
+                        .padding()
+                        .background(Color.brandWhite)
                     }
                     
                     
-                    if ($menu["Text"].wrappedValue ?? false) {
+                    if ($stepViewModel.menu["Text"].wrappedValue ?? false) {
                         TextField("Enter text", text: $stepViewModel.texto,axis: .vertical)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .lineLimit(4)
-                            .background(Color(.brandWhite))
+                            .padding()
+                            .background(Color(.brandLightGray))
                         
                     }
                     
                     if (stepViewModel.ingredientsAdded != []) {
                         VStack(alignment: .leading) {
                             Text("Ingredients")
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .foregroundStyle(.gray)
-                                .padding(.bottom,-12)
-                                .padding(.top,6)
-                                .padding(.leading,16)
-                            ResizableTagGroup(visualContent: stepViewModel.ingredientsAdded.map({ Text($0.name)
-                                    .padding(6)
-                                    .foregroundColor(.white)
-                                .background(Color(.brandGreen), in: .rect(cornerRadius: 6))})) //[TagView(Tag: "Algo", visualContent: {Text("O")})]
+                                .padding(.bottom,-default_spacing)
+                                .padding(.top,half_spacing)
+                                .padding(.leading,default_spacing)
+                            ResizableTagGroup(visualContent: stepViewModel.ingredientsAdded.map({ ingredient in
+                                Button(action: {
+                                    stepViewModel.toggleIngredient(ingredient: ingredient)
+                                }, label: {
+                                    Text(ingredient.name)
+                                        .padding(half_spacing)
+                                        .foregroundColor(.white)
+                                        .background(Color(.brandGreen), in: .rect(cornerRadius: hard_radius))
+                                })
+                            }))
                             .padding()
                         }
                         .background(Color(.brandWhite))
+                        .padding()
                     }
                     
-                    if ($menu["Tip"].wrappedValue ?? false) {
+                    if ($stepViewModel.menu["Tip"].wrappedValue ?? false) {
                         TextField("Enter tip", text: $stepViewModel.tip,axis: .vertical)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .lineLimit(4)
-                            .background(Color(.brandWhite))
+                            .padding()
+                            .background(Color(.brandLightGray))
                     }
                     
-                    if ($menu["Timer"].wrappedValue ?? false) {
+                    if ($stepViewModel.menu["Timer"].wrappedValue ?? false) {
                         VStack(alignment: .leading) {
                             TimePicker(totalTime: $stepViewModel.totalTime)
                         }
+                        .background(Color.brandWhite)
+                        .padding()
                     }
                 }
             }
             .background(Color(.brandLightGray))
+            
             
             VStack(alignment: .leading) {
                 List{
                     Section{
                         ForEach(menuKeys, id: \.self) { key in
                             HStack {
-                                Text(key)
+                                Text(LocalizedStringKey(key))
                                 
                                 Spacer()
                                 
                                 Button(action: {
-                                    menu[key] = !(menu[key] ?? true)
+                                    stepViewModel.menu[key] = !(stepViewModel.menu[key] ?? true)
                                 }, label: {
                                     Text("Add")
                                         .foregroundStyle(.orange)
@@ -129,9 +146,9 @@ struct CreateEditStepView: View {
                             Spacer()
                             
                             Menu("Add"){
-                                ForEach(ingredients){ ingredient in
+                                ForEach(ingredients.filter({ !stepViewModel.ingredientsAdded.contains($0) })){ ingredient in
                                     Button(ingredient.name) {
-                                        stepViewModel.addIngredient(ingredient: ingredient)
+                                        stepViewModel.toggleIngredient(ingredient: ingredient)
                                     }
                                 }
                             }

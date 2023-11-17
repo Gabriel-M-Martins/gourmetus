@@ -12,7 +12,7 @@ protocol RecipeDetailsDelegate {
     func editRecipe()
 }
 
-class RecipeDetailsViewModel: ObservableObject{
+class RecipeDetailsViewModel: ObservableObject{    
     var delegate: RecipeDetailsDelegate?
     
     let menuOptions: [MenuOption] = [

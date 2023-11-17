@@ -121,7 +121,7 @@ struct HomeView: View {
         .navigationTitle("Menu")
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)
-            .presentationDetents([.fraction(1/2.5), .medium, .large])
+            .presentationDetents([.fraction(1 * 0.8), .large])
             .presentationDragIndicator(.visible)
         }
         .toolbar(content: {
@@ -293,9 +293,22 @@ extension HomeView {
         }
     }
     
+//    private var createRecipeButton: some View {
+//        NavigationLink{
+//            let recipe: Binding<Recipe?> = .constant(nil)
+//            CreateEditRecipeView()
+//        } label: {
+//            Text("Add recipe")
+//                .frame(width: UIScreen.main.bounds.width * 0.55, height: UIScreen.main.bounds.width * 0.075)
+//                .foregroundStyle(Color.color_general_fixed_light)
+//                .modifier(Header())
+//            
+//        }
+//        .tint(.color_button_container_primary)
+//        .buttonStyle(.borderedProminent)
+//        
+//    }
 }
-
-
 
 #Preview {
     NavigationStack {

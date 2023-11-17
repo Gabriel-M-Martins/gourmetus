@@ -104,7 +104,7 @@ struct RecipesListsView: View {
         .searchable(text: $searchedText, placement: .automatic, prompt: "Search")
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)
-            .presentationDetents([.fraction(1/2.5), .medium, .large])
+            .presentationDetents([.fraction(1 * 0.8), .large])
             .presentationDragIndicator(.visible)
         }
         .toolbar {

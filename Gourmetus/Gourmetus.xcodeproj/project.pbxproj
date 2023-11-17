@@ -22,6 +22,8 @@
 		7B0B67042AF1744D00D6A66C /* RecipesListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */; };
 		7B0B67062AF1748100D6A66C /* ListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0B67052AF1748100D6A66C /* ListType.swift */; };
 		7B1539D82AF01BCD000B372A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1539D72AF01BCD000B372A /* HomeViewModel.swift */; };
+		7B1EFD952B068A71001BBE04 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EFD942B068A71001BBE04 /* SearchBarView.swift */; };
+		7B1EFD972B06980C001BBE04 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EFD962B06980C001BBE04 /* CustomSearchBar.swift */; };
 		7B2B6A9B2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */; };
 		7B2B6A9F2AE9A9DC00AFEFFA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */; };
 		7B50B8042AE852B700E00C04 /* RecipeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */; };
@@ -84,6 +86,8 @@
 		7B0B67032AF1744D00D6A66C /* RecipesListsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListsViewModel.swift; sourceTree = "<group>"; };
 		7B0B67052AF1748100D6A66C /* ListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListType.swift; sourceTree = "<group>"; };
 		7B1539D72AF01BCD000B372A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		7B1EFD942B068A71001BBE04 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		7B1EFD962B06980C001BBE04 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 		7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsView.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 				CE22A96F2AFC06760064EEAB /* TagView.swift */,
 				A72EA1182B02919E0003008D /* FavoriteButtonStyle.swift */,
 				7BE13DDF2B029B7F00DFF8E3 /* KnifeView.swift */,
+				7B1EFD942B068A71001BBE04 /* SearchBarView.swift */,
+				7B1EFD962B06980C001BBE04 /* CustomSearchBar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -438,6 +444,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = A785B5372AE1C3A0002E1D1F;
 			productRefGroup = A785B5412AE1C3A0002E1D1F /* Products */;
@@ -498,6 +505,7 @@
 				A7CA1AF42AFAD12B00BF334D /* AppDelegate.swift in Sources */,
 				CE7F24CE2AF040F9004065C8 /* TimerNotification.swift in Sources */,
 				7B2B6A9B2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift in Sources */,
+				7B1EFD952B068A71001BBE04 /* SearchBarView.swift in Sources */,
 				30F09A082AF2BD8800C502C2 /* TimerComponent.swift in Sources */,
 				CE22A9702AFC06760064EEAB /* TagView.swift in Sources */,
 				30F09A042AF039CF00C502C2 /* RecipePlayerView.swift in Sources */,
@@ -521,6 +529,7 @@
 				A75BE2CD2AFC07DF001C299F /* Tag.swift in Sources */,
 				A77F458C2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift in Sources */,
 				A72EA11C2B02A3E90003008D /* SearchView.swift in Sources */,
+				7B1EFD972B06980C001BBE04 /* CustomSearchBar.swift in Sources */,
 				CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */,
 				A71E6B5E2AFD4DAA00F89E71 /* CookbookView.swift in Sources */,
 				A71E6B602AFD62B900F89E71 /* CookbookCard.swift in Sources */,

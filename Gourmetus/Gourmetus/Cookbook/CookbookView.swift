@@ -13,34 +13,43 @@ struct CookbookView: View {
     @EnvironmentObject var cookbook: Cookbook
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Divider()
-                
-                HStack {
-                    Spacer()
+        NavigationStack{
+            ScrollView {
+                VStack {
+                    Divider()
                     
                     VStack {
                         CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
                             RecipesListsView(listType: .History)
                         })
-                            .frame(width: scale)
+                        .frame(width: scale)
                         Divider()
                         
                         CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
                             RecipesListsView(listType: .Owned)
                         })
-                            .frame(width: scale)
+                        .frame(width: scale)
+                        Divider()
+                        
+                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
+                            RecipesListsView(listType: .Owned)
+                        })
+                        .frame(width: scale)
                         Divider()
                         
                         CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
                             RecipesListsView(listType: .Favorites)
                         })
-                            .frame(width: scale)
-                        Divider()
+                        .frame(width: scale)
                     }
                     
                     Spacer()
+                    
+                    CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
+                        RecipesListsView(listType: .Favorites)
+                    })
+                    .frame(width: scale)
+                    Divider()
                 }
             }
         }

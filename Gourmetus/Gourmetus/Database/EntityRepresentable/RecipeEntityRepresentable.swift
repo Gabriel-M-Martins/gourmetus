@@ -11,7 +11,8 @@ extension Recipe : EntityRepresentable {
     convenience init?(entityRepresentation: EntityRepresentation) {
         guard let name = entityRepresentation.values["name"] as? String,
               let difficulty = entityRepresentation.values["difficulty"] as? Int,
-              let duration = entityRepresentation.values["duration"] as? Int else { return nil }
+              let duration = entityRepresentation.values["duration"] as? Int,
+              let rating = entityRepresentation.values["rating"] as? Float else { return nil }
 
         guard let stepsRepresentations = entityRepresentation.toManyRelationships["steps"] else { return nil }
         
@@ -54,6 +55,7 @@ extension Recipe : EntityRepresentable {
             "id" : self.id,
             "name" : self.name,
             "difficulty" : self.difficulty as Any,
+            "rating" : self.rating as Any,
             "duration" : self.duration as Any
         ]
         
