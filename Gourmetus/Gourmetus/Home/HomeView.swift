@@ -201,8 +201,8 @@ extension HomeView {
                 ForEach(favorites) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
-                    }label: {
-                        RecipeCardMini(recipe: recipe)
+                    } label: {
+                        RecipeCardHorizontal(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -238,7 +238,7 @@ extension HomeView {
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
-                        RecipeCardMini(recipe: recipe)
+                        RecipeCardVerticalSmall(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
