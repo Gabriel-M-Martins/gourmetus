@@ -11,9 +11,47 @@ struct HomeView: View {
     
     @EnvironmentObject var cookbook: Cookbook
     
+    @State var searchedText: String = ""
+    @State private var presentTagSheet: Bool = false
+    @State private var selectedTags: Set<String> = []
+    
+    var history: [Recipe] {
+        filterRecipes(cookbook.history)
+    }
+    
+    var favorites: [Recipe] {
+        filterRecipes(cookbook.favorites)
+    }
+    
+    var ownedRecipes: [Recipe] {
+        filterRecipes(cookbook.ownedRecipes)
+    }
+    
+    var community: [Recipe] {
+        filterRecipes(cookbook.community)
+    }
+    
+    private func filterRecipes(_ recipes: [Recipe]) -> [Recipe] {
+        var result: [Recipe] = recipes
+        
+        if !selectedTags.isEmpty {
+            result = result.filter { recipe in
+                Set(recipe.tags.map({ $0.name })).isSuperset(of: selectedTags)
+            }
+        }
+        
+        if !searchedText.isEmpty {
+            result = result.filter { recipe in
+                recipe.name.uppercased().contains(searchedText.uppercased())
+            }
+        }
+        
+        return result
+    }
+    
     var body: some View {
-        ScrollView{
-            VStack(spacing: 0){
+        ScrollView {
+            VStack(spacing: 0) {
                 //                Button(action: {
                 //                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 //                        if success {
@@ -28,9 +66,9 @@ struct HomeView: View {
                 //                    Divider()
                 
                 //History
-                VStack(spacing: 0){
+                VStack(spacing: 0) {
                     titleRecentlyAccessed
-                    if cookbook.history.isEmpty {
+                    if history.isEmpty {
                         emptyState
                     } else {
                         scrollViewRecentlyAccessed
@@ -43,7 +81,7 @@ struct HomeView: View {
                 //Favorites
                 VStack(spacing: 0){
                     titleFavourites
-                    if cookbook.favorites.isEmpty {
+                    if favorites.isEmpty {
                         emptyState
                     } else {
                         scrollViewFavourites
@@ -56,7 +94,7 @@ struct HomeView: View {
                 //Owned
                 VStack(spacing: 0){
                     titleMyRecipes
-                    if cookbook.ownedRecipes.isEmpty {
+                    if ownedRecipes.isEmpty {
                         emptyState
                     } else {
                         scrollViewMyRecipes
@@ -69,17 +107,33 @@ struct HomeView: View {
                 //Community
                 VStack(spacing: 0){
                     titleCommunity
-                    if cookbook.community.isEmpty {
+                    if community.isEmpty {
                         emptyState
-                    }else{
+                    } else {
                         scrollViewCommunity
                     }
                 }
                 
             }
-            .navigationTitle("Menu")
-            .searchable(text: .constant(""), placement: .automatic, prompt: "Search")
         }
+        .scrollDismissesKeyboard(.interactively)
+        .searchable(text: $searchedText)
+        .navigationTitle("Menu")
+        .sheet(isPresented: $presentTagSheet) {
+            TagFilterSearchView(selectedTags: $selectedTags)
+            .presentationDetents([.fraction(1/2.5), .medium, .large])
+            .presentationDragIndicator(.visible)
+        }
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    presentTagSheet = true
+                } label: {
+                    Image.filter
+                        .foregroundStyle(Color.color_button_container_primary)
+                }
+            }
+        })
     }
 }
 
@@ -107,12 +161,12 @@ extension HomeView {
     
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
-            HStack(spacing: default_spacing){
-                ForEach(0..<cookbook.history.count, id:\.self) { idx in
+            HStack(spacing: default_spacing) {
+                ForEach(history) { recipe in
                     NavigationLink{
-                        RecipeDetailsView(recipe: cookbook.history[idx])
+                        RecipeDetailsView(recipe: recipe)
                     }label: {
-                        RecipeCardMini(recipe: $cookbook.history[idx].wrappedValue)
+                        RecipeCardMini(recipe: recipe)
                             .tint(Color(uiColor: UIColor.label))
                     }
                 }
@@ -144,7 +198,7 @@ extension HomeView {
     private var scrollViewFavourites: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing) {
-                ForEach(cookbook.favorites) { recipe in
+                ForEach(favorites) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
@@ -180,7 +234,7 @@ extension HomeView {
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing){
-                ForEach(cookbook.ownedRecipes) { recipe in
+                ForEach(ownedRecipes) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
@@ -208,7 +262,7 @@ extension HomeView {
     
     private var scrollViewCommunity: some View {
         VStack(spacing: default_spacing){
-            ForEach(cookbook.community) { recipe in
+            ForEach(community) { recipe in
                 NavigationLink {
                     RecipeDetailsView(recipe: recipe)
                 } label: {
@@ -224,10 +278,19 @@ extension HomeView {
     }
     
     private var emptyState: some View {
-        Text("It seems you don't have any recipe in your cookbook yet. Start adding someor browse the community!")
-            .modifier(Paragraph())
-            .padding(.horizontal, default_spacing)
-            .padding(.bottom, default_spacing)
+        VStack {
+            if !searchedText.isEmpty || !selectedTags.isEmpty {
+                Text("It seems there aren't any recipes that match your search in your cookbook yet.")
+                    .modifier(Paragraph())
+                    .padding(.horizontal, default_spacing)
+                    .padding(.bottom, default_spacing)
+            } else {
+                Text("It seems you don't have any recipe in your cookbook yet. Start adding some or browse the community!")
+                    .modifier(Paragraph())
+                    .padding(.horizontal, default_spacing)
+                    .padding(.bottom, default_spacing)
+            }
+        }
     }
     
 }
@@ -238,4 +301,5 @@ extension HomeView {
     NavigationStack {
         HomeView()
     }
+    .environmentObject(Constants.mockedCookbook)
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct CookbookView: View {
     private let scale: CGFloat = UIScreen.main.bounds.width/1.2
     
-    @EnvironmentObject private var cookbook: Cookbook
+    @EnvironmentObject var cookbook: Cookbook
     
     var body: some View {
         ScrollView {
@@ -22,19 +22,19 @@ struct CookbookView: View {
                     
                     VStack {
                         CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
-                            Text("Recentes")
+                            RecipesListsView(listType: .History)
                         })
                             .frame(width: scale)
                         Divider()
                         
                         CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
-                            Text("Meus")
+                            RecipesListsView(listType: .Owned)
                         })
                             .frame(width: scale)
                         Divider()
                         
                         CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
-                            Text("Favoritas")
+                            RecipesListsView(listType: .Favorites)
                         })
                             .frame(width: scale)
                         Divider()

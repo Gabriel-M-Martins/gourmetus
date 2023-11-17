@@ -16,27 +16,27 @@ struct TabBarView: View {
             
             NavigationStack {
                 HomeView()
-                    .environmentObject(cookbook)
             }
+            .environmentObject(cookbook)
             .tabItem {
                 Label("Home", systemImage: "house")
             }
             
             NavigationStack {
                 CookbookView()
-                    .environmentObject(cookbook)
             }
+            .environmentObject(cookbook)
             .tabItem {
                 Label("Cookbook", systemImage: "text.book.closed.fill")
             }
             
-            NavigationStack {
-                SearchView()
-                    .environmentObject(cookbook)
-            }
-            .tabItem {
-                Label("My Kitchen", systemImage: "stove.fill")
-            }
+//            NavigationStack {
+//                SearchView()
+//            }
+//            .environmentObject(cookbook)
+//            .tabItem {
+//                Label("My Kitchen", systemImage: "stove.fill")
+//            }
             
         }
         .tint(Color.color_button_container_primary)

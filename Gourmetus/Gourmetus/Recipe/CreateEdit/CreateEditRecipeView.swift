@@ -267,11 +267,11 @@ struct CreateEditRecipeView: View {
     
 }
 
-struct CreateEditRecipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateEditRecipeView(recipe: Constants.mockedRecipe)
-        
-    }
-}
 
+#Preview {
+    NavigationStack {
+        CreateEditRecipeView()
+    }
+    .environmentObject(Constants.mockedCookbook)
+}
 
