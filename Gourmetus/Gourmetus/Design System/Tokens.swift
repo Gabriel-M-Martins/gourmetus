@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  Tokens.swift
 //  Recipefy
 //
 //  Created by Mateus Moura Godinho on 07/11/23.
@@ -14,11 +14,13 @@ var titleFontSize = 32.0
 var headerFontSize = 20.0
 var bodyFontSize = 14.0
 var spanFontSize = 10.0
+var linkFontSize = 10.0
 
 var smooth_radius = 20.0
 var hard_radius = 5.0
 var default_spacing = 16.0
 var half_spacing = 8.0
+var borderWidth = 2.0
 
 extension Color{
     static let color_general_fixed_light = Color("brandWhite")
@@ -55,6 +57,9 @@ extension Image{
     static let pauseCircle = Image(systemName: "pause.circle")
     static let playCircle = Image(systemName: "play.circle")
     static let repeatCircle = Image(systemName: "repeat.circle")
+    static let filter = Image(systemName: "slider.horizontal.3")
+    static let collapse = Image(systemName: "chevron.down")
+    static let contract = Image(systemName: "chevron.up")
     
     static let bookFavourites = Image("Livro Favoritos")
     static let bookMyRecipes = Image("Livro Minhas Receitas")
@@ -89,6 +94,12 @@ struct Title: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("Helvetica", size: titleFontSize)).fontWeight(.light)
+    }
+}
+struct Link: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.custom("SF Pro", size: linkFontSize)).fontWeight(.regular).textCase(.uppercase).underline()
     }
 }
 

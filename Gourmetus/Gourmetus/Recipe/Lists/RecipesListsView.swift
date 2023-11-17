@@ -8,143 +8,133 @@
 import SwiftUI
 
 struct RecipesListsView: View {
-    
-    @StateObject var vm : RecipesListsViewModel
+    var listType: ListType
     
     @EnvironmentObject var cookbook: Cookbook
     
-    @State private var searchText = ""
-//    @ObservedObject var searchBarResponder = SearchBarResponder()
+    @State var searchedText: String = ""
+    @State private var presentTagSheet: Bool = false
+    @State private var selectedTags: Set<String> = []
     
-    init(listType: ListType) {
-        self._vm = StateObject(wrappedValue: RecipesListsViewModel(listType: listType))
+    private func filterRecipes(_ recipes: [Recipe]) -> [Recipe] {
+        var result: [Recipe] = recipes
+        
+        if !selectedTags.isEmpty {
+            result = result.filter { recipe in
+                Set(recipe.tags.map({ $0.name })).isSuperset(of: selectedTags)
+            }
+        }
+        
+        if !searchedText.isEmpty {
+            result = result.filter { recipe in
+                recipe.name.uppercased().contains(searchedText.uppercased())
+            }
+        }
+        
+        return result
+    }
+    
+    var recipes: [Recipe] {
+        switch self.listType {
+        case .History:
+            return filterRecipes(cookbook.history)
+        case .Owned:
+            return filterRecipes(cookbook.ownedRecipes)
+        case .Favorites:
+            return filterRecipes(cookbook.favorites)
+        }
     }
     
     var body: some View {
-        ScrollView{
-//            CurstomSearchBar(text: $searchText, isFirstResponder: searchBarResponder.isActive)
+        ScrollView {
             Divider()
-            HStack{
-                Text(vm.listType.description2)
-                    .modifier(Header())
+            
+            HStack {
+                Text(listType.subtitle)
+                    .modifier(Huge())
                     .padding(.leading, default_spacing)
                 Spacer()
             }
             .padding(.vertical ,default_spacing)
             
-            switch vm.listType{
-            case .History:
-                if cookbook.history.isEmpty{
-                    emptyState
-                }else{
-                    historyList
-                        .padding(.horizontal, default_spacing)
-                }
-            case .Favorites:
-                if cookbook.favorites.isEmpty{
-                    emptyState
-                }else{
-                    favoritesList
-                        .padding(.horizontal, default_spacing)
-                }
-            case .Owned:
-                if cookbook.ownedRecipes.isEmpty{
-                    emptyState
-                }else{
-                    ownedList
-                        .padding(.horizontal, default_spacing)
-                }
-            }
-        }
-        .navigationTitle(vm.listType.description)
-        .searchable(text: $searchText, placement: .automatic, prompt: "Search")
-        .navigationBarItems(trailing: NavigationLink{
-            let recipe: Binding<Recipe?> = .constant(nil)
-            CreateEditRecipeView(recipe: recipe)
-        }label: {
-            if vm.listType == .Owned {
-                Image.plus
-            }
-        }
-        )
-//        .onAppear{
-//            activateSearch()
-//        }
-    }
-}
-
-extension RecipesListsView {
-    
-//    func activateSearch() {
-//            searchBarResponder.isActive = true
-//    }
-    
-    private var historyList: some View {
-        ForEach(cookbook.history) { recipe in
-            VStack(spacing: default_spacing){
-                Divider()
-                HStack{
-                    Text("Completed")
-                        .modifier(Span())
-                        .foregroundColor(Color.color_text_container_highlight)
+            Divider()
+            
+            if recipes.isEmpty {
+                VStack{
+                    Spacer()
+                    Text("Nothing to see here yet.")
+                        .modifier(Title())
+                        .foregroundStyle(Color.color_text_container_highlight)
                     Spacer()
                 }
-                NavigationLink{
-                    RecipeDetailsView(recipe: recipe)
-                }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
-                }
-                .padding(.bottom, half_spacing)
-            }
-        }
-    }
-    
-    private var favoritesList: some View {
-        ForEach(cookbook.favorites) { recipe in
-            VStack{
-                NavigationLink{
-                    RecipeDetailsView(recipe: recipe)
-                }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
-                        .padding(.bottom, default_spacing)
-                }
-            }
-        }
-    }
-    
-    private var ownedList: some View {
-        ForEach(cookbook.ownedRecipes) { recipe in
-            VStack{
-                NavigationLink{
-                    RecipeDetailsView(recipe: recipe)
-                }label: {
-                    RecipeCardVerticalBig(recipe: recipe)
-                        .tint(Color(uiColor: UIColor.label))
-                        .padding(.bottom, default_spacing)
+                .padding(default_spacing)
+            } else {
+                ForEach(recipes) { recipe in
+                    NavigationLink {
+                        RecipeDetailsView(recipe: recipe)
+                    } label: {
+                        VStack {
+                            if listType == .History {
+                                HStack {
+                                    Text("Completed")
+                                        .modifier(Span())
+                                        .foregroundColor(Color.color_text_container_highlight)
+                                    Spacer()
+                                }
+                                .padding(.horizontal, default_spacing)
+                                .padding(.top, default_spacing)
+                            }
+                            
+                            RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
+                                _ = cookbook.toggleFavourite(recipe: recipe)
+                            } })
+                            .tint(Color(uiColor: UIColor.label))
+                            .padding(.vertical, default_spacing)
+                            
+                            if listType == .History {
+                                Divider()
+                                    .padding(.horizontal, default_spacing)
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-    
-    private var emptyState: some View {
-        VStack{
-            Spacer()
-            Text("Nothing to see here yet.")
-                .modifier(Title())
-                .foregroundStyle(Color.color_text_container_highlight)
-            Spacer()
+        .navigationTitle(listType.title)
+        .searchable(text: $searchedText, placement: .automatic, prompt: "Search")
+        .sheet(isPresented: $presentTagSheet) {
+            TagFilterSearchView(selectedTags: $selectedTags)
+            .presentationDetents([.fraction(1 * 0.8), .large])
+            .presentationDragIndicator(.visible)
         }
-        .frame(height: 515)
-        //        .padding(.horizontal, default_spacing)
-        //        .background(.blue)
+        .toolbar {
+            if listType == .Owned {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        CreateEditRecipeView()
+                    } label: {
+                        Image.plus
+                            .foregroundStyle(Color.color_button_container_primary)
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    presentTagSheet = true
+                } label: {
+                    Image.filter
+                        .foregroundStyle(Color.color_button_container_primary)
+                }
+            }
+        }
     }
-    
 }
 
-
 #Preview {
-    RecipesListsView(listType: .Favorites)
-        .environmentObject(Constants.mockedCookbook1)
+    NavigationStack {
+        RecipesListsView(listType: .Owned)
+    }
+    .environmentObject(Constants.mockedCookbook)
+        
 }

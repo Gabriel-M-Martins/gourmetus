@@ -8,27 +8,31 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    
     enum Destination {
         case Player
         case Edit
     }
+
+    var recipe: Recipe
     
-    @StateObject var vm: RecipeDetailsViewModel
-    
+    @StateObject var vm: RecipeDetailsViewModel = RecipeDetailsViewModel()
     @EnvironmentObject var cookbook: Cookbook
+        
     @State private var isNextViewActivated: Bool = false
     @State private var destination: Destination = .Player
     
-    init(recipe: Recipe) {
-        self._vm = StateObject(wrappedValue: RecipeDetailsViewModel(recipe: recipe))
+    var image: Image {
+        guard let data = recipe.imageData,
+              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
+        
+        return Image(uiImage: uiimage)
     }
     
     var body: some View {
         List {
             Section {
                 VStack(alignment: .center, spacing: default_spacing) {
-                    Image.bookFavourites
+                    image
                         .resizable()
                         .scaledToFill()
                         .frame(height: UIScreen.main.bounds.width/2.5)
@@ -42,7 +46,7 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.clockFill
-                                Text(vm.convertHoursMinutes())
+                                Text(String(format: "%02d:%02d", recipe.duration/60, recipe.duration%60))
                             }
                             
                             Text("・")
@@ -63,7 +67,7 @@ struct RecipeDetailsView: View {
                             
                             // TODO: foreach de dificuldade || componente de dificuldade
                             HStack {
-                                KnifeView(recipe: vm.recipe)
+                                KnifeView(recipe: recipe)
                             }
                             
                             Text("・")
@@ -71,7 +75,7 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.starFill
-                                Text("\(String(format: "%.1f", vm.recipe.rating))")
+                                Text("\(String(format: "%.1f", recipe.rating))")
                             }
                             .foregroundStyle(Color.color_text_review_primary)
                             
@@ -82,15 +86,26 @@ struct RecipeDetailsView: View {
                     
                     // TODO: componente de resizable tag collection
                     ScrollView{
-                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
-                            TagView(Tag: tag.name) {
-                                Text("Nothing to see here yet.")
-                                    .modifier(Title())
-                                    .foregroundStyle(Color.color_text_container_highlight)
+//                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
+//                            TagView(Tag: tag.name) {
+//                                Text("Nothing to see here yet.")
+//                                    .modifier(Title())
+//                                    .foregroundStyle(Color.color_text_container_highlight)
+//                            }
+//                        }))
+                        ChipsStack {
+                            ForEach(recipe.tags) { tag in
+//                                Button {
+//                                    
+//                                } label: {
+//                                    TagView(text: tag.name, selected: .constant(true))
+//                                }
+                                TagView(text: tag.name, selected: .constant(true))
+                                .padding(.trailing, half_spacing)
+                                .padding(.bottom, half_spacing)
                             }
-                        }))
+                        }
                     }
-                    .frame(width: UIScreen.main.bounds.width/1.5)
                     Divider()
                 }
                 
@@ -98,8 +113,7 @@ struct RecipeDetailsView: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
             
-            
-            if let description = vm.recipe.desc {
+            if let description = recipe.desc {
                 Section {
                     Text(description)
                 } header: {
@@ -109,7 +123,7 @@ struct RecipeDetailsView: View {
             
             // TODO: Empty state de ingredients
             Section {
-                ForEach(vm.recipe.ingredients) { ingredient in
+                ForEach(recipe.ingredients) { ingredient in
                     HStack {
                         Text(ingredient.name)
                         
@@ -125,9 +139,9 @@ struct RecipeDetailsView: View {
             
             // TODO: Empty state de steps
             Section {
-                ForEach(0..<vm.recipe.steps.count) { idx in
+                ForEach(0..<recipe.steps.count) { idx in
                     HStack {
-                        Text(vm.recipe.steps[idx].title)
+                        Text(recipe.steps[idx].title)
                             .foregroundStyle(Color.color_text_container_highlight)
                         
                         Spacer()
@@ -138,12 +152,13 @@ struct RecipeDetailsView: View {
                     .background(
                         // TODO: Ir para o player no passo escolhido
                         
-                        NavigationLink(destination: RecipePlayerView(recipe: vm.recipe, step: idx), label: {})
+                        NavigationLink(destination: RecipePlayerView(recipe: recipe, step: idx), label: {})
                     )
                 }
             } header: {
                 Text("Steps")
             }
+            
             
             HStack {
                 Spacer()
@@ -163,9 +178,12 @@ struct RecipeDetailsView: View {
                 .overlay(
                     GeometryReader { proxy in
                         Button("") {
-                            vm.toggleFavourite()
+                            cookbook.toggleFavourite(recipe: recipe)
                         }
-                        .buttonStyle(FavoriteButtonStyle(isFavorited: $vm.isFavorite))
+                        .buttonStyle(FavoriteButtonStyle(isFavorited:
+                                .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) },
+                                      set: { value in return }))
+                        )
                         .position(x: proxy.frame(in: .local).width + half_spacing + UIScreen.main.bounds.width * 0.045, y: proxy.frame(in: .local).midY)
                     }
                 )
@@ -192,20 +210,19 @@ struct RecipeDetailsView: View {
                 }
             }
         })
-        .navigationTitle(vm.recipe.name)
+        .navigationTitle(recipe.name)
         .navigationDestination(isPresented: $isNextViewActivated) {
             switch destination {
             case .Player:
-                RecipePlayerView(recipe: self.vm.recipe, step: 0)
+                RecipePlayerView(recipe: recipe, step: 0)
             case .Edit:
-                CreateEditRecipeView(recipe: self.$vm.recipe.toOptional())
+                CreateEditRecipeView(recipe: recipe)
             }
 
-            RecipePlayerView(recipe: self.vm.recipe,step: 0)
+            RecipePlayerView(recipe: recipe, step: 0)
 
         }
         .onAppear {
-            self.vm.populateCookbook(cookbook: self.cookbook)
             self.vm.delegate = self
         }
     }
@@ -214,8 +231,8 @@ struct RecipeDetailsView: View {
 #Preview {
     NavigationStack {
         RecipeDetailsView(recipe: Constants.mockedRecipe)
-            .environmentObject(Cookbook())
     }
+    .environmentObject(Constants.mockedCookbook)
 }
 
 extension Binding {
@@ -229,7 +246,6 @@ extension Binding {
 }
 
 extension RecipeDetailsView: RecipeDetailsDelegate {
-    
     func editRecipe() {
         self.destination = .Edit
         self.isNextViewActivated = true

@@ -10,7 +10,7 @@ import CoreData
 
 final class Recipe: Identifiable, Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
+        hasher.combine(self.id)
     }
     
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
@@ -30,7 +30,7 @@ final class Recipe: Identifiable, Hashable {
     var tags: [Tag]
     
     
-    required init(id: UUID, name: String, desc: String? = nil, difficulty: Int, imageData: Data? = nil, steps: [Step], ingredients: [Ingredient], tags: [Tag] = [], duration: Int) {
+    required init(id: UUID = UUID(), name: String = "", desc: String? = nil, difficulty: Int = 0, imageData: Data? = nil, steps: [Step] = [], ingredients: [Ingredient] = [], tags: [Tag] = [], duration: Int = 0) {
         self.id = id
         self.name = name
         self.desc = desc

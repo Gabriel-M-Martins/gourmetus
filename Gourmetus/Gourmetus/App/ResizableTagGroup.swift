@@ -66,5 +66,27 @@ struct ResizableTagGroup<Content: View>: View {
 }
 
 #Preview {
-    ResizableTagGroup(visualContent: [Text("Algo")])
+//    ResizableTagGroup(visualContent: [Text("Algo")])
+    NavigationStack {
+        Text("Coe")
+    }
+    .sheet(isPresented: .constant(true), content: {
+        ScrollView {
+            HStack {
+                Text("Titulo")
+                Spacer()
+            }
+            ChipsStack(spacing: default_spacing) {
+                ForEach(1...50, id: \.self) { idx in
+                    Button {
+    //                    Text("\(idx)")
+                    } label: {
+                        TagView(text: "\(idx)", selected: .constant(true))
+                    }
+                }
+            }
+            .background(.blue)
+        }
+        .background(.red)
+    })
 }

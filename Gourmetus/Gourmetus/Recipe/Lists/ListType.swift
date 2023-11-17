@@ -12,7 +12,7 @@ enum ListType: String, Codable {
     case Owned
     case Favorites
     
-    var description: String {
+    var title: String {
         switch self {
         case .History: return "Recently Accessed"
         case .Owned: return "My Recipes"
@@ -20,7 +20,7 @@ enum ListType: String, Codable {
         }
     }
     
-    var description2: String {
+    var subtitle: String {
         switch self {
         case .History: return "History of Recipes"
         case .Owned: return "Your Recipes"

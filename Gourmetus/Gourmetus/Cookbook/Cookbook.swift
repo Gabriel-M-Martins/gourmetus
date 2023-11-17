@@ -8,9 +8,11 @@
 import Foundation
 import CoreData
 
-final class Cookbook: Hashable, ObservableObject{
+final class Cookbook: Hashable, ObservableObject {
+    @Injected private var repo: any Repository<Cookbook>
+    
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
+        hasher.combine(self.id)
     }
     
     static func == (lhs: Cookbook, rhs: Cookbook) -> Bool {
@@ -42,6 +44,34 @@ final class Cookbook: Hashable, ObservableObject{
         self.latestSize = 10
     }
     
+    func fetch() {
+        guard let cookbook = repo.fetch().first else {
+            self.id = UUID()
+            self.ownedRecipes = Constants.mockedRecipes
+            self.favorites = Constants.mockedRecipes
+            self.history = Constants.mockedRecipes
+            self.community = Constants.mockedRecipes
+            
+            return
+        }
+        
+        self.id = cookbook.id
+        self.ownedRecipes = cookbook.ownedRecipes
+        self.favorites = cookbook.favorites
+        self.history = cookbook.history
+        self.community = cookbook.community
+    }
+    
+    func fetch(id: UUID) {
+        guard let cookbook = repo.fetch(id: id) else { return }
+        
+        self.id = cookbook.id
+        self.ownedRecipes = cookbook.ownedRecipes
+        self.favorites = cookbook.favorites
+        self.history = cookbook.history
+        self.community = cookbook.community
+    }
+    
     func addFavorite(recipe: Recipe) {
         favorites.append(recipe)
     }
@@ -52,7 +82,21 @@ final class Cookbook: Hashable, ObservableObject{
                 favorites.remove(at: i)
             }
         }
-        
+    }
+    
+    @discardableResult
+    func toggleFavourite(recipe: Recipe) -> Bool {
+        if self.favorites.contains(where: { $0.id == recipe.id }) {
+            self.favorites.removeAll(where: { $0.id == recipe.id })
+            return false
+        } else {
+            self.favorites.append(recipe)
+            return true
+        }
+    }
+    
+    func isFavoritedRecipe(recipe: Recipe) -> Bool {
+        self.favorites.contains(where: { $0.id == recipe.id })
     }
     
     func addLatest(recipe: Recipe){

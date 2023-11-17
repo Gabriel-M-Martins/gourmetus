@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Tag {
+final class Tag : Identifiable {
     let id: UUID
     let name: String
     
@@ -20,7 +20,7 @@ final class Tag {
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
+        hasher.combine(self.id)
     }
     
     static func == (lhs: Tag, rhs: Tag) -> Bool {

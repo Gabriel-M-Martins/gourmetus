@@ -12,12 +12,7 @@ protocol RecipeDetailsDelegate {
     func editRecipe()
 }
 
-
-class RecipeDetailsViewModel: ObservableObject{
-    @Published var recipe: Recipe
-    
-    var isFavorite: Bool = false
-    var cookbook: Cookbook = Cookbook()
+class RecipeDetailsViewModel: ObservableObject{    
     var delegate: RecipeDetailsDelegate?
     
     let menuOptions: [MenuOption] = [
@@ -25,28 +20,9 @@ class RecipeDetailsViewModel: ObservableObject{
         .Delete
     ]
     
-    init(recipe: Recipe) {
-        self.recipe = recipe
-    }
-    
-    func populateCookbook(cookbook: Cookbook) {
-        self.cookbook = cookbook
-        self.isFavorite = cookbook.favorites.contains(where: { $0.id == recipe.id })
-    }
-    
-    func convertHoursMinutes() -> String{
-        return String(format: "%02d:%02d", self.recipe.duration/60, self.recipe.duration%60)
-    }
-    
-    func toggleFavourite() {
-        if isFavorite {
-            cookbook.favorites.removeAll(where: { $0.id == recipe.id })
-        } else {
-            cookbook.favorites.append(recipe)
-        }
-        
-        isFavorite.toggle()
-    }
+//    func convertHoursMinutes() -> String{
+//        return String(format: "%02d:%02d", self.recipe.duration/60, self.recipe.duration%60)
+//    }
     
     func menuButtonClicked(_ option: MenuOption) {
         switch option {

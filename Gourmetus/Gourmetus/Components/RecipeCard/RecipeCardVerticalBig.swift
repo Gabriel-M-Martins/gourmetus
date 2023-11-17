@@ -9,26 +9,22 @@ import SwiftUI
 
 struct RecipeCardVerticalBig: View {
     
-    @Injected private var repo: any Repository<Cookbook>
+    @State var recipe: Recipe
+    @Binding var isFavorite: Bool
     
-    @StateObject var vm: RecipeCardVerticalBigViewModel
-    
-    @EnvironmentObject var cookbook: Cookbook
-    
-    init(recipe: Recipe) {
-        self._vm = StateObject(wrappedValue: RecipeCardVerticalBigViewModel(recipe: recipe))
-    }
+    var favoriteButtonClosure: () -> ()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8){
-            if let imgData = vm.recipe.imageData,
+        VStack(alignment: .leading, spacing: 8) {
+            
+            if let imgData = recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
                     .cornerRadius(smooth_radius)
                     .padding(.top, default_spacing)
                     .padding(.horizontal, default_spacing)
-            }else{
+            } else {
                 Image("DefaultRecipeImage")
                     .resizable()
                     .cornerRadius(smooth_radius)
@@ -36,56 +32,37 @@ struct RecipeCardVerticalBig: View {
                     .padding(.horizontal, default_spacing)
                     .frame(height: 145)
             }
-            ZStack {
-                HStack{
-                    VStack(alignment: .leading, spacing: 8){
-                        
-                        Text(vm.recipe.name)
-                            .modifier(Paragraph())
-                            .foregroundColor(Color.color_button_container_primary)
-                            .lineLimit(1)
-                        
-                        KnifeView(recipe: vm.recipe)
-                        
-                        Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
-                            .modifier(Paragraph())
-                            .foregroundStyle(Color.color_text_review_primary)
-                        Text("By \(Image.personCircle)")
-                            .modifier(Span())
-                            .foregroundColor(Color.color_text_container_muted)
-                            .truncationMode(.tail)
-                            .lineLimit(1)
-                            
-                        
-                    }
+            
+            HStack {
+                VStack(alignment: .leading, spacing: half_spacing){
+                    Text(recipe.name)
+                        .modifier(Paragraph())
+                        .foregroundColor(Color.color_button_container_primary)
+                        .lineLimit(1)
                     
-                    Spacer()
+//                    difficulty
+                    
+                    Text("\(Image.starFill) \(recipe.difficulty.formatted())")
+                        .modifier(Paragraph())
+                        .foregroundStyle(Color.color_text_review_primary)
+                    Text("By \(Image.personCircle)")
+                        .modifier(Span())
+                        .foregroundColor(Color.color_text_container_muted)
+                        .truncationMode(.tail)
+                        .lineLimit(1)
+                        
+                    
                 }
- 
-                VStack{
+                
+                Spacer()
+                
+                VStack {
                     Spacer()
                     
-                    HStack{
-                        Spacer()
-                        Button{
-                            cookbook.favorites = vm.toggleFavourite(favorites: cookbook.favorites)
-                            repo.save(cookbook)
-                        }label: {
-                            ZStack{
-                                Circle()
-                                    .fill(vm.isFavorite(favorites: cookbook.favorites) ? Color.color_button_container_primary : Color.color_background_container_primary)
-                                    .modifier(cardShadow())
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: smooth_radius)
-                                            .strokeBorder(.orange, lineWidth: 2)
-                                    )
-                                Image.heartFill
-                                    .foregroundColor(vm.isFavorite(favorites: cookbook.favorites) ? Color.color_background_container_primary : Color.color_button_container_primary)
-                                
-                            }
-                            .frame(width: 37, height: 36)
-                        }
+                    Button("botao") {
+                        self.favoriteButtonClosure()
                     }
+                    .buttonStyle(FavoriteButtonStyle(isFavorited: $isFavorite))
                 }
             }
 
@@ -116,6 +93,6 @@ extension RecipeCardVerticalBig {
 }
 
 #Preview {
-    RecipeCardVerticalBig(recipe: Constants.mockedRecipe)
+    RecipeCardVerticalBig(recipe: Constants.mockedRecipe, isFavorite: .constant(false), favoriteButtonClosure: {})
         .environmentObject(Constants.mockedCookbook)
 }

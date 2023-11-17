@@ -10,7 +10,7 @@ import SwiftUI
 struct CookbookView: View {
     private let scale: CGFloat = UIScreen.main.bounds.width/1.2
     
-    @EnvironmentObject private var cookbook: Cookbook
+    @EnvironmentObject var cookbook: Cookbook
     
     var body: some View {
         NavigationStack{
@@ -18,43 +18,43 @@ struct CookbookView: View {
                 VStack {
                     Divider()
                     
-                    HStack {
-                        Spacer()
-                        VStack {
-                            CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
-                                RecipesListsView(listType: .History)
-                            })
-                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
-                            Text("Mine")
+                    VStack {
+                        CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
+                            RecipesListsView(listType: .History)
                         })
-                            .frame(width: scale)
-                            Divider()
-                            
-                            CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
-                                RecipesListsView(listType: .Owned)
-                            })
-                            .frame(width: scale)
-                            Divider()
-                            
-                            CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
-                                RecipesListsView(listType: .Favorites)
-                            })
-                            .frame(width: scale)
-                        }
-                        
-                        Spacer()
-
-                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
-                            Text("Favorites")
-                        })
-                            .frame(width: scale)
+                        .frame(width: scale)
                         Divider()
+                        
+                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
+                            RecipesListsView(listType: .Owned)
+                        })
+                        .frame(width: scale)
+                        Divider()
+                        
+                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
+                            RecipesListsView(listType: .Owned)
+                        })
+                        .frame(width: scale)
+                        Divider()
+                        
+                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
+                            RecipesListsView(listType: .Favorites)
+                        })
+                        .frame(width: scale)
                     }
+                    
+                    Spacer()
+                    
+                    CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
+                        RecipesListsView(listType: .Favorites)
+                    })
+                    .frame(width: scale)
+                    Divider()
                 }
             }
-            .navigationTitle("Cookbook")
-            .searchable(text: .constant(""))
         }
+        .navigationTitle("Cookbook")
+        .searchable(text: .constant(""))
     }
 }
 
