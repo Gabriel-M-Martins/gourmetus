@@ -19,6 +19,7 @@ extension Step : EntityRepresentable {
         self.imageData = entityRepresentation.values["image"] as? Data
         self.timer = entityRepresentation.values["timer"] as? Int
         self.order = order
+        self.ingredients = entityRepresentation.toManyRelationships["ingredients"] as? [Ingredient] ?? []
     }
     
     func encode() -> EntityRepresentation {
@@ -44,7 +45,9 @@ extension Step : EntityRepresentable {
             values["timer"] = self.timer!
         }
         
-        let toManyRelationships: [String : [EntityRepresentation]] = [:]
+        let toManyRelationships: [String : [EntityRepresentation]] = [
+            "ingredients" : self.ingredients.map({ $0.encode() })
+        ]
         
         let toOneRelationships: [String : EntityRepresentation] = [:]
         

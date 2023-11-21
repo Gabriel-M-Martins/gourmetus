@@ -115,7 +115,7 @@ struct RecipesListsView: View {
             if listType == .Owned {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        CreateEditRecipeView()
+                        CreateEditRecipeView(mode: .Creating)
                     } label: {
                         Image.plus
                             .foregroundStyle(Color.color_button_container_primary)

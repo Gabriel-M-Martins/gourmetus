@@ -8,39 +8,44 @@
 import Foundation
 import SwiftUI
 
+protocol CreateEditStepDelegate {
+    var editingStep: Step? { get }
+    var imageData: UIImage? { get }
+}
+
 class CreateEditStepViewModel: ObservableObject {
     @Published var texto = ""
     @Published var tip = ""
-    @Published var title = ""
+    @Published var title = "Step Title"
     @Published var totalTime: Int? = 0
     @Published var ingredientsAdded: Set<Ingredient> = []
     @Published var menu = ["Image" : false, "Text": false, "Tip": false, "Timer": false]
     
-    func addStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel){
-        if let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0) {
-            viewModel.steps.append(Step(id: UUID(), title: "foo", texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1))
-            imageViewModel.selectedImage = UIImage()
-        } else {
-            viewModel.steps.append(Step(id: UUID(), title: "bar", texto: texto, tip: tip ,timer: totalTime, order: -1))
-        }
-    }
+    var delegate: CreateEditStepDelegate?
     
-    func editStep(viewModel: CreateEditRecipeViewModel, imageViewModel:PhotoPickerViewModel ,editingStep: Step){
-        if let index = viewModel.steps.firstIndex(of: editingStep) {
-            if (imageViewModel.selectedImage != nil) {
-                let imageData = imageViewModel.selectedImage!.jpegData(compressionQuality: 1.0)
-                viewModel.steps[index] = Step(id:editingStep.id, title: "foo1" ,texto: texto, tip: tip , imageData: imageData ,timer: totalTime, order: -1)
-                imageViewModel.selectedImage = UIImage()
-            } else{
-                viewModel.steps[index] = Step(id:editingStep.id, title: "bar1", texto: texto, tip: tip ,timer: totalTime, order: -1)
-            }
+    func save(_ recipe: Recipe) {
+        var step = delegate?.editingStep ?? Step()
+        
+        step.texto = (self.texto.isEmpty ? (step.texto ?? nil) : self.texto)
+        step.tip = (self.tip.isEmpty ? (step.tip ?? nil) : self.tip)
+        step.timer = totalTime
+        step.imageData = delegate?.imageData?.pngData()
+        step.ingredients = Array(ingredientsAdded)
+        
+        // TODO: Faltou lidar com a ordenação dos passos!!!
+        if let idx = recipe.steps.firstIndex(where: { $0.id == step.id }) {
+            step.order = idx
+            recipe.steps[idx] = step
+        } else {
+            step.order = recipe.steps.count
+            recipe.steps.append(step)
         }
     }
     
     func editField(step: Step){
         texto = step.texto ?? ""
         tip = step.tip  ?? ""
-        title = step.title ?? ""
+        title = step.title
         
         if let tempo = step.timer{
             totalTime = tempo

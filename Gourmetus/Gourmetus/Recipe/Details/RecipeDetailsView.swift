@@ -13,7 +13,7 @@ struct RecipeDetailsView: View {
         case Edit
     }
 
-    var recipe: Recipe
+    @State var recipe: Recipe
     
     @StateObject var vm: RecipeDetailsViewModel = RecipeDetailsViewModel()
     @EnvironmentObject var cookbook: Cookbook
@@ -216,7 +216,7 @@ struct RecipeDetailsView: View {
             case .Player:
                 RecipePlayerView(recipe: recipe, step: 0)
             case .Edit:
-                CreateEditRecipeView(recipe: recipe)
+                CreateEditRecipeView(recipe: recipe, mode: .Editing($recipe))
             }
 
         }

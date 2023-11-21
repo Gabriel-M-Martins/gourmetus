@@ -115,7 +115,7 @@ class CreateEditRecipeViewModel: ObservableObject {
         }
     }
     
-    func editRecipe(recipe: Recipe){
+    func editRecipe(recipe: Recipe) {
         recipeTitle = recipe.name
         desc = recipe.desc ?? ""
         ingredients = recipe.ingredients

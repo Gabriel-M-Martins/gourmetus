@@ -8,16 +8,29 @@
 import SwiftUI
 import PhotosUI
 
-struct CreateEditStepView: View {
+struct CreateEditStepView: View, CreateEditStepDelegate {
     
     @Binding var editingStep: Step?
-    @State var ingredients: [Ingredient] = []
+    @Binding var recipe: Recipe
+    
+    var ingredients: [Ingredient] {
+        recipe.ingredients
+    }
+    
     @StateObject private var imageViewModel = PhotoPickerViewModel()
     @StateObject var stepViewModel =  CreateEditStepViewModel()
+    
     @ObservedObject var recipeViewModel:  CreateEditRecipeViewModel
+    
     @Binding var showSheet: Bool
     @State private var selection: String?
-    @State var selectedIngediant: Ingredient = Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg)
+    @State var selectedIngediant: Ingredient = Ingredient(id: UUID(), name: "", quantity: "", unit: .Kg)
+    
+    @Environment(\.dismiss) private var dismiss
+    //@Binding var recipe: Recipe
+    var imageData: UIImage? {
+        self.imageViewModel.selectedImage
+    }
     
     var menuKeys: [String] {
         Array($stepViewModel.menu.wrappedValue.keys).sorted()
@@ -30,12 +43,22 @@ struct CreateEditStepView: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing:default_spacing) {
-            HStack() {
-                Text("Title")
-                    .font(.headline)
-                TextField("Step Title", text: $stepViewModel.title)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            }
+                Section {
+                    HStack{
+                        Text("Title")
+                        TextField("Enter title", text: $stepViewModel.title)
+                            .foregroundColor(Color.color_card_container_stroke)
+                    }
+                    .padding()
+                }
+                .background(Color.white)
+//                Button {
+//                    // TODO: Falta a binding de recipe no lugar da recipe view model.
+////                    stepViewModel.save(recipeViewModel.)
+//                } label: {
+//                    Text("salva caralho")
+//                }
+            .cornerRadius(half_spacing)
             .padding(.leading,default_spacing)
             .padding(.trailing,default_spacing)
             
@@ -44,40 +67,68 @@ struct CreateEditStepView: View {
                     HStack {
                         Text("Add a component into the editor to build your step.")
                             .padding()
+                            .foregroundColor(Color.color_text_container_primary)
+                            .font(.subheadline)
                         Spacer()
                     }
                         //.fixedSize(horizontal: true, vertical: true)
                 } else {
                     if($stepViewModel.menu["Image"].wrappedValue ?? false) {
                         VStack {
-                            Image(uiImage: imageViewModel.selectedImage!)
-                                .resizable()
-                                .cornerRadius(half_spacing)
-                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: 360, height: 100)
-                                .foregroundColor(.red)
-                                .background(Color(.brandWhite))
-                            
                             PhotosPicker(selection: $imageViewModel.imageSelecion,
                                          matching: .any(of: [.images, .not(.screenshots)])) {
-                                Text("Select Photos")
+                                if let image = imageViewModel.selectedImage {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 360, height: 100)
+                                        .foregroundColor(.red)
+                                        .background(Color.blue)
+                                        .cornerRadius(10)
+                                        .padding(0)
+                                        .onAppear {
+                                            print(imageViewModel.selectedImage)
+                                        }
+                                    
+                                } else {
+                                    Image(systemName: "photo")
+                                        .font(
+                                            Font.custom("SF Pro", size: 50)
+                                                .weight(.medium)
+                                        )
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(Color.color_text_container_primary)
+                                        .frame(width: 360, height: 100)
+                                        .background(Color.color_background_container_primary)
+                                        .cornerRadius(half_spacing)
+                                }
                             }
+                            .background(Color.color_card_container_stroke)
                         }
-                        .padding()
-                        .background(Color.brandWhite)
+                        .padding(.horizontal,default_spacing)
+                        .padding(.top,half_spacing)
+                        .background(Color.color_card_container_stroke)
                     }
                     
                     
                     if ($stepViewModel.menu["Text"].wrappedValue ?? false) {
-                        TextField("Enter text", text: $stepViewModel.texto,axis: .vertical)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .lineLimit(4)
-                            .padding()
-                            .background(Color(.brandLightGray))
-                        
+                        Section {
+                            TextField("Enter text", text: $stepViewModel.texto,axis: .vertical)
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .lineLimit(4)
+                                .foregroundColor(Color.color_text_container_primary)
+                                .background(Color.color_background_container_primary)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .padding(.horizontal,default_spacing)
+                                .padding(.vertical,half_spacing)
+                        }
+                        .background(Color.color_background_container_primary)
+                        .cornerRadius(half_spacing)
+                        .padding(.horizontal,default_spacing)
+                        .padding(.top,half_spacing)
                     }
                     
-                    if (stepViewModel.ingredientsAdded != []) {
+                    if (!stepViewModel.ingredientsAdded.isEmpty) {
                         VStack(alignment: .leading) {
                             Text("Ingredients")
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -92,33 +143,47 @@ struct CreateEditStepView: View {
                                     Text(ingredient.name)
                                         .padding(half_spacing)
                                         .foregroundColor(.white)
-                                        .background(Color(.brandGreen), in: .rect(cornerRadius: hard_radius))
+                                        .background(Color.color_text_container_highlight, in: .rect(cornerRadius: hard_radius))
                                 })
                             }))
                             .padding()
                         }
-                        .background(Color(.brandWhite))
-                        .padding()
+                        .background(Color.color_background_container_primary)
+                        .cornerRadius(half_spacing)
+                        .padding(.horizontal,default_spacing)
+                        .padding(.top,half_spacing)
                     }
                     
                     if ($stepViewModel.menu["Tip"].wrappedValue ?? false) {
-                        TextField("Enter tip", text: $stepViewModel.tip,axis: .vertical)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .lineLimit(4)
-                            .padding()
-                            .background(Color(.brandLightGray))
+                        Section {
+                            TextField("Enter tip", text: $stepViewModel.tip,axis: .vertical)
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .lineLimit(4)
+                                .foregroundColor(Color.color_text_container_primary)
+                                .background(Color.color_background_container_primary)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .padding(.horizontal,default_spacing)
+                                .padding(.vertical,half_spacing)
+                        }
+                        .background(Color.color_background_container_primary)
+                        .cornerRadius(half_spacing)
+                        .padding(.horizontal,default_spacing)
+                        .padding(.top,half_spacing)
                     }
                     
                     if ($stepViewModel.menu["Timer"].wrappedValue ?? false) {
                         VStack(alignment: .leading) {
                             TimePicker(totalTime: $stepViewModel.totalTime)
+                                .cornerRadius(half_spacing)
                         }
-                        .background(Color.brandWhite)
-                        .padding()
+                        .background(Color.color_background_container_primary)
+                        .cornerRadius(half_spacing)
+                        .padding(.horizontal,default_spacing)
+                        .padding(.top,half_spacing)
                     }
                 }
             }
-            .background(Color(.brandLightGray))
+            .background(Color.color_card_container_stroke)
             
             
             VStack(alignment: .leading) {
@@ -133,8 +198,8 @@ struct CreateEditStepView: View {
                                 Button(action: {
                                     stepViewModel.menu[key] = !(stepViewModel.menu[key] ?? true)
                                 }, label: {
-                                    Text("Add")
-                                        .foregroundStyle(.orange)
+                                    Text(stepViewModel.menu[key] == false ? "Add" : "Remove")
+                                        .foregroundStyle(Color.color_button_container_primary)
                                 })
                                 
                             }
@@ -152,7 +217,7 @@ struct CreateEditStepView: View {
                                     }
                                 }
                             }
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(Color.color_button_container_primary)
                         }
                     } header: {
                         Text("Components")
@@ -161,25 +226,36 @@ struct CreateEditStepView: View {
                     
                     
                 }
+                .scrollDisabled(true)
                 .listStyle(.insetGrouped)
-                .background(Color(.brandWhite))
+                .background(Color.color_background_container_primary)
                 .scrollContentBackground(.hidden)
                 .frame(height:250)
             }
             
         }
-        .background(Color(.brandWhite))
+        .listStyle(.insetGrouped)
+        .scrollDismissesKeyboard(.immediately)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Edit Recipe")
+            .toolbar {
+                Button(action: {
+                    stepViewModel.save(self.recipe)
+                    dismiss()
+                }) {
+                    Text("Save")
+                }
+            }
+        .background(Color.color_background_container_primary)
+        .padding(.top,default_spacing)
         .onAppear(perform: {
+            self.stepViewModel.delegate = self
             
             if (editingStep != nil){
-                if let image = editingStep!.imageData{
-                    imageViewModel.selectedImage = UIImage(data: image)
-                }
                 stepViewModel.editField(step: editingStep!)
             } else {
                 stepViewModel.texto = ""
                 stepViewModel.tip = ""
-                imageViewModel.selectedImage = UIImage()
             }
         })
     }
@@ -187,8 +263,7 @@ struct CreateEditStepView: View {
 }
 
 #Preview {
-    CreateEditStepView(editingStep: .constant(Constants.mockedSteps1[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
-                                                                                      Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)], recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
+    CreateEditStepView(editingStep: .constant(Constants.mockedSteps1[0]), recipe: .constant(Constants.mockedRecipe), recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
 }
 
 
@@ -247,6 +322,7 @@ struct TimePicker: View {
                 .pickerStyle(WheelPickerStyle())
             }
         }
+        .cornerRadius(half_spacing)
         .onChange(of: selectedHour, perform: { newHour in
             updateTotalTimeInMinutes()
         })

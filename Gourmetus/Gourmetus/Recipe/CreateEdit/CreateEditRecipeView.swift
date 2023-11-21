@@ -13,7 +13,7 @@ struct CreateEditRecipeView: View {
     
     @State private var editingStep: Step?
     
-    var recipe: Recipe?
+    //var recipe: Recipe?
     
     @State private var selectedDifficulty: Int = 1
     
@@ -28,6 +28,23 @@ struct CreateEditRecipeView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State var recipe: Recipe = Recipe()
+    var mode: Mode
+    
+    enum Mode {
+        case Creating
+        case Editing(Binding<Recipe>)
+    }
+    
+    var title: String {
+        switch self.mode {
+        case .Creating:
+            "Add Recipe"
+        case .Editing(_):
+            "Edit Recipe"
+        }
+    }
+    
     var body: some View {
 
             GeometryReader { geometry in
@@ -36,13 +53,12 @@ struct CreateEditRecipeView: View {
                     Section {
                         HStack{
                             Text("Title")
-                                .bold()
                             TextField("Enter title", text: $createEditViewModel.recipeTitle)
                                 
                         }
                                         
                     } header: {
-                        Text("title")
+                        //Text("title")
                     }
                         
                     
@@ -215,16 +231,12 @@ struct CreateEditRecipeView: View {
                         
                         
                     }
-                    
-                   
-                    
-                    
                 }
                 .sheet(isPresented: $isPresentingNewSheet) {
-                    CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
+                    CreateEditStepView(editingStep: $createEditViewModel.editingStep,recipe: $recipe, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
                         }
                 .sheet(isPresented: $isPresentingEditSheet) {
-                    CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
+                    CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipe: $recipe, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
                         }
                 .sheet(isPresented: $isPresentingIngredientSheet) {
                     ZStack {
@@ -238,7 +250,7 @@ struct CreateEditRecipeView: View {
                 .listStyle(.insetGrouped)
                 .scrollDismissesKeyboard(.immediately)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(recipe != nil ? "Edit Recipe" : "Add Recipe")
+                .navigationTitle(self.title)
                     .toolbar {
                         Button(action: {
                             createEditViewModel.populateCookbook(cookbook: cookbook)
@@ -251,17 +263,33 @@ struct CreateEditRecipeView: View {
                     }
                 }
             .onAppear(perform: {
-                if (recipe != nil){
-                    createEditViewModel.editRecipe(recipe: recipe!)
-                    if let imageData = recipe!.imageData {
-                       imageViewModel.selectedImage = UIImage(data: imageData)
-                   } else {
-                       imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
-                   }
+                switch self.mode {
+                case .Creating:
+                    break
+                case .Editing(let recipe):
+                    self.recipe = recipe.wrappedValue
+                }
+                
+                createEditViewModel.editRecipe(recipe: self.recipe)
+                
+                if let imageData = recipe.imageData {
+                    imageViewModel.selectedImage = UIImage(data: imageData)
                 } else {
                     imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
                 }
+                
                 self.createEditViewModel.populateCookbook(cookbook: self.cookbook)
+                
+//                if (recipe != nil){
+//                    createEditViewModel.editRecipe(recipe: recipe!)
+//                    if let imageData = recipe!.imageData {
+//                       imageViewModel.selectedImage = UIImage(data: imageData)
+//                   } else {
+//                       imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
+//                   }
+//                } else {
+//                    imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
+//                }
             })
         }
     
@@ -270,7 +298,7 @@ struct CreateEditRecipeView: View {
 
 #Preview {
     NavigationStack {
-        CreateEditRecipeView()
+        CreateEditRecipeView(mode: .Creating)
     }
     .environmentObject(Constants.mockedCookbook)
 }
