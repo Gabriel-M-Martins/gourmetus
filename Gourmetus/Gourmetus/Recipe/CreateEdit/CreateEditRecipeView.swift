@@ -231,7 +231,7 @@ struct CreateEditRecipeView: View {
                         }
                 .sheet(isPresented: $isPresentingIngredientSheet) {
                     ZStack {
-                        Color(.systemGray6).edgesIgnoringSafeArea(.all)
+                        Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all)
                             CreateEditIngredientView(editingIngredient: $createEditViewModel.editingIngredient,recipeViewModel: createEditViewModel, showSheet: $isPresentingIngredientSheet)
                         }
                     
