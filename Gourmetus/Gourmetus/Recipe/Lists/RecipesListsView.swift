@@ -80,9 +80,9 @@ struct RecipesListsView: View {
                         VStack {
                             if listType == .History {
                                 HStack {
-                                    Text("Completed")
+                                    Text(recipe.completed ? "Completed" : "Continue")
                                         .modifier(Span())
-                                        .foregroundColor(Color.color_text_container_highlight)
+                                        .foregroundColor(recipe.completed ? Color.color_text_container_highlight : Color.color_text_container_muted )
                                     Spacer()
                                 }
                                 .padding(.horizontal, default_spacing)

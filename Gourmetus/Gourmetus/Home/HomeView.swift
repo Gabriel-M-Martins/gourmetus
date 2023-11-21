@@ -51,54 +51,67 @@ struct HomeView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                Divider()
-                //History
-                VStack(spacing: 0){
-                    if !cookbook.history.isEmpty {
-                        titleRecentlyAccessed
-                        scrollViewRecentlyAccessed
-                    }
+            if cookbook.history.isEmpty && cookbook.community.isEmpty{
+                VStack{
+//                    Spacer()
+                    Text("Nothing to see here yet.")
+                        .modifier(Title())
+                        .foregroundStyle(Color.color_text_container_highlight)
+                        
+//                    Spacer()
                 }
-                .padding(.bottom, default_spacing)
-                
-                Divider()
-                
-                //Favorites
-                VStack(spacing: 0){
+                .padding(default_spacing)
+                .padding(.top, UIScreen.main.bounds.height*0.2)
+            }else{
+                VStack(spacing: 0) {
+                    Divider()
+                    //History
+                    VStack(spacing: 0){
+                        if !cookbook.history.isEmpty {
+                            titleRecentlyAccessed
+                            scrollViewRecentlyAccessed
+                        }
+                    }
+                    .padding(.bottom, default_spacing)
                     
-                    if !cookbook.favorites.isEmpty {
-                        titleFavourites
-                        scrollViewFavourites
-                    }
-                }
-                .padding(.bottom, default_spacing)
-                
-                Divider()
-                
-                //Owned
-                VStack(spacing: 0){
-                    titleMyRecipes
-                    if cookbook.ownedRecipes.isEmpty {
-                        emptyState
-                        createRecipeButton
-                    } else {
-                        scrollViewMyRecipes
-                    }
-                }
-                .padding(.bottom, default_spacing)
-                
-                Divider()
-                
-                //Community
-                VStack(spacing: 0){
+                    Divider()
                     
-                    if !cookbook.community.isEmpty{
-                        titleCommunity
-                        scrollViewCommunity
+                    //Favorites
+                    //                VStack(spacing: 0){
+                    //
+                    //                    if !cookbook.favorites.isEmpty {
+                    //                        titleFavourites
+                    //                        scrollViewFavourites
+                    //                    }
+                    //                }
+                    //                .padding(.bottom, default_spacing)
+                    //
+                    //                Divider()
+                    
+                    //Owned
+                    //                VStack(spacing: 0){
+                    //                    titleMyRecipes
+                    //                    if cookbook.ownedRecipes.isEmpty {
+                    //                        emptyState
+                    //                        createRecipeButton
+                    //                    } else {
+                    //                        scrollViewMyRecipes
+                    //                    }
+                    //                }
+                    //                .padding(.bottom, default_spacing)
+                    //
+                    //                Divider()
+                    
+                    //Community
+                    VStack(spacing: 0){
+                        
+                        if !cookbook.community.isEmpty{
+                            titleCommunity
+                            scrollViewCommunity
+                        }
                     }
+                    
                 }
-                
             }
         }
         .scrollDismissesKeyboard(.interactively)
@@ -106,8 +119,8 @@ struct HomeView: View {
         .navigationTitle("Menu")
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)
-            .presentationDetents([.fraction(1 * 0.8), .large])
-            .presentationDragIndicator(.visible)
+                .presentationDetents([.fraction(1 * 0.8), .large])
+                .presentationDragIndicator(.visible)
         }
         .toolbar(content: {
             ToolbarItem(placement: .topBarTrailing) {
@@ -299,5 +312,5 @@ extension HomeView {
     NavigationStack {
         HomeView()
     }
-    .environmentObject(Constants.mockedCookbook)
+    .environmentObject(Constants.mockedCookbookEmpty)
 }
