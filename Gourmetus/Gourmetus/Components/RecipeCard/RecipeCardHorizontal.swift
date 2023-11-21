@@ -44,7 +44,8 @@ struct RecipeCardHorizontal: View {
                     Spacer()
                 }
                 KnifeView(recipe: vm.recipe)
-                Text("\(Image.starFill) \(vm.recipe.difficulty.formatted())")
+                
+                Text("\(Image.starFill) \(vm.recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", vm.recipe.rating))")
                     .modifier(Paragraph())
                     .foregroundStyle(Color.color_text_review_primary)
                 Text("By \(Image.personCircle)")

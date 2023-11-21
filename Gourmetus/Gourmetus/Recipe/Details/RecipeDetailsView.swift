@@ -21,11 +21,41 @@ struct RecipeDetailsView: View {
     @State private var isNextViewActivated: Bool = false
     @State private var destination: Destination = .Player
     
+    @Environment(\.dismiss) private var dismiss
+    
+    @Injected private var repo: any Repository<Recipe>
+    
+    var image2: Image {
+        if let imgData = recipe.imageData,
+           let img = UIImage(data: imgData) {
+            Image(uiImage: img)
+                .resizable()
+//                .cornerRadius(smooth_radius)
+//                .padding(.top, default_spacing)
+//                .padding(.horizontal, default_spacing)
+        } else {
+            Image("DefaultRecipeImage")
+                .resizable()
+//                .cornerRadius(smooth_radius)
+//                .padding(.top, default_spacing)
+//                .padding(.horizontal, default_spacing)
+//                .frame(height: 145)
+        }
+    }
+    
     var image: Image {
-        guard let data = recipe.imageData,
-              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
+        print (recipe.imageData)
+        if let imgData = recipe.imageData,
+           let img = UIImage(data: imgData) {
+                return Image(uiImage: img)
+        } else {
+            return Image("DefaultRecipeImage")
+        }
         
-        return Image(uiImage: uiimage)
+//        guard let data = recipe.imageData,
+//              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
+//        
+//        return Image(uiImage: uiimage)
     }
     
     var body: some View {
@@ -75,7 +105,8 @@ struct RecipeDetailsView: View {
                             
                             HStack {
                                 Image.starFill
-                                Text("\(String(format: "%.1f", recipe.rating))")
+                                Text("\(recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", recipe.rating))")
+                                    .modifier(Span())
                             }
                             .foregroundStyle(Color.color_text_review_primary)
                             
@@ -226,13 +257,6 @@ struct RecipeDetailsView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        RecipeDetailsView(recipe: Constants.mockedRecipe)
-    }
-    .environmentObject(Constants.mockedCookbook)
-}
-
 extension Binding {
     func toOptional() -> Binding<Value?> {
         return Binding<Value?> {
@@ -248,6 +272,12 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
         self.destination = .Edit
         self.isNextViewActivated = true
     }
+    
+    func deleteRecipe(){
+        self.repo.delete(recipe.id)
+        self.cookbook.removeOwned(recipe: recipe)
+        self.dismiss()
+    }
 }
 
 extension HorizontalAlignment {
@@ -258,4 +288,11 @@ extension HorizontalAlignment {
     }
     
     static let subCenter = HorizontalAlignment(SubCenter.self)
+}
+
+#Preview {
+    NavigationStack {
+        RecipeDetailsView(recipe: Constants.mockedRecipe)
+    }
+    .environmentObject(Constants.mockedCookbook)
 }

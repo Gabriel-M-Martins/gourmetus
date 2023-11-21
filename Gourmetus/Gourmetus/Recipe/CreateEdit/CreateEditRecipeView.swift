@@ -241,6 +241,9 @@ struct CreateEditRecipeView: View {
                 .navigationTitle(recipe != nil ? "Edit Recipe" : "Add Recipe")
                     .toolbar {
                         Button(action: {
+                            if let image = imageViewModel.selectedImage {
+                                self.createEditViewModel.image = image
+                            }
                             createEditViewModel.populateCookbook(cookbook: cookbook)
                             createEditViewModel.saveRepo(recipe: recipe)
                             isPresentingNewSheet = false

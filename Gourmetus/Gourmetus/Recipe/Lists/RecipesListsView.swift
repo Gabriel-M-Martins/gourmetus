@@ -55,7 +55,7 @@ struct RecipesListsView: View {
             
             HStack {
                 Text(listType.subtitle)
-                    .modifier(Huge())
+                    .modifier(Header())
                     .padding(.leading, default_spacing)
                 Spacer()
             }
