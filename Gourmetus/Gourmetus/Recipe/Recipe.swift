@@ -24,13 +24,14 @@ final class Recipe: Identifiable, Hashable {
     var rating: Float
     var imageData: Data?
     var duration: Int
+    var completed: Bool
     
     var steps: [Step]
     var ingredients: [Ingredient]
     var tags: [Tag]
     
     
-    required init(id: UUID = UUID(), name: String = "", desc: String? = nil, difficulty: Int = 0, imageData: Data? = nil, steps: [Step] = [], ingredients: [Ingredient] = [], tags: [Tag] = [], duration: Int = 0) {
+    required init(id: UUID = UUID(), name: String = "", desc: String? = nil, difficulty: Int = 0, rating: Float = 0, imageData: Data? = nil, steps: [Step] = [], ingredients: [Ingredient] = [], tags: [Tag] = [], duration: Int = 0, completed: Bool = false) {
         self.id = id
         self.name = name
         self.desc = desc
@@ -45,5 +46,6 @@ final class Recipe: Identifiable, Hashable {
         self.ingredients.sort(by: { $0.name.lowercased() < $1.name.lowercased() } )
         
         self.tags = tags
+        self.completed = completed
     }
 }
