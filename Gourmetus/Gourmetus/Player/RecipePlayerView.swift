@@ -60,14 +60,19 @@ struct RecipePlayerView: View {
                                             .if(isTipCollapsed) { $0.lineLimit(1) }
                                             .truncationMode(.tail)
                                         
-                                        Button {
-                                            withAnimation {
-                                                isTipCollapsed.toggle()
+                                        
+                                        if(playerViewModel.currentStep.tip!.count > 35){
+                                            Button {
+                                                withAnimation {
+                                                    isTipCollapsed.toggle()
+                                                }
+                                            } label: {
+                                                Image(systemName: isTipCollapsed ? "chevron.down" : "chevron.up")
+                                                    .padding(.top,5)
                                             }
-                                        } label: {
-                                            Image(systemName: isTipCollapsed ? "chevron.down" : "chevron.up")
-                                                .padding(.top,5)
                                         }
+                                            
+                                        
                                         
                                     }
                                     .frame(maxWidth: .infinity)
