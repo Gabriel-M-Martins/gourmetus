@@ -59,7 +59,7 @@ struct DurationPickerView: View {
                 .pickerStyle(WheelPickerStyle())
             }
             .padding()
-            .background(Color.white)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
             .cornerRadius(20)
         }
         

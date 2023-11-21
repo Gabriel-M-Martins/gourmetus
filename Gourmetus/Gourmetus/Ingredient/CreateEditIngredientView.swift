@@ -37,9 +37,10 @@ struct CreateEditIngredientView: View {
                     
                 }, label: {
                     Text("Cancel")
-                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 10)
                         
-                })
+                        
+                }).buttonStyle(.plain)
                 
                 Button(action: {
                     
@@ -96,7 +97,7 @@ struct CreateEditIngredientView: View {
                 
             }
             .padding()
-            .background(Color.white)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
             .cornerRadius(20)
         }
         
