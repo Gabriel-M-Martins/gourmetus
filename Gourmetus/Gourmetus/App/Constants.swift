@@ -10,7 +10,7 @@ import UIKit
 
 struct Constants {
     static let mockedSteps1: [Step] = [
-        Step(id: UUID(), title: "passo 1", texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "banner-placeholder")!.pngData(), order: 0 ),
+        Step(id: UUID(), title: "passo 1", texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidificador.", imageData: UIImage(named: "banner-placeholder")!.pngData(), ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg)], order: 0 ),
         Step(id: UUID(), title: "passo 2", texto: "passo 2", order: 1),
         Step(id: UUID(), title: "passo 3", texto: "passo 3", order: 2),
         Step(id: UUID(), title: "passo 4", timer: 10, order: 3),

@@ -40,4 +40,24 @@ class RecipePlayerViewModel: ObservableObject {
             currentStep = recipe.steps[currentStepIndex]
         }
     }
+    
+    func concatenateIngredients() -> String {
+        guard !currentStep.ingredients.isEmpty else { return "None" }
+
+        if currentStep.ingredients.count == 1 {
+            return currentStep.ingredients[0].name
+        }
+        
+        var result = ""
+        
+        for (index, ingredient) in currentStep.ingredients.enumerated() {
+            if index == currentStep.ingredients.count - 1 {
+                   result += "and \(ingredient.name)"
+            } else {
+                   result += "\(ingredient.name), "
+            }
+        }
+
+           return result
+       }
 }
