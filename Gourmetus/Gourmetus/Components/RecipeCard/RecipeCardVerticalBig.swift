@@ -40,9 +40,9 @@ struct RecipeCardVerticalBig: View {
                         .foregroundColor(Color.color_button_container_primary)
                         .lineLimit(1)
                     
-//                    difficulty
+                    KnifeView(recipe: recipe)
                     
-                    Text("\(Image.starFill) \(recipe.difficulty.formatted())")
+                    Text("\(Image.starFill) \(recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", recipe.rating))")
                         .modifier(Paragraph())
                         .foregroundStyle(Color.color_text_review_primary)
                     Text("By \(Image.personCircle)")

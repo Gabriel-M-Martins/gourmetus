@@ -10,6 +10,7 @@ import SwiftUI
 
 protocol RecipeDetailsDelegate {
     func editRecipe()
+    func deleteRecipe()
 }
 
 class RecipeDetailsViewModel: ObservableObject{    
@@ -31,6 +32,8 @@ class RecipeDetailsViewModel: ObservableObject{
         case .Edit:
             delegate?.editRecipe()
         case .Delete:
+            // 1 - Deleta
+            delegate?.deleteRecipe()
             break
         case .Report:
             break
@@ -69,4 +72,8 @@ class RecipeDetailsViewModel: ObservableObject{
             }
         }
     }
+    
+//    func deleteRecipe(recipe: Recipe){
+//        
+//    }
 }

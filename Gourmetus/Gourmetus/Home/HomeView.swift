@@ -66,11 +66,9 @@ struct HomeView: View {
                 //                    Divider()
                 
                 //History
-                VStack(spacing: 0) {
-                    titleRecentlyAccessed
-                    if history.isEmpty {
-                        emptyState
-                    } else {
+                VStack(spacing: 0){
+                    if !cookbook.history.isEmpty {
+                        titleRecentlyAccessed
                         scrollViewRecentlyAccessed
                     }
                 }
@@ -80,10 +78,9 @@ struct HomeView: View {
                 
                 //Favorites
                 VStack(spacing: 0){
-                    titleFavourites
-                    if favorites.isEmpty {
-                        emptyState
-                    } else {
+                    
+                    if !cookbook.favorites.isEmpty {
+                        titleFavourites
                         scrollViewFavourites
                     }
                 }
@@ -94,8 +91,9 @@ struct HomeView: View {
                 //Owned
                 VStack(spacing: 0){
                     titleMyRecipes
-                    if ownedRecipes.isEmpty {
+                    if cookbook.ownedRecipes.isEmpty {
                         emptyState
+                        createRecipeButton
                     } else {
                         scrollViewMyRecipes
                     }
@@ -106,10 +104,9 @@ struct HomeView: View {
                 
                 //Community
                 VStack(spacing: 0){
-                    titleCommunity
-                    if community.isEmpty {
-                        emptyState
-                    } else {
+                    
+                    if !cookbook.community.isEmpty{
+                        titleCommunity
                         scrollViewCommunity
                     }
                 }
@@ -293,21 +290,21 @@ extension HomeView {
         }
     }
     
-//    private var createRecipeButton: some View {
-//        NavigationLink{
-//            let recipe: Binding<Recipe?> = .constant(nil)
-//            CreateEditRecipeView()
-//        } label: {
-//            Text("Add recipe")
-//                .frame(width: UIScreen.main.bounds.width * 0.55, height: UIScreen.main.bounds.width * 0.075)
-//                .foregroundStyle(Color.color_general_fixed_light)
-//                .modifier(Header())
-//            
-//        }
-//        .tint(.color_button_container_primary)
-//        .buttonStyle(.borderedProminent)
-//        
-//    }
+    private var createRecipeButton: some View {
+        NavigationLink{
+            let recipe: Binding<Recipe?> = .constant(nil)
+            CreateEditRecipeView()
+        } label: {
+            Text("Add recipe")
+                .frame(width: UIScreen.main.bounds.width * 0.55, height: UIScreen.main.bounds.width * 0.075)
+                .foregroundStyle(Color.color_general_fixed_light)
+                .modifier(Header())
+            
+        }
+        .tint(.color_button_container_primary)
+        .buttonStyle(.borderedProminent)
+        
+    }
 }
 
 #Preview {
