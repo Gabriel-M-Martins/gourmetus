@@ -31,12 +31,6 @@ struct CookbookView: View {
                         .frame(width: scale)
                         Divider()
                         
-                        CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
-                            RecipesListsView(listType: .Owned)
-                        })
-                        .frame(width: scale)
-                        Divider()
-                        
                         CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
                             RecipesListsView(listType: .Favorites)
                         })
@@ -45,11 +39,6 @@ struct CookbookView: View {
                     
                     Spacer()
                     
-                    CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
-                        RecipesListsView(listType: .Favorites)
-                    })
-                    .frame(width: scale)
-                    Divider()
                 }
             }
         }

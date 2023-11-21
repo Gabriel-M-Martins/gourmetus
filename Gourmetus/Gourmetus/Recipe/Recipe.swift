@@ -35,7 +35,7 @@ final class Recipe: Identifiable, Hashable {
         self.name = name
         self.desc = desc
         self.difficulty = difficulty
-        self.rating = 5.0
+        self.rating = 0
         self.imageData = imageData
         self.duration = duration
         

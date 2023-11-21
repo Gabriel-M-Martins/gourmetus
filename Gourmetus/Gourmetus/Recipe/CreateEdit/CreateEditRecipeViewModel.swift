@@ -47,11 +47,13 @@ class CreateEditRecipeViewModel: ObservableObject {
     func saveRepo(recipe: Recipe?){
         var calculatedDuration = hourSelection * 60 + minuteSelection
         if (recipe != nil){
-            let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            let data = image.pngData()
+            let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, imageData: data,steps: steps, ingredients: ingredients, duration: calculatedDuration)
             repo.save(rec)
             print(repo.fetch(id: recipe!.id))
         } else {
-            let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            let data = image.pngData()
+            let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, imageData: data, steps: steps, ingredients: ingredients, duration: calculatedDuration)
             cookbook.ownedRecipes.append(rec)
             repo.save(rec)
             repoCookbook.save(cookbook)

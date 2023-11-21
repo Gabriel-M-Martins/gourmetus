@@ -77,9 +77,17 @@ final class Cookbook: Hashable, ObservableObject {
     }
     
     func removeFavorite(recipe: Recipe){
-        for i in 0...favorites.count {
-            if (favorites[i].name == recipe.name){
+        for i in 0..<favorites.count {
+            if (favorites[i].id == recipe.id){
                 favorites.remove(at: i)
+            }
+        }
+    }
+    
+    func removeOwned(recipe: Recipe) {
+        for i in 0..<ownedRecipes.count {
+            if (ownedRecipes[i].id == recipe.id){
+                ownedRecipes.remove(at: i)
             }
         }
     }
