@@ -119,6 +119,9 @@ struct RecipePlayerView: View {
                     
                 }
                 .padding(0)
+                .transaction { transaction in
+                    transaction.animation = nil
+                }
                 //.frame(height: geometry.size.height * 0.77)
                 
                 VStack (spacing:0){
@@ -132,9 +135,9 @@ struct RecipePlayerView: View {
                         HStack(spacing: 0){
                             //Previous Step
                             Button(action: {
-                                
+                                withAnimation{
                                     playerViewModel.previousStep()
-                                
+                                    }
                             }, label: {
                                 Image(systemName: "chevron.left")
                                     .resizable()
@@ -151,8 +154,10 @@ struct RecipePlayerView: View {
                             Spacer()
                             //Next Step
                             Button(action: {
-                               
+                                withAnimation{
                                     playerViewModel.nextStep()
+                                }
+                                   
                                 
                             }, label: {
                                 Image(systemName: "chevron.right")
@@ -192,6 +197,7 @@ struct RecipePlayerView: View {
                     }
                     .toolbar(.hidden, for: .tabBar)
                     .navigationBarTitleDisplayMode(.inline)
+                    .animation(.easeIn, value: 2)
                     
                 }
                 
