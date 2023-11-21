@@ -19,20 +19,22 @@ struct CookbookView: View {
                     Divider()
                     
                     VStack {
-                        CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
-                            RecipesListsView(listType: .History)
+                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
+                            RecipesListsView(listType: .Favorites)
                         })
                         .frame(width: scale)
+                        
                         Divider()
                         
                         CookbookCard(title: "My Recipes", subtitle: "\(cookbook.ownedRecipes.count) Recipes Inside", book: .ownedRecipes, destination: {
                             RecipesListsView(listType: .Owned)
                         })
                         .frame(width: scale)
+                        
                         Divider()
                         
-                        CookbookCard(title: "Favorite Recipes", subtitle: "\(cookbook.favorites.count) Recipes Inside", book: .favorites, destination: {
-                            RecipesListsView(listType: .Favorites)
+                        CookbookCard(title: "Recently Accessed", subtitle: "\(cookbook.history.count) Recipes Inside", book: .history, destination: {
+                            RecipesListsView(listType: .History)
                         })
                         .frame(width: scale)
                     }

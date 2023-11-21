@@ -12,7 +12,8 @@ extension Recipe : EntityRepresentable {
         guard let name = entityRepresentation.values["name"] as? String,
               let difficulty = entityRepresentation.values["difficulty"] as? Int,
               let duration = entityRepresentation.values["duration"] as? Int,
-              let rating = entityRepresentation.values["rating"] as? Float else { return nil }
+              let rating = entityRepresentation.values["rating"] as? Float,
+              let completed = entityRepresentation.values["completed"] as? Bool else { return nil }
 
         guard let stepsRepresentations = entityRepresentation.toManyRelationships["steps"] else { return nil }
         
@@ -47,7 +48,7 @@ extension Recipe : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, name: name, desc: entityRepresentation.values["desc"] as? String, difficulty: difficulty, imageData: entityRepresentation.values["image"] as? Data, steps: steps.sorted(by: { $0.order < $1.order }), ingredients: ingredients, tags: tags, duration: duration)
+        self.init(id: entityRepresentation.id, name: name, desc: entityRepresentation.values["desc"] as? String, difficulty: difficulty, rating: rating, imageData: entityRepresentation.values["image"] as? Data, steps: steps.sorted(by: { $0.order < $1.order }), ingredients: ingredients, tags: tags, duration: duration, completed: completed)
     }
     
     func encode() -> EntityRepresentation {
@@ -56,7 +57,8 @@ extension Recipe : EntityRepresentable {
             "name" : self.name,
             "difficulty" : self.difficulty as Any,
             "rating" : self.rating as Any,
-            "duration" : self.duration as Any
+            "duration" : self.duration as Any,
+            "completed" : self.completed as Any
         ]
         
         if self.desc != nil {
