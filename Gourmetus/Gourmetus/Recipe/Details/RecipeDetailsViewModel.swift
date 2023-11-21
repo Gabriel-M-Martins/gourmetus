@@ -11,6 +11,7 @@ import SwiftUI
 protocol RecipeDetailsDelegate {
     func editRecipe()
     func deleteRecipe()
+    func startRecipe()
 }
 
 class RecipeDetailsViewModel: ObservableObject{    
