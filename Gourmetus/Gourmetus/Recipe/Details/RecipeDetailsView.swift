@@ -12,14 +12,15 @@ struct RecipeDetailsView: View {
         case Player
         case Edit
     }
-
+    
     var recipe: Recipe
     
     @StateObject var vm: RecipeDetailsViewModel = RecipeDetailsViewModel()
     @EnvironmentObject var cookbook: Cookbook
-        
+    
     @State private var isNextViewActivated: Bool = false
     @State private var destination: Destination = .Player
+    @State private var showAlert = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -30,16 +31,16 @@ struct RecipeDetailsView: View {
            let img = UIImage(data: imgData) {
             Image(uiImage: img)
                 .resizable()
-//                .cornerRadius(smooth_radius)
-//                .padding(.top, default_spacing)
-//                .padding(.horizontal, default_spacing)
+            //                .cornerRadius(smooth_radius)
+            //                .padding(.top, default_spacing)
+            //                .padding(.horizontal, default_spacing)
         } else {
             Image("DefaultRecipeImage")
                 .resizable()
-//                .cornerRadius(smooth_radius)
-//                .padding(.top, default_spacing)
-//                .padding(.horizontal, default_spacing)
-//                .frame(height: 145)
+            //                .cornerRadius(smooth_radius)
+            //                .padding(.top, default_spacing)
+            //                .padding(.horizontal, default_spacing)
+            //                .frame(height: 145)
         }
     }
     
@@ -47,15 +48,15 @@ struct RecipeDetailsView: View {
         print (recipe.imageData)
         if let imgData = recipe.imageData,
            let img = UIImage(data: imgData) {
-                return Image(uiImage: img)
+            return Image(uiImage: img)
         } else {
             return Image("DefaultRecipeImage")
         }
         
-//        guard let data = recipe.imageData,
-//              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
-//        
-//        return Image(uiImage: uiimage)
+        //        guard let data = recipe.imageData,
+        //              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
+        //
+        //        return Image(uiImage: uiimage)
     }
     
     var body: some View {
@@ -117,23 +118,23 @@ struct RecipeDetailsView: View {
                     
                     // TODO: componente de resizable tag collection
                     ScrollView{
-//                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
-//                            TagView(Tag: tag.name) {
-//                                Text("Nothing to see here yet.")
-//                                    .modifier(Title())
-//                                    .foregroundStyle(Color.color_text_container_highlight)
-//                            }
-//                        }))
+                        //                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
+                        //                            TagView(Tag: tag.name) {
+                        //                                Text("Nothing to see here yet.")
+                        //                                    .modifier(Title())
+                        //                                    .foregroundStyle(Color.color_text_container_highlight)
+                        //                            }
+                        //                        }))
                         ChipsStack {
                             ForEach(recipe.tags) { tag in
-//                                Button {
-//                                    
-//                                } label: {
-//                                    TagView(text: tag.name, selected: .constant(true))
-//                                }
+                                //                                Button {
+                                //
+                                //                                } label: {
+                                //                                    TagView(text: tag.name, selected: .constant(true))
+                                //                                }
                                 TagView(text: tag.name, selected: .constant(true))
-                                .padding(.trailing, half_spacing)
-                                .padding(.bottom, half_spacing)
+                                    .padding(.trailing, half_spacing)
+                                    .padding(.bottom, half_spacing)
                             }
                         }
                     }
@@ -195,8 +196,17 @@ struct RecipeDetailsView: View {
                 Spacer()
                 
                 Button(action: {
-                    isNextViewActivated = true
-                    self.destination = .Player
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                        if success {
+                            print("All set!")
+                            self.startRecipe()
+                        } else if let error = error {
+                            print(error.localizedDescription)
+                        }else{
+                            showAlert = true
+                        }
+                    }
+                    
                 }) {
                     Text("Start")
                         .frame(width: UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.width * 0.075)
@@ -249,11 +259,17 @@ struct RecipeDetailsView: View {
             case .Edit:
                 CreateEditRecipeView(recipe: recipe)
             }
-
+            
         }
         .onAppear {
             self.vm.delegate = self
         }
+        
+        .alert(isPresented: $showAlert, content: {
+            Alert(title: Text("Permission required"), message: Text("To be able to be notified of when your timer ends, we need your permission to send you notifications. Head to your settings to allow the app to send notifications."), primaryButton: .destructive(Text("Cancel").bold(), action: {self.startRecipe()}), secondaryButton: .default(Text("Ok"), action: {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!); self.startRecipe()
+            }))
+        })
     }
 }
 
@@ -268,6 +284,12 @@ extension Binding {
 }
 
 extension RecipeDetailsView: RecipeDetailsDelegate {
+    func startRecipe() {
+        self.isNextViewActivated = true
+        self.destination = .Player
+    }
+    
+    
     func editRecipe() {
         self.destination = .Edit
         self.isNextViewActivated = true

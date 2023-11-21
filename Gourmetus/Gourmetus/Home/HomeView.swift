@@ -52,19 +52,7 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                //                Button(action: {
-                //                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                //                        if success {
-                //                            print("All set!")
-                //                        } else if let error = error {
-                //                            print(error.localizedDescription)
-                //                        }
-                //                    }
-                //                }, label: {
-                //                    Text("Button")
-                //                })
-                //                    Divider()
-                
+                Divider()
                 //History
                 VStack(spacing: 0){
                     if !cookbook.history.isEmpty {
