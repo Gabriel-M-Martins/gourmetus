@@ -135,6 +135,7 @@ struct CreateEditRecipeView: View {
                             Text("+")
                                 .foregroundColor(.accentColor)
                         }
+                        .contentShape(Rectangle())
                         .onTapGesture{
                             isPresentingIngredientSheet.toggle()
                         }
@@ -157,6 +158,7 @@ struct CreateEditRecipeView: View {
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.secondary)
                             }
+                            .contentShape(Rectangle())
                             
                                 .onTapGesture{
                                     createEditViewModel.editingIngredient = ingredient
@@ -180,6 +182,7 @@ struct CreateEditRecipeView: View {
                             Text("+")
                                 .foregroundColor(.accentColor)
                         }
+                        .contentShape(Rectangle())
                         .onTapGesture{
                             createEditViewModel.editingStep = nil
                             isPresentingEditSheet.toggle()
@@ -199,7 +202,7 @@ struct CreateEditRecipeView: View {
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.accentColor)
                             }
-                            
+                            .contentShape(Rectangle())
                                 .onTapGesture{
                                     createEditViewModel.editingStep = step
                                     isPresentingEditSheet.toggle()

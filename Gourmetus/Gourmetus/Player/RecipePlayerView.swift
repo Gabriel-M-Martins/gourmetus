@@ -89,14 +89,20 @@ struct RecipePlayerView: View {
                                         .if(!isLandscape) { $0.frame(maxWidth: UIScreen.main.bounds.size.width * 0.3) }
                                         .if(isLandscape) { $0.frame(width: UIScreen.main.bounds.width - 40) }
                                 }
-                              
-                                VStack{
-                                    Text("Ingredients used in this step")
-                                        .modifier(Span())
-                                    Text("Butter, Sugar and Milk")
-                                        .modifier(Paragraph())
-                                        .foregroundColor(Color.color_text_container_highlight)
+                                
+                                if(playerViewModel.currentStep.ingredients.count > 0){
+                                    VStack{
+                                       
+                                        Text("Ingredients used in this step")
+                                            .modifier(Span())
+                                        Text(playerViewModel.concatenateIngredients())
+                                            .modifier(Paragraph())
+                                            .foregroundColor(Color.color_text_container_highlight)
+                                       
+                                    }
                                 }
+                              
+                                
                             }
                             
                             

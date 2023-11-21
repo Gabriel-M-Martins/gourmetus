@@ -15,6 +15,17 @@ struct Step: Identifiable, Hashable {
     var tip: String?
     var imageData: Data?
     var timer: Int?
-    var ingredientsAdded: Set<Ingredient>?
+    var ingredients: [Ingredient]
     var order: Int
+    
+    init(id: UUID = UUID(), title: String = "default", texto: String? = nil, tip: String? = nil, imageData: Data? = nil, timer: Int? = nil, ingredients: [Ingredient] = [], order: Int = -1) {
+        self.id = id
+        self.title = title
+        self.texto = texto
+        self.tip = tip
+        self.imageData = imageData
+        self.timer = timer
+        self.ingredients = ingredients
+        self.order = order
+    }
 }
