@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipePlayerView: View {
+struct RecipePlayerView: View, PlayerDelegate {
     
     @State var isTextFocused : Bool = false
     
@@ -15,6 +15,9 @@ struct RecipePlayerView: View {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var cookbook: Cookbook
+
     
     init(recipe: Recipe, step: Int) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
@@ -143,6 +146,28 @@ struct RecipePlayerView: View {
                             TimerView(remainingTime: playerViewModel.currentStep.timer!)
                         }
                         
+                        if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)){
+                            Button(action: {
+                               
+                                   
+                                playerViewModel.completeRecipe()
+                                dismiss()
+                                    
+                            }, label: {
+                                Text("Finish")
+                                    
+                                    .padding(.vertical, 7)
+                                    .padding(.horizontal, 50)
+                                    
+                                    .background(Color.color_button_container_primary)
+                                    .cornerRadius(hard_radius)
+                                    .foregroundColor(Color.color_general_fixed_light)
+                                    .modifier(Header())
+                                   
+                                    
+                            })
+                        }
+                        
                         HStack(spacing: 0){
                             //Previous Step
                             Button(action: {
@@ -164,6 +189,7 @@ struct RecipePlayerView: View {
                                 .foregroundColor(Color.color_text_container_highlight)
                             Spacer()
                             //Next Step
+                            
                             Button(action: {
                                 withAnimation{
                                     playerViewModel.nextStep()
@@ -175,7 +201,9 @@ struct RecipePlayerView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
-                                    .foregroundColor(Color.black)
+                                    //.foregroundColor(Color.black)
+                                    .if(playerViewModel.currentStepIndex != (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.black) }
+                                    .if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.gray) }
                                     
                             })
                             
@@ -271,13 +299,15 @@ struct RecipePlayerView: View {
                 }
             }
         })
-       
+        .onAppear{
+            self.playerViewModel.delegate = self
+        }
         
-           
     }
     
         
 }
+
 
 #Preview {
     RecipePlayerView(recipe: Constants.mockedRecipe, step: 0)

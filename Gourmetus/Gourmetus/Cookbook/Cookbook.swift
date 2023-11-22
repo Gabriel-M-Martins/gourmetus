@@ -108,10 +108,13 @@ final class Cookbook: Hashable, ObservableObject {
     }
     
     func addLatest(recipe: Recipe){
+        repo.delete(self.id)
+        recipe.delete()
         if(history.count == latestSize){
             history.remove(at: latestSize)
         }
-            history.append(recipe)
+        history.append(recipe)
+        repo.save(self)
 //        latest.sort(by: $0.date.compare($1.date) == orderedAscending)
     }
     
