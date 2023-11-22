@@ -39,7 +39,6 @@ class RecipePlayerViewModel: ObservableObject {
             currentStep = recipe.steps[currentStepIndex]
         }
         
-        
     }
     
     func previousStep(){
@@ -47,6 +46,7 @@ class RecipePlayerViewModel: ObservableObject {
             self.currentStepIndex -= 1
             currentStep = recipe.steps[currentStepIndex]
         }
+ 
     }
     
     func concatenateIngredients() -> String {

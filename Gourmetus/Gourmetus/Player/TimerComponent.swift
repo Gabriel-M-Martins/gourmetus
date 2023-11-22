@@ -17,9 +17,9 @@ struct TimerView: View {
     
     @State var notificationId: UUID? = nil
     
-    init(remainingTime: Int) {
-           self._initialTime = State(initialValue: remainingTime)
-           self._remainingTime = State(initialValue: remainingTime)
+    init(initialTime: Int) {
+           self._initialTime = State(initialValue: initialTime)
+           self._remainingTime = State(initialValue: initialTime)
        }
     
     var body: some View {
@@ -38,8 +38,6 @@ struct TimerView: View {
 //                .font(.headline)
             
         VStack {
-            Text("Timer")
-                .font(.headline)
             
             HStack{
                 Text(timeFormatted)
@@ -65,11 +63,17 @@ struct TimerView: View {
                 
                 
                 Button(action: {
-                    stopTimer()
-                    remainingTime = initialTime
-                    startTimer()
-                    
-                    
+                    if(isRunning){
+                        stopTimer()
+                        remainingTime = initialTime
+                        startTimer()
+                        
+                    } else{
+                        stopTimer()
+                        remainingTime = initialTime
+                        
+                    }
+                  
                     
                 }) {
                     Image(systemName: "repeat.circle")
@@ -86,7 +90,7 @@ struct TimerView: View {
             
         }
         .padding(0)
-        .background(Color.white)
+        .background(Color(UIColor.secondarySystemGroupedBackground))
         .cornerRadius(5)
     }
     
@@ -126,5 +130,5 @@ struct TimerView: View {
 
 #Preview {
    
-    TimerView(remainingTime: 300)
+    TimerView(initialTime: 300)
 }

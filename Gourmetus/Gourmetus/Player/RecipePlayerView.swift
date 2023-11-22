@@ -143,7 +143,14 @@ struct RecipePlayerView: View, PlayerDelegate {
                     VStack(spacing:0){
                         
                         if(playerViewModel.currentStep.timer != nil){
-                            TimerView(remainingTime: playerViewModel.currentStep.timer!)
+                            if(playerViewModel.currentStep.timer != 0){
+                                TimerView(initialTime: playerViewModel.currentStep.timer!)
+                                    .onAppear{
+                                        print(playerViewModel.currentStep.timer)
+                                    }
+                            }
+                            
+                            
                         }
                         
                         if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)){
@@ -179,7 +186,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color.color_text_container_primary)
                                    
                                     
                             })
@@ -202,7 +209,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
                                     //.foregroundColor(Color.black)
-                                    .if(playerViewModel.currentStepIndex != (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.black) }
+                                    .if(playerViewModel.currentStepIndex != (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.color_text_container_primary) }
                                     .if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.gray) }
                                     
                             })
@@ -216,7 +223,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                             ForEach(0..<playerViewModel.recipe.steps.count, id: \.self) { page in
                                 Circle()
                                     .frame(width: 10, height: 10)
-                                    .foregroundColor(page == playerViewModel.currentStepIndex ? Color.color_text_container_highlight : Color.gray)
+                                    .foregroundColor(page == playerViewModel.currentStepIndex ? Color.color_text_container_highlight : Color.color_card_container_stroke)
                             }
                         }
                     }
@@ -231,7 +238,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                             bottomTrailing: 0,
                             topTrailing: 50.0),
                             style: .continuous)
-                        .foregroundStyle(.white).ignoresSafeArea()
+                        .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground)).ignoresSafeArea()
                         .shadow(color: Color.gray, radius: 5, x: 0, y: 2)
                     }
                     .toolbar(.hidden, for: .tabBar)
@@ -301,6 +308,7 @@ struct RecipePlayerView: View, PlayerDelegate {
         })
         .onAppear{
             self.playerViewModel.delegate = self
+            
         }
         
     }
