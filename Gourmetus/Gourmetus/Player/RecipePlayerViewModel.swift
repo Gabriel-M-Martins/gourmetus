@@ -7,10 +7,18 @@
 
 import Foundation
 
+protocol PlayerDelegate {
+    var cookbook: Cookbook { get }
+}
+
 class RecipePlayerViewModel: ObservableObject {
     @Published var recipe: Recipe
     @Published var currentStep: Step
     @Published var currentStepIndex: Int
+    
+    var delegate: PlayerDelegate?
+    
+    @Injected private var repo: any Repository<Recipe>
    
     
     init(recipe: Recipe, initialStepIndex: Int? = nil) {
@@ -60,4 +68,9 @@ class RecipePlayerViewModel: ObservableObject {
 
            return result
        }
+    
+    func completeRecipe(){
+        recipe.completed = true
+        delegate?.cookbook.addLatest(recipe: recipe)
+    }
 }

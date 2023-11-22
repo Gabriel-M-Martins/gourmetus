@@ -9,6 +9,9 @@ import Foundation
 import CoreData
 
 final class Recipe: Identifiable, Hashable {
+    
+    @Injected private var repo: any Repository<Recipe>
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.id)
     }
@@ -48,4 +51,13 @@ final class Recipe: Identifiable, Hashable {
         self.tags = tags
         self.completed = completed
     }
+    
+    func delete(){
+        repo.delete(self.id)
+        
+    }
+    
+    
+    
+    
 }
