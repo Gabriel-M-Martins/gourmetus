@@ -41,17 +41,19 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
         
         guard let representation = traverseRelationships(object: fetchedResult, visited: Set()) else { return nil }
         
-        return Model(entityRepresentation: representation)
+        var visited: [UUID : (any EntityRepresentable)?] = [:]
+        return Model.decode(representation: representation, visited: &visited)
     }
     
     func fetch() -> [Model] {
         var result = [Model]()
+        var visited: [UUID : (any EntityRepresentable)?]  = [:]
         
         let fetchResults = fetch(self.entityName)
         for fetchResult in fetchResults {
             guard let representation = traverseRelationships(object: fetchResult, visited: Set()) else { continue }
             
-            if let model = Model(entityRepresentation: representation) {
+            if let model = Model.decode(representation: representation, visited: &visited) {
                 result.append(model)
             }
         }
@@ -61,7 +63,9 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
     
     
     func save(_ model: Model) {
-        let representation = model.encode()
+        var visited: [UUID : EntityRepresentation] = [:]
+        
+        let representation = model.encode(visited: &visited)
         
         guard let entity = traverseRelationships(representation: representation, visited: [:]) else { return }
         
