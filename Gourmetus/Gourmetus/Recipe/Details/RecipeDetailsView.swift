@@ -296,7 +296,7 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
     }
     
     func deleteRecipe(){
-        self.repo.delete(recipe.id)
+        self.repo.delete(recipe)
         self.cookbook.removeOwned(recipe: recipe)
         self.dismiss()
     }

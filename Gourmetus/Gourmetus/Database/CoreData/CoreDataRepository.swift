@@ -11,21 +11,26 @@ import CoreData
 final class CoreDataRepository<Model>: Repository where Model: EntityRepresentable {
     private var container: NSPersistentContainer { PersistenceController.shared.container }
     
-    // TODO: tirar a cache e fazer o save dar um fetch no banco p/ checar se ja existe
     private var entityName: String
     
     init(_ entityName: String) {
         self.entityName = entityName
     }
     
-    func delete(_ id: UUID) {
+    // TODO: Delete não tá deletando as entidades nestadas :P (?)
+    func delete(_ model: Model) {
+        var visited: [UUID : EntityRepresentation] = [:]
+        let representation = model.encode(visited: &visited)
         let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.predicate = NSPredicate(format: "id == %@", representation.id as CVarArg)
         
         let fetchedResults = (try? container.viewContext.fetch(request)) ?? []
+        
         for result in fetchedResults {
             container.viewContext.delete(result)
         }
+        
+        try? container.viewContext.save()
     }
     
     private func fetch(_ entityName: String) -> [NSManagedObject] {
@@ -39,21 +44,23 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
         
         guard let fetchedResult = (try? container.viewContext.fetch(request))?.first else { return nil }
         
-        guard let representation = traverseRelationships(object: fetchedResult, visited: Set()) else { return nil }
+        var visitedRepresentation: [UUID : EntityRepresentation] = [:]
+        guard let representation = traverseRelationships(object: fetchedResult, visited: &visitedRepresentation) else { return nil }
         
-        var visited: [UUID : (any EntityRepresentable)?] = [:]
-        return Model.decode(representation: representation, visited: &visited)
+        var visitedModels: [UUID : (any EntityRepresentable)?] = [:]
+        return Model.decode(representation: representation, visited: &visitedModels)
     }
     
     func fetch() -> [Model] {
+        var visitedRepresentations: [UUID : EntityRepresentation] = [:]
+        var visitedModels: [UUID : (any EntityRepresentable)?] = [:]
         var result = [Model]()
-        var visited: [UUID : (any EntityRepresentable)?]  = [:]
         
         let fetchResults = fetch(self.entityName)
         for fetchResult in fetchResults {
-            guard let representation = traverseRelationships(object: fetchResult, visited: Set()) else { continue }
+            guard let representation = traverseRelationships(object: fetchResult, visited: &visitedRepresentations) else { continue }
             
-            if let model = Model.decode(representation: representation, visited: &visited) {
+            if let model = Model.decode(representation: representation, visited: &visitedModels) {
                 result.append(model)
             }
         }
@@ -61,15 +68,16 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
         return result
     }
     
-    
     func save(_ model: Model) {
-        var visited: [UUID : EntityRepresentation] = [:]
+        var visitedRepresentations: [UUID : EntityRepresentation] = [:]
+        var visitedNSManagedObjects: [UUID : NSManagedObject] = [:]
+        let representation = model.encode(visited: &visitedRepresentations)
         
-        let representation = model.encode(visited: &visited)
+        guard let _ = traverseRelationships(representation: representation, visited: &visitedNSManagedObjects) else { return }
         
-        guard let entity = traverseRelationships(representation: representation, visited: [:]) else { return }
-        
-        try? entity.managedObjectContext?.save()
+        for (_, entity) in visitedNSManagedObjects {
+            try? entity.managedObjectContext?.save()
+        }
     }
     
     func save(_ models: [Model]) {
@@ -97,13 +105,18 @@ extension CoreDataRepository {
         }
     }
     
-    private func traverseRelationships(object: NSManagedObject, visited: Set<UUID>) -> EntityRepresentation? {
+    private func traverseRelationships(object: NSManagedObject, visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation? {
         guard let id = object.value(forKey: "id") as? UUID,
               let entityName = object.entity.name else { return nil }
         
-        var newVisited = visited
+        if let result = visited[id] {
+            return result
+        }
         
         let attributes = object.entity.attributesByName.map({ $0.key })
+        
+        let representation = EntityRepresentation(id: id, entityName: entityName, values: object.dictionaryWithValues(forKeys: attributes), toOneRelationships: [:], toManyRelationships: [:])
+        visited[id] = representation
         
         let keysToOneRelationships = object.entity.relationshipsByName.reduce([String]()) { partialResult, item in
             var result = partialResult
@@ -116,14 +129,17 @@ extension CoreDataRepository {
         var toOneRelationships = [String : EntityRepresentation]()
         for key in keysToOneRelationships {
             guard let relationship = object.value(forKey: key) as? NSManagedObject,
-                  let relationshipId = object.value(forKey: "id") as? UUID else { continue }
+                  let _ = relationship.value(forKey: "id") as? UUID else { continue }
             
-            if !visited.contains(relationshipId) {
-                newVisited.insert(id)
-                let representation = traverseRelationships(object: relationship, visited: newVisited)
+            if let representation = traverseRelationships(object: relationship, visited: &visited) {
+                visited[representation.id] = representation
                 toOneRelationships[key] = representation
+                
+                continue
             }
         }
+        
+        representation.toOneRelationships = toOneRelationships
         
         let keysToManyRelationships = object.entity.relationshipsByName.reduce([String]()) { partialResult, item in
             var result = partialResult
@@ -135,47 +151,44 @@ extension CoreDataRepository {
         
         var toManyRelationships = [String : [EntityRepresentation]]()
         for key in keysToManyRelationships {
-            guard let relationships = object.value(forKey: key) as? NSSet,
-                  let relationshipId = object.value(forKey: "id") as? UUID else { continue }
-
-            if !visited.contains(relationshipId) {
-                newVisited.insert(id)
+            guard let relationships = object.value(forKey: key) as? NSSet else { continue }
                 
-                var representations = [EntityRepresentation]()
+            var representations = [EntityRepresentation]()
+            for relationship in relationships.allObjects as? [NSManagedObject] ?? [] {
+                guard let _ = relationship.value(forKey: "id") as? UUID else { continue }
                 
-                for relationship in relationships.allObjects as? [NSManagedObject] ?? [] {
-                    guard let rep = traverseRelationships(object: relationship, visited: newVisited) else { continue }
-                    representations.append(rep)
+                if let representation = traverseRelationships(object: relationship, visited: &visited) {
+                    visited[representation.id] = representation
+                    representations.append(representation)
+                    continue
                 }
-                
-                toManyRelationships[key] = representations
             }
+            
+            toManyRelationships[key] = representations
         }
         
-        
-        let representation = EntityRepresentation(id: id, entityName: entityName, values: object.dictionaryWithValues(forKeys: attributes), toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        representation.toManyRelationships = toManyRelationships
         
         return representation
     }
     
-    private func traverseRelationships(representation: EntityRepresentation, visited: [UUID : EntityRepresentation], context: NSManagedObjectContext? = nil) -> NSManagedObject? {
+    private func traverseRelationships(representation: EntityRepresentation, visited: inout [UUID : NSManagedObject], context: NSManagedObjectContext? = nil) -> NSManagedObject? {
+        if let result = visited[representation.id] {
+            return result
+        }
+        
         guard let entityParent = representationToEntity(representation: representation, context: context) else { return nil }
         populateEntity(values: representation.values, entity: entityParent)
         
-        var entitiesVisited = visited
+        visited[representation.id] = entityParent
+        
         let sonsToOne = representation.toOneRelationships.map { (key: String, value: EntityRepresentation) in
             return (key: key, value: value)
         }
         
         for son in sonsToOne {
-            if let _ = entitiesVisited[son.value.id] {
-                continue
-            }
-            
-            entitiesVisited[son.value.id] = son.value
-            
-            if let entitySon = traverseRelationships(representation: son.value, visited: entitiesVisited, context: entityParent.managedObjectContext),
-               let relationship = entityParent.entity.relationships(forDestination: entitySon.entity).first(where: {$0.name == son.key}) {
+            if let entitySon = traverseRelationships(representation: son.value, visited: &visited, context: entityParent.managedObjectContext),
+               let relationship = entityParent.entity.relationships(forDestination: entitySon.entity).first(where: { $0.name == son.key }) {
             
                 entityParent.setValue(entitySon, forKey: relationship.name)
             }
@@ -189,13 +202,7 @@ extension CoreDataRepository {
             var childrenToAdd = [NSManagedObject]()
             
             for sonK in son.values {
-                if let _ = entitiesVisited[sonK.id] {
-                    continue
-                }
-                
-                entitiesVisited[sonK.id] = sonK
-                
-                if let entitySon = traverseRelationships(representation: sonK, visited: entitiesVisited, context: entityParent.managedObjectContext) {
+                if let entitySon = traverseRelationships(representation: sonK, visited: &visited, context: entityParent.managedObjectContext) {
                     childrenToAdd.append(entitySon)
                 }
             }

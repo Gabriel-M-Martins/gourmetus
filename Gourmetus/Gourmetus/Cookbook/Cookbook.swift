@@ -45,21 +45,23 @@ final class Cookbook: Hashable, ObservableObject {
     }
     
     func fetch() {
-        guard let cookbook = repo.fetch().first else {
+        if let cookbook = repo.fetch().first {
+            self.id = cookbook.id
+            self.ownedRecipes = cookbook.ownedRecipes
+            self.favorites = cookbook.favorites
+            self.history = cookbook.history
+            self.community = cookbook.community
+            
+        } else {
             self.id = UUID()
             self.ownedRecipes = Constants.mockedRecipes
             self.favorites = Constants.mockedRecipes
             self.history = Constants.mockedRecipes
             self.community = Constants.mockedRecipes
             
-            return
+            repo.save(self)
         }
         
-        self.id = cookbook.id
-        self.ownedRecipes = cookbook.ownedRecipes
-        self.favorites = cookbook.favorites
-        self.history = cookbook.history
-        self.community = cookbook.community
     }
     
     func fetch(id: UUID) {
@@ -94,13 +96,17 @@ final class Cookbook: Hashable, ObservableObject {
     
     @discardableResult
     func toggleFavourite(recipe: Recipe) -> Bool {
+        let result: Bool
         if self.favorites.contains(where: { $0.id == recipe.id }) {
             self.favorites.removeAll(where: { $0.id == recipe.id })
-            return false
+            result = false
         } else {
             self.favorites.append(recipe)
-            return true
+            result = true
         }
+        
+        repo.save(self)
+        return result
     }
     
     func isFavoritedRecipe(recipe: Recipe) -> Bool {
@@ -108,15 +114,13 @@ final class Cookbook: Hashable, ObservableObject {
     }
     
     func addLatest(recipe: Recipe){
-        repo.delete(self.id)
+        repo.delete(self)
         recipe.delete()
         if(history.count == latestSize){
             history.remove(at: latestSize)
         }
         history.append(recipe)
         repo.save(self)
-//        latest.sort(by: $0.date.compare($1.date) == orderedAscending)
+        //        latest.sort(by: $0.date.compare($1.date) == orderedAscending)
     }
-    
-    
 }
