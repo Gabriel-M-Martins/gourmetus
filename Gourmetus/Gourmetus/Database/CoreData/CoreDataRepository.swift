@@ -73,11 +73,12 @@ final class CoreDataRepository<Model>: Repository where Model: EntityRepresentab
         var visitedNSManagedObjects: [UUID : NSManagedObject] = [:]
         let representation = model.encode(visited: &visitedRepresentations)
         
-        guard let _ = traverseRelationships(representation: representation, visited: &visitedNSManagedObjects) else { return }
+        guard let entity = traverseRelationships(representation: representation, visited: &visitedNSManagedObjects) else { return }
         
-        for (_, entity) in visitedNSManagedObjects {
-            try? entity.managedObjectContext?.save()
-        }
+        try? entity.managedObjectContext?.save()
+//        for (_, entity) in visitedNSManagedObjects {
+//            try? entity.managedObjectContext?.save()
+//        }
     }
     
     func save(_ models: [Model]) {
@@ -207,10 +208,14 @@ extension CoreDataRepository {
                 }
             }
             
-            if childrenToAdd.isEmpty { continue }
+            if childrenToAdd.isEmpty,
+               let relationship = entityParent.entity.relationshipsByName[son.key] {
+                entityParent.setValue([], forKey: relationship.name)
+                continue
+            }
+            
             
             if let relationship = entityParent.entity.relationships(forDestination: childrenToAdd[0].entity).first(where: { $0.name == son.key }) {
-                
                 entityParent.setValue(NSSet(array: childrenToAdd), forKey: relationship.name)
             }
         }
