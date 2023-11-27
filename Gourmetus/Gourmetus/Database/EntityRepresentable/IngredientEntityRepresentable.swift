@@ -8,20 +8,33 @@
 import Foundation
 
 extension Ingredient : EntityRepresentable {
-    init?(entityRepresentation: EntityRepresentation) {
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self? {
+        if let result = visited[representation.id] {
+            return (result as? Self)
+        }
+        
+        visited.updateValue(nil, forKey: representation.id)
+        
         let decoder = JSONDecoder()
-        guard let name = entityRepresentation.values["name"] as? String,
-              let quantity = entityRepresentation.values["quantity"] as? String,
-              let unitData = entityRepresentation.values["unit"] as? Data,
+        guard let name = representation.values["name"] as? String,
+              let quantity = representation.values["quantity"] as? String,
+              let unitData = representation.values["unit"] as? Data,
               let unit = try? decoder.decode(IngredientUnit.self, from: unitData) else { return nil }
         
-        self.id = entityRepresentation.id
-        self.name = name
-        self.quantity = quantity
-        self.unit = unit
+        let result = Self.init(id: representation.id, name: name, quantity: quantity, unit: unit)
+        visited[representation.id] = result
+        
+        return result
     }
     
-    func encode() -> EntityRepresentation {
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation {
+        if let result = visited[self.id] {
+            return result
+        }
+        
+        let result = EntityRepresentation(id: self.id, entityName: "IngredientEntity", values: [:], toOneRelationships: [:], toManyRelationships: [:])
+        visited[self.id] = result
+        
         let encoder = JSONEncoder()
         var values: [String : Any] = [
             "id" : self.id,
@@ -37,6 +50,10 @@ extension Ingredient : EntityRepresentable {
         
         let toOneRelationships: [String : EntityRepresentation] = [:]
         
-        return EntityRepresentation(id: self.id, entityName: "IngredientEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        result.values = values
+        result.toOneRelationships = toOneRelationships
+        result.toManyRelationships = toManyRelationships
+        
+        return result
     }
 }

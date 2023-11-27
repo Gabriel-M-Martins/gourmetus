@@ -44,8 +44,8 @@ struct RecipeDetailsView: View {
         }
     }
     
+    // TODO: essa porra aqui sempre ta vindo nil por algum motivo
     var image: Image {
-        print (recipe.imageData)
         if let imgData = recipe.imageData,
            let img = UIImage(data: imgData) {
             return Image(uiImage: img)
@@ -296,7 +296,7 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
     }
     
     func deleteRecipe(){
-        self.repo.delete(recipe.id)
+        self.repo.delete(recipe)
         self.cookbook.removeOwned(recipe: recipe)
         self.dismiss()
     }

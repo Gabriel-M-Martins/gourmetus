@@ -132,10 +132,6 @@ struct HomeView: View {
                 }
             }
         })
-        .onAppear{
-            print(cookbook.community.map({$0.id}))
-            print(cookbook.history.map({$0.id}))
-        }
     }
 }
 

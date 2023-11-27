@@ -8,39 +8,37 @@
 import Foundation
 
 extension Recipe : EntityRepresentable {
-    convenience init?(entityRepresentation: EntityRepresentation) {
-        guard let name = entityRepresentation.values["name"] as? String,
-              let difficulty = entityRepresentation.values["difficulty"] as? Int,
-              let duration = entityRepresentation.values["duration"] as? Int,
-              let rating = entityRepresentation.values["rating"] as? Float,
-              let completed = entityRepresentation.values["completed"] as? Bool else { return nil }
-
-        guard let stepsRepresentations = entityRepresentation.toManyRelationships["steps"] else { return nil }
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self? {
+        if let result = visited[representation.id] {
+            return (result as? Self)
+        }
         
-        let steps = stepsRepresentations.reduce([Step]()) { partialResult, representation in
-            guard let step = Step(entityRepresentation: representation) else { return partialResult }
+        visited.updateValue(nil, forKey: representation.id)
+        
+        guard let name = representation.values["name"] as? String,
+              let difficulty = representation.values["difficulty"] as? Int,
+              let duration = representation.values["duration"] as? Int,
+              let rating = representation.values["rating"] as? Float,
+              let completed = representation.values["completed"] as? Bool,
+              let stepsRepresentations = representation.toManyRelationships["steps"],
+              let tagsRepresentations = representation.toManyRelationships["tags"],
+              let ingredientsRepresentations = representation.toManyRelationships["ingredients"] else { return nil }
+
+        let desc = representation.values["desc"] as? String
+        let imageData = representation.values["image"] as? Data
+        
+        let steps = stepsRepresentations.reduce([Step]()) { partialResult, innerRepresentation in
+            guard let step = Step.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(step)
             
             return result
         }
+        .sorted(by: { $0.order < $1.order })
         
-        guard let ingredientsRepresentations = entityRepresentation.toManyRelationships["ingredients"] else { return nil }
-        
-        let ingredients = ingredientsRepresentations.reduce([Ingredient]()) { partialResult, representation in
-            guard let ingredient = Ingredient(entityRepresentation: representation) else { return partialResult }
-            
-            var result = partialResult
-            result.append(ingredient)
-            
-            return result
-        }
-        
-        guard let tagsRepresentations = entityRepresentation.toManyRelationships["tags"] else { return nil }
-        
-        let tags = tagsRepresentations.reduce([Tag]()) { partialResult, representation in
-            guard let model = Tag(entityRepresentation: representation) else { return partialResult }
+        let tags = tagsRepresentations.reduce([Tag]()) { partialResult, innerRepresentation in
+            guard let model = Tag.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -48,10 +46,29 @@ extension Recipe : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, name: name, desc: entityRepresentation.values["desc"] as? String, difficulty: difficulty, rating: rating, imageData: entityRepresentation.values["image"] as? Data, steps: steps.sorted(by: { $0.order < $1.order }), ingredients: ingredients, tags: tags, duration: duration, completed: completed)
+        let ingredients = ingredientsRepresentations.reduce([Ingredient]()) { partialResult, innerRepresentation in
+            guard let model = Ingredient.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
+            
+            var result = partialResult
+            result.append(model)
+            
+            return result
+        }
+        
+        let result = Self.init(id: representation.id, name: name, desc: desc, difficulty: difficulty, rating: rating, imageData: imageData, steps: steps, ingredients: ingredients, tags: tags, duration: duration, completed: completed)
+        visited[representation.id] = result
+        
+        return result
     }
     
-    func encode() -> EntityRepresentation {
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation {
+        if let result = visited[self.id] {
+            return result
+        }
+        
+        let result = EntityRepresentation(id: self.id, entityName: "RecipeEntity", values: [:], toOneRelationships: [:], toManyRelationships: [:])
+        visited[self.id] = result
+        
         var values: [String : Any] = [
             "id" : self.id,
             "name" : self.name,
@@ -69,15 +86,19 @@ extension Recipe : EntityRepresentable {
             values["image"] = self.imageData!
         }
         
-        let toManyRelationships: [String : [EntityRepresentation]] = [
-            "steps" : self.steps.map({ $0.encode() }),
-            "ingredients" : self.ingredients.map({ $0.encode() }),
-            "tags" : self.tags.map({ $0.encode() }),
-        ]
-        
         let toOneRelationships: [String : EntityRepresentation] = [:]
         
-        return EntityRepresentation(id: self.id, entityName: "RecipeEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        let toManyRelationships: [String : [EntityRepresentation]] = [
+            "steps" : self.steps.map({ $0.encode(visited: &visited) }),
+            "ingredients" : self.ingredients.map({ $0.encode(visited: &visited) }),
+            "tags" : self.tags.map({ $0.encode(visited: &visited) }),
+        ]
+        
+        result.values = values
+        result.toOneRelationships = toOneRelationships
+        result.toManyRelationships = toManyRelationships
+        
+        return result
     }
     
     

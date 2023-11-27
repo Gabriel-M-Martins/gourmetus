@@ -13,5 +13,5 @@ protocol Repository<Model> {
     func fetch(id: UUID) -> Model?
     func save(_ model: Model)
     func save(_ models: [Model])
-    func delete(_ id: UUID)
+    func delete(_ model: Model)
 }
