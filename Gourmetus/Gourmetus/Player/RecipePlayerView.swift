@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+protocol RecipePlayerTimerDelegate {
+    func toggleTimer()
+    func resetTimer()
+    
+}
+
 struct RecipePlayerView: View, PlayerDelegate {
     
     @State var isTextFocused : Bool = false
@@ -15,6 +21,9 @@ struct RecipePlayerView: View, PlayerDelegate {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     @StateObject var speech = Speech()
+    @StateObject var timerViewModel: TimerViewModel = TimerViewModel(initialTime: 10, id: UUID())
+    
+    @State var current = 0
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var cookbook: Cookbook
@@ -24,29 +33,25 @@ struct RecipePlayerView: View, PlayerDelegate {
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
-       @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
     var isLandscape: Bool {
-            return horizontalSizeClass == .compact && verticalSizeClass == .regular
-        }
+        return horizontalSizeClass == .compact && verticalSizeClass == .regular
+    }
     
     var body: some View {
         
-        
         GeometryReader { geometry in
+            
             ZStack{
+                
                 VStack{
                     
-                    
-                    
                     VStack(spacing: 20){
-                        
                         
                         VStack (spacing: 20){
                             
                             RotatingView(isLandscape: !isLandscape){
-                                
-                                
                                 
                                 if(playerViewModel.currentStep.tip != nil){
                                     
@@ -74,9 +79,6 @@ struct RecipePlayerView: View, PlayerDelegate {
                                                     .padding(.top,5)
                                             }
                                         }
-                                        
-                                        
-                                        
                                     }
                                     .frame(maxWidth: .infinity)
                                     .padding()
@@ -84,8 +86,6 @@ struct RecipePlayerView: View, PlayerDelegate {
                                     .foregroundColor(Color.brandWhite)
                                     .cornerRadius(hard_radius)
                                     //.animation(.easeInOut)
-                                    
-                                    
                                 }
                                 
                                 if(playerViewModel.currentStep.imageData != nil && !isTextFocused){
@@ -113,7 +113,6 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                             }
                             
-                            
                             if(playerViewModel.currentStep.texto != nil){
                                 Text(playerViewModel.currentStep.texto!)
                                     .modifier(Title())
@@ -123,14 +122,11 @@ struct RecipePlayerView: View, PlayerDelegate {
                         }
                         //.background(Color.red)
                         .padding(0)
-                        
                     }
                     .frame(width: geometry.size.width)
                     //.padding(100)
                     
                     Spacer()
-                    
-                    
                 }
                 .padding(0)
                 .transaction { transaction in
@@ -138,19 +134,26 @@ struct RecipePlayerView: View, PlayerDelegate {
                 }
                 //.frame(height: geometry.size.height * 0.77)
                 
-                VStack (spacing:0){
+                VStack (spacing:0) {
                     Spacer()
-                    VStack(spacing:0){
+                    VStack(spacing:0) {
                         
                         if(playerViewModel.currentStep.timer != nil){
                             if(playerViewModel.currentStep.timer != 0){
-                                TimerView(initialTime: playerViewModel.currentStep.timer!)
-                                    .onAppear{
-                                        print(playerViewModel.currentStep.timer)
-                                    }
+                                if(playerViewModel.currentStepIndex.isMultiple(of: 2)){
+                                    TimerView(vm: timerViewModel)
+                                        .onAppear {
+                                            self.timerViewModel.initialTime = self.playerViewModel.currentStep.timer!
+                                            self.timerViewModel.id = self.playerViewModel.currentStep.id
+                                        }
+                                } else{
+                                    TimerView(vm: timerViewModel)
+                                        .onAppear {
+                                            self.timerViewModel.initialTime = self.playerViewModel.currentStep.timer!
+                                            self.timerViewModel.id = self.playerViewModel.currentStep.id
+                                        }
+                                }
                             }
-                            
-                            
                         }
                         
                         if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)){
@@ -247,24 +250,24 @@ struct RecipePlayerView: View, PlayerDelegate {
                     
                 }
                 
-//                if speech.showOverlay {
-//                    
-//                    ZStack{
-//                        Rectangle()
-//                            .opacity(0.5)
-//                        VStack{
-//                            Spacer()
-//                            Rectangle()
-//                                .foregroundColor(.white)
-//                                .frame(height: 300)
-//                                .overlay {
-//                                    
-//                                    Text(speech.recognizedText)
-//                                }
-//                            Spacer()
-//                        }
-//                    }
-//                }
+                //                if speech.showOverlay {
+                //
+                //                    ZStack{
+                //                        Rectangle()
+                //                            .opacity(0.5)
+                //                        VStack{
+                //                            Spacer()
+                //                            Rectangle()
+                //                                .foregroundColor(.white)
+                //                                .frame(height: 300)
+                //                                .overlay {
+                //
+                //                                    Text(speech.recognizedText)
+                //                                }
+                //                            Spacer()
+                //                        }
+                //                    }
+                //                }
                 
             }
             .frame(width: geometry.size.width)
@@ -352,7 +355,7 @@ struct RecipePlayerView: View, PlayerDelegate {
         
     }
     
-        
+    
 }
 
 
@@ -419,23 +422,24 @@ extension RecipePlayerView: SpeechViewDelegate {
         print("quit")
         dismiss()
     }
-
+    
     func mode() {
-        print("mfgdgfdode")
+        print("mode")
         self.isTextFocused.toggle()
     }
     
     func timer() {
-        print("timer")
+        timerViewModel.toggleTimer()
     }
     
     func timerReset() {
         print("timerReset")
+        timerViewModel.resetTimer()
     }
     
     func tip() {
         print("tip")
-    
+        
         self.isTipCollapsed.toggle()
     }
 }
