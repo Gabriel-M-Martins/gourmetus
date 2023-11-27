@@ -10,6 +10,7 @@ import UIKit
 
 // AppDelegate.swift
 class AppDelegate: NSObject, UIApplicationDelegate {
+    let notificationCenter = NotificationCenter.default
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         
@@ -19,6 +20,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Dependencies.register(CoreDataRepository<Step>("StepEntity"), for: (any Repository<Step>).self)
         Dependencies.register(CoreDataRepository<Tag>("TagEntity"), for: (any Repository<Tag>).self)
         
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
         return true
     }
     
@@ -26,6 +29,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let sceneConfig: UISceneConfiguration = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
             sceneConfig.delegateClass = SceneDelegate.self
             return sceneConfig
+    }
+    
+    @objc func appMovedToForeground() {
+        notificationCenter.post(name: Notification.Name("enteredForeground"), object: nil)
     }
 }
 

@@ -15,6 +15,8 @@ struct RecipePlayerView: View, PlayerDelegate {
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     
+    @State var current = 0
+    
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var cookbook: Cookbook
 
@@ -142,12 +144,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                     Spacer()
                     VStack(spacing:0){
                         
+                        
+                        
                         if(playerViewModel.currentStep.timer != nil){
                             if(playerViewModel.currentStep.timer != 0){
-                                TimerView(initialTime: playerViewModel.currentStep.timer!)
-                                    .onAppear{
-                                        print(playerViewModel.currentStep.timer)
-                                    }
+                                if(playerViewModel.currentStepIndex.isMultiple(of: 2)){
+                                    TimerView(initialTime: playerViewModel.currentStep.timer!, id:playerViewModel.currentStep.id)
+                                } else{
+                                    TimerView(initialTime: playerViewModel.currentStep.timer!, id:playerViewModel.currentStep.id)
+                                }
+                                
+                                   
                             }
                             
                             
@@ -308,6 +315,7 @@ struct RecipePlayerView: View, PlayerDelegate {
         })
         .onAppear{
             self.playerViewModel.delegate = self
+           
             
         }
         

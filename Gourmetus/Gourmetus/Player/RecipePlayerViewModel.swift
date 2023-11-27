@@ -30,8 +30,14 @@ class RecipePlayerViewModel: ObservableObject {
                 self.currentStepIndex = 0 // Default to 0 if no index is provided
                 self.currentStep = recipe.steps[0]
             }
+        
+        
+        
+            
             
         }
+    
+    
     
     func nextStep(){
         if(currentStepIndex < recipe.steps.count - 1){
