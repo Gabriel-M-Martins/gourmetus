@@ -17,13 +17,13 @@ class EntityRepresentation {
     let entityName: String
     /// The properties the entity has. Probably this is going to be modified in the future to be a custom struct that can specify properties
     /// types accordingly to the database.
-    let values: [String : Any] // [String: PrimitiveValue]
+    var values: [String : Any] // [String: PrimitiveValue]
     /// This should **only** map to children relationships and **never** to parent relationships as to avoid
     /// infinite mapping loops.
-    let toOneRelationships: [String : EntityRepresentation]
+    var toOneRelationships: [String : EntityRepresentation]
     /// This should **only** map to children relationships and **never** to parent relationships as to avoid
     /// infinite mapping loops.
-    let toManyRelationships: [String : [EntityRepresentation]]
+    var toManyRelationships: [String : [EntityRepresentation]]
     
     init(id: UUID, entityName: String, values: [String : Any], toOneRelationships: [String : EntityRepresentation], toManyRelationships: [String : [EntityRepresentation]]) {
         self.id = id
@@ -36,6 +36,6 @@ class EntityRepresentation {
 
 /// Structs that are going to be stored in a database should implement this protocol to proper map the communication with *any* database.
 protocol EntityRepresentable: Hashable {
-    init?(entityRepresentation: EntityRepresentation)
-    func encode() -> EntityRepresentation
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self?
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation
 }

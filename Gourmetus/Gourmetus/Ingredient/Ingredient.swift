@@ -8,11 +8,26 @@
 import Foundation
 import CoreData
 
-struct Ingredient: Equatable, Identifiable, Hashable{
+final class Ingredient: Equatable, Identifiable, Hashable{
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+    
+    static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     var id: UUID
     var name: String
     var quantity: String
     var unit: IngredientUnit
+    
+    init(id: UUID = UUID(), name: String = "default ingredient", quantity: String = "default quantity", unit: IngredientUnit = .G) {
+        self.id = id
+        self.name = name
+        self.quantity = quantity
+        self.unit = unit
+    }
 }
 
 enum IngredientUnit: Codable, Identifiable, CaseIterable {

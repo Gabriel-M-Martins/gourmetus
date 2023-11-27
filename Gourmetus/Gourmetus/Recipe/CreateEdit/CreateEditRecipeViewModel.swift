@@ -44,13 +44,13 @@ class CreateEditRecipeViewModel: ObservableObject {
         ingredientUnit = .Kg
     }
     
-    func saveRepo(recipe: Recipe?){
-        var calculatedDuration = hourSelection * 60 + minuteSelection
+    func saveRepo(recipe: Recipe?) {
+        let calculatedDuration = hourSelection * 60 + minuteSelection
         if (recipe != nil){
             let data = image.pngData()
             let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, imageData: data,steps: steps, ingredients: ingredients, duration: calculatedDuration)
+            
             repo.save(rec)
-            print(repo.fetch(id: recipe!.id))
         } else {
             let data = image.pngData()
             let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, imageData: data, steps: steps, ingredients: ingredients, duration: calculatedDuration)
@@ -125,7 +125,6 @@ class CreateEditRecipeViewModel: ObservableObject {
         difficulty = recipe.difficulty
         hourSelection = recipe.duration / 60
         minuteSelection = recipe.duration % 60
-        print(recipe.duration)
         
     }
 }

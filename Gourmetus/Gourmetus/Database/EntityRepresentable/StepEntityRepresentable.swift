@@ -8,33 +8,45 @@
 import Foundation
 
 extension Step : EntityRepresentable {
-    init?(entityRepresentation: EntityRepresentation) {
-        guard let order = entityRepresentation.values["order"] as? Int,
-              let title = entityRepresentation.values["title"] as? String else { return nil }
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self? {
+        if let result = visited[representation.id] {
+            return (result as? Self)
+        }
         
-        self.id = entityRepresentation.id
-        self.title = title
-        self.texto = entityRepresentation.values["texto"] as? String
-        self.tip = entityRepresentation.values["tip"] as? String
-        self.imageData = entityRepresentation.values["image"] as? Data
-        self.timer = entityRepresentation.values["timer"] as? Int
-        self.order = order
+        visited.updateValue(nil, forKey: representation.id)
         
-        guard let ingredientsRepresentations = entityRepresentation.toManyRelationships["ingredients"] else { return nil }
+        guard let order = representation.values["order"] as? Int,
+              let title = representation.values["title"] as? String,
+              let ingredientsRepresentations = representation.toManyRelationships["ingredients"] else { return nil }
         
-        let ingredients = ingredientsRepresentations.reduce([Ingredient]()) { partialResult, representation in
-            guard let ingredient = Ingredient(entityRepresentation: representation) else { return partialResult }
+        let texto = representation.values["texto"] as? String
+        let tip = representation.values["tip"] as? String
+        let imageData = representation.values["image"] as? Data
+        let timer = representation.values["timer"] as? Int
+        
+        let ingredients = ingredientsRepresentations.reduce([Ingredient]()) { partialResult, innerRepresentation in
+            guard let model = Ingredient.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
-            result.append(ingredient)
+            result.append(model)
             
             return result
         }
         
-        self.ingredients = ingredients
+        let result = Self.init(id: representation.id, title: title, texto: texto, tip: tip, imageData: imageData, timer: timer, ingredients: ingredients, order: order)
+        visited[representation.id] = result
+        
+        return result
     }
     
-    func encode() -> EntityRepresentation {
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation {
+        if let result = visited[self.id] {
+            return result
+        }
+        
+        let result = EntityRepresentation(id: self.id, entityName: "StepEntity", values: [:], toOneRelationships: [:], toManyRelationships: [:])
+        visited[self.id] = result
+        
         var values: [String : Any] = [
             "id" : self.id,
             "title" : self.title,
@@ -57,11 +69,15 @@ extension Step : EntityRepresentable {
             values["timer"] = self.timer!
         }
         
-        let toManyRelationships: [String : [EntityRepresentation]] = [
-            "ingredients" : self.ingredients.map({ $0.encode() })]
-        
         let toOneRelationships: [String : EntityRepresentation] = [:]
         
-        return EntityRepresentation(id: self.id, entityName: "StepEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        let toManyRelationships: [String : [EntityRepresentation]] = [
+            "ingredients" : self.ingredients.map({ $0.encode(visited: &visited) })]
+        
+        result.values = values
+        result.toOneRelationships = toOneRelationships
+        result.toManyRelationships = toManyRelationships
+        
+        return result
     }
 }

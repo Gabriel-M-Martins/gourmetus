@@ -8,13 +8,18 @@
 import Foundation
 
 extension Tag : EntityRepresentable {
-    convenience init?(entityRepresentation: EntityRepresentation) {
-        guard let name = entityRepresentation.values["name"] as? String else { return nil }
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self? {
+        if let result = visited[representation.id] {
+            return (result as? Self)
+        }
         
-        guard let recipesRepresentations = entityRepresentation.toManyRelationships["recipes"] else { return nil }
+        visited.updateValue(nil, forKey: representation.id)
         
-        let recipes = recipesRepresentations.reduce([Recipe]()) { partialResult, representation in
-            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+        guard let name = representation.values["name"] as? String,
+              let recipesRepresentations = representation.toManyRelationships["recipes"] else { return nil }
+        
+        let recipes = recipesRepresentations.reduce([Recipe]()) { partialResult, innerRepresentation in
+            guard let model = Recipe.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -22,10 +27,20 @@ extension Tag : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, name: name, recipes: recipes)
+        let result = Self.init(id: representation.id, name: name, recipes: recipes)
+        visited[representation.id] = result
+        
+        return result
     }
     
-    func encode() -> EntityRepresentation {
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation {
+        if let result = visited[self.id] {
+            return result
+        }
+        
+        let result = EntityRepresentation(id: self.id, entityName: "TagEntity", values: [:], toOneRelationships: [:], toManyRelationships: [:])
+        visited[self.id] = result
+        
         let values: [String : Any] = [
             "id" : self.id,
             "name" : self.name
@@ -36,10 +51,14 @@ extension Tag : EntityRepresentable {
         ]
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
-            "recipes" : self.recipes.map({ $0.encode() })
+            "recipes" : self.recipes.map({ $0.encode(visited: &visited) })
         ]
         
-        return EntityRepresentation(id: self.id, entityName: "TagEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        result.values = values
+        result.toOneRelationships = toOneRelationships
+        result.toManyRelationships = toManyRelationships
+        
+        return result
     }
     
 }

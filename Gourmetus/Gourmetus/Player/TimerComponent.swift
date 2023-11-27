@@ -102,13 +102,11 @@ struct TimerView: View {
     }
     
     func startTimer() {
-       // print(remainingTime)
         notificationId = NotificationService.setTimer(time: remainingTime, title: "Notificacao", subtitle: "Funcionou")
-        print(notificationId)
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if remainingTime > 0 {
                 remainingTime -= 1
-                //print("rodando")
+                
             } else {
                 stopTimer()
                 isRunning = false

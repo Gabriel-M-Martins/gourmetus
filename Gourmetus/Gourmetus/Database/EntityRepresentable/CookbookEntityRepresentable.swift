@@ -8,14 +8,20 @@
 import Foundation
 
 extension Cookbook : EntityRepresentable {
-    convenience init?(entityRepresentation: EntityRepresentation) {
-        guard let favoritesRepresentations = entityRepresentation.toManyRelationships["favorites"],
-              let historyRepresentations = entityRepresentation.toManyRelationships["history"],
-              let ownedRecipesRepresentations = entityRepresentation.toManyRelationships["ownedRecipes"],
-              let communityRepresentations = entityRepresentation.toManyRelationships["community"] else { return nil }
+    static func decode(representation: EntityRepresentation, visited: inout [UUID : (any EntityRepresentable)?]) -> Self? {
+        if let result = visited[representation.id] {
+            return (result as? Self)
+        }
         
-        let favorites = favoritesRepresentations.reduce([Recipe]()) { partialResult, representation in
-            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+        visited.updateValue(nil, forKey: representation.id)
+        
+        guard let favoritesRepresentations = representation.toManyRelationships["favorites"],
+              let historyRepresentations = representation.toManyRelationships["history"],
+              let ownedRecipesRepresentations = representation.toManyRelationships["ownedRecipes"],
+              let communityRepresentations = representation.toManyRelationships["community"] else { return nil }
+        
+        let favorites = favoritesRepresentations.reduce([Recipe]()) { partialResult, innerRepresentation in
+            guard let model = Recipe.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -23,8 +29,8 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        let history = historyRepresentations.reduce([Recipe]()) { partialResult, representation in
-            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+        let history = historyRepresentations.reduce([Recipe]()) { partialResult, innerRepresentation in
+            guard let model = Recipe.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -32,8 +38,8 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        let ownedRecipes = ownedRecipesRepresentations.reduce([Recipe]()) { partialResult, representation in
-            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+        let ownedRecipes = ownedRecipesRepresentations.reduce([Recipe]()) { partialResult, innerRepresentation in
+            guard let model = Recipe.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -41,8 +47,8 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        let community = communityRepresentations.reduce([Recipe]()) { partialResult, representation in
-            guard let model = Recipe(entityRepresentation: representation) else { return partialResult }
+        let community = communityRepresentations.reduce([Recipe]()) { partialResult, innerRepresentation in
+            guard let model = Recipe.decode(representation: innerRepresentation, visited: &visited) else { return partialResult }
             
             var result = partialResult
             result.append(model)
@@ -50,24 +56,38 @@ extension Cookbook : EntityRepresentable {
             return result
         }
         
-        self.init(id: entityRepresentation.id, ownedRecipes: ownedRecipes, favorites: favorites, history: history, community: community)
+        let result = Self.init(id: representation.id, ownedRecipes: ownedRecipes, favorites: favorites, history: history, community: community)
+        visited[representation.id] = result
+        
+        return result
     }
     
-    func encode() -> EntityRepresentation {
+    func encode(visited: inout [UUID : EntityRepresentation]) -> EntityRepresentation {
+        if let result = visited[self.id] {
+            return result
+        }
+        
+        let result = EntityRepresentation(id: self.id, entityName: "CookbookEntity", values: [:], toOneRelationships: [:], toManyRelationships: [:])
+        visited[self.id] = result
+        
         let values: [String : Any] = [
             "id" : self.id,
         ]
         
         let toManyRelationships: [String : [EntityRepresentation]] = [
-            "ownedRecipes" : self.ownedRecipes.map({ $0.encode() }),
-            "favorites" : self.favorites.map({ $0.encode() }),
-            "history" : self.history.map({ $0.encode() }),
-            "community" : self.community.map({ $0.encode() })
+            "ownedRecipes" : self.ownedRecipes.map({ $0.encode(visited: &visited) }),
+            "favorites" : self.favorites.map({ $0.encode(visited: &visited) }),
+            "history" : self.history.map({ $0.encode(visited: &visited) }),
+            "community" : self.community.map({ $0.encode(visited: &visited) }),
         ]
         
         let toOneRelationships: [String : EntityRepresentation] = [:]
         
-        return EntityRepresentation(id: self.id, entityName: "CookbookEntity", values: values, toOneRelationships: toOneRelationships, toManyRelationships: toManyRelationships)
+        result.values = values
+        result.toOneRelationships = toOneRelationships
+        result.toManyRelationships = toManyRelationships
+        
+        return result
     }
 }
 
