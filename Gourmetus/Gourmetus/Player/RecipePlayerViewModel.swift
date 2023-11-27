@@ -30,29 +30,36 @@ class RecipePlayerViewModel: ObservableObject {
                 self.currentStepIndex = 0 // Default to 0 if no index is provided
                 self.currentStep = recipe.steps[0]
             }
-        
-        
-        
-            
             
         }
     
-    
-    
-    func nextStep(){
+    func nextStep() {
         if(currentStepIndex < recipe.steps.count - 1){
             self.currentStepIndex += 1
             currentStep = recipe.steps[currentStepIndex]
         }
-        
     }
     
-    func previousStep(){
+    func previousStep() {
         if(currentStepIndex > 0){
             self.currentStepIndex -= 1
             currentStep = recipe.steps[currentStepIndex]
         }
  
+    }
+    
+    func firstStep() {
+        if(currentStepIndex != 0){
+            self.currentStepIndex = 0
+            currentStep = recipe.steps[currentStepIndex]
+        }
+    }
+    
+    func lastStep() {
+        if(currentStepIndex < recipe.steps.count - 1){
+            self.currentStepIndex = recipe.steps.count - 1
+            currentStep = recipe.steps[currentStepIndex]
+        }
     }
     
     func concatenateIngredients() -> String {

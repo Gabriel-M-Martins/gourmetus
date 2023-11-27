@@ -40,6 +40,7 @@
 		7BE13DE02B029B7F00DFF8E3 /* KnifeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE13DDF2B029B7F00DFF8E3 /* KnifeView.swift */; };
 		7BE609842AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */; };
 		7BE615D02B0D1CA400E82BD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE615CF2B0D1CA400E82BD4 /* SceneDelegate.swift */; };
+		7BF5F8A62B0FE88100DBDE03 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5F8A52B0FE88100DBDE03 /* Speech.swift */; };
 		A71E6B5E2AFD4DAA00F89E71 /* CookbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E6B5D2AFD4DAA00F89E71 /* CookbookView.swift */; };
 		A71E6B602AFD62B900F89E71 /* CookbookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E6B5F2AFD62B900F89E71 /* CookbookCard.swift */; };
 		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
@@ -105,6 +106,7 @@
 		7BE13DDF2B029B7F00DFF8E3 /* KnifeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnifeView.swift; sourceTree = "<group>"; };
 		7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardVerticalBigViewModel.swift; sourceTree = "<group>"; };
 		7BE615CF2B0D1CA400E82BD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7BF5F8A52B0FE88100DBDE03 /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
 		A71E6B5D2AFD4DAA00F89E71 /* CookbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookView.swift; sourceTree = "<group>"; };
 		A71E6B5F2AFD62B900F89E71 /* CookbookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookCard.swift; sourceTree = "<group>"; };
 		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */,
 				30AB481A2AE98C59007EC567 /* PhotoPicker.swift */,
+				7BF5F8A52B0FE88100DBDE03 /* Speech.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				3050D4C02AEA8EB000D26A87 /* CreateEditStepView.swift in Sources */,
 				7BE0A5A62AFAAE1B004550D5 /* RecipeCardVerticalSmallViewModel.swift in Sources */,
 				A77F458A2AFAD56300FDFB43 /* StepEntityRepresentable.swift in Sources */,
+				7BF5F8A62B0FE88100DBDE03 /* Speech.swift in Sources */,
 				A72EA1192B02919E0003008D /* FavoriteButtonStyle.swift in Sources */,
 				30CB53AF2AE84E3C0093A21D /* CreateEditRecipeView.swift in Sources */,
 				3050D4C22AEFED8E00D26A87 /* CreateEditRecipeViewModel.swift in Sources */,
@@ -675,6 +679,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow the app to use the microphone";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Please allow the app to use the speech recognition";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -707,6 +713,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow the app to use the microphone";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Please allow the app to use the speech recognition";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

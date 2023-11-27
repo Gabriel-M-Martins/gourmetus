@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+protocol RecipePlayerTimerDelegate {
+    func toggleTimer()
+    func resetTimer()
+    
+}
+
 struct RecipePlayerView: View, PlayerDelegate {
     
     @State var isTextFocused : Bool = false
@@ -14,41 +20,38 @@ struct RecipePlayerView: View, PlayerDelegate {
     @State var isTipCollapsed : Bool = true
     
     @StateObject var playerViewModel: RecipePlayerViewModel
+    @StateObject var speech = Speech()
+    @StateObject var timerViewModel: TimerViewModel = TimerViewModel(initialTime: 10, id: UUID())
     
     @State var current = 0
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var cookbook: Cookbook
-
     
     init(recipe: Recipe, step: Int) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
-       @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
     var isLandscape: Bool {
-            return horizontalSizeClass == .compact && verticalSizeClass == .regular
-        }
+        return horizontalSizeClass == .compact && verticalSizeClass == .regular
+    }
     
     var body: some View {
         
-        
         GeometryReader { geometry in
+            
             ZStack{
+                
                 VStack{
-                    
-                   
                     
                     VStack(spacing: 20){
                         
-                        
                         VStack (spacing: 20){
-                        
-                            RotatingView(isLandscape: !isLandscape){
                             
-                           
+                            RotatingView(isLandscape: !isLandscape){
                                 
                                 if(playerViewModel.currentStep.tip != nil){
                                     
@@ -58,8 +61,8 @@ struct RecipePlayerView: View, PlayerDelegate {
                                             
                                         }
                                         
-                                            .frame(width: 30)
-                                            
+                                        .frame(width: 30)
+                                        
                                         Text(playerViewModel.currentStep.tip!)
                                             .frame(maxWidth: .infinity,alignment: .leading)
                                             .if(isTipCollapsed) { $0.lineLimit(1) }
@@ -76,9 +79,6 @@ struct RecipePlayerView: View, PlayerDelegate {
                                                     .padding(.top,5)
                                             }
                                         }
-                                            
-                                        
-                                        
                                     }
                                     .frame(maxWidth: .infinity)
                                     .padding()
@@ -86,14 +86,12 @@ struct RecipePlayerView: View, PlayerDelegate {
                                     .foregroundColor(Color.brandWhite)
                                     .cornerRadius(hard_radius)
                                     //.animation(.easeInOut)
-                                    
-                                    
                                 }
                                 
                                 if(playerViewModel.currentStep.imageData != nil && !isTextFocused){
                                     Image(uiImage: UIImage(data: playerViewModel.currentStep.imageData!)!)
                                         .resizable()
-                                        //.aspectRatio(contentMode: .fill
+                                    //.aspectRatio(contentMode: .fill
                                         .frame(height: 160)
                                         .cornerRadius(hard_radius)
                                         .if(!isLandscape) { $0.frame(maxWidth: UIScreen.main.bounds.size.width * 0.3) }
@@ -102,19 +100,18 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                                 if(playerViewModel.currentStep.ingredients.count > 0){
                                     VStack{
-                                       
+                                        
                                         Text("Ingredients used in this step")
                                             .modifier(Span())
                                         Text(playerViewModel.concatenateIngredients())
                                             .modifier(Paragraph())
                                             .foregroundColor(Color.color_text_container_highlight)
-                                       
+                                        
                                     }
                                 }
-                              
+                                
                                 
                             }
-                            
                             
                             if(playerViewModel.currentStep.texto != nil){
                                 Text(playerViewModel.currentStep.texto!)
@@ -125,14 +122,11 @@ struct RecipePlayerView: View, PlayerDelegate {
                         }
                         //.background(Color.red)
                         .padding(0)
-                   
                     }
                     .frame(width: geometry.size.width)
                     //.padding(100)
                     
                     Spacer()
-                    
-                    
                 }
                 .padding(0)
                 .transaction { transaction in
@@ -140,45 +134,47 @@ struct RecipePlayerView: View, PlayerDelegate {
                 }
                 //.frame(height: geometry.size.height * 0.77)
                 
-                VStack (spacing:0){
+                VStack (spacing:0) {
                     Spacer()
-                    VStack(spacing:0){
-                        
-                        
+                    VStack(spacing:0) {
                         
                         if(playerViewModel.currentStep.timer != nil){
                             if(playerViewModel.currentStep.timer != 0){
                                 if(playerViewModel.currentStepIndex.isMultiple(of: 2)){
-                                    TimerView(initialTime: playerViewModel.currentStep.timer!, id:playerViewModel.currentStep.id)
+                                    TimerView(vm: timerViewModel)
+                                        .onAppear {
+                                            self.timerViewModel.initialTime = self.playerViewModel.currentStep.timer!
+                                            self.timerViewModel.id = self.playerViewModel.currentStep.id
+                                        }
                                 } else{
-                                    TimerView(initialTime: playerViewModel.currentStep.timer!, id:playerViewModel.currentStep.id)
+                                    TimerView(vm: timerViewModel)
+                                        .onAppear {
+                                            self.timerViewModel.initialTime = self.playerViewModel.currentStep.timer!
+                                            self.timerViewModel.id = self.playerViewModel.currentStep.id
+                                        }
                                 }
-                                
-                                   
                             }
-                            
-                            
                         }
                         
                         if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)){
                             Button(action: {
-                               
-                                   
+                                
+                                
                                 playerViewModel.completeRecipe()
                                 dismiss()
-                                    
+                                
                             }, label: {
                                 Text("Finish")
-                                    
+                                
                                     .padding(.vertical, 7)
                                     .padding(.horizontal, 50)
-                                    
+                                
                                     .background(Color.color_button_container_primary)
                                     .cornerRadius(hard_radius)
                                     .foregroundColor(Color.color_general_fixed_light)
                                     .modifier(Header())
-                                   
-                                    
+                                
+                                
                             })
                         }
                         
@@ -187,15 +183,15 @@ struct RecipePlayerView: View, PlayerDelegate {
                             Button(action: {
                                 withAnimation{
                                     playerViewModel.previousStep()
-                                    }
+                                }
                             }, label: {
                                 Image(systemName: "chevron.left")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
                                     .foregroundColor(Color.color_text_container_primary)
-                                   
-                                    
+                                
+                                
                             })
                             Spacer()
                             Text(playerViewModel.currentStep.title)
@@ -208,17 +204,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 withAnimation{
                                     playerViewModel.nextStep()
                                 }
-                                   
+                                
                                 
                             }, label: {
                                 Image(systemName: "chevron.right")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
-                                    //.foregroundColor(Color.black)
+                                //.foregroundColor(Color.black)
                                     .if(playerViewModel.currentStepIndex != (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.color_text_container_primary) }
                                     .if(playerViewModel.currentStepIndex == (playerViewModel.recipe.steps.count - 1)) { $0.foregroundColor(Color.gray) }
-                                    
+                                
                             })
                             
                             
@@ -244,7 +240,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                             bottomLeading: 0,
                             bottomTrailing: 0,
                             topTrailing: 50.0),
-                            style: .continuous)
+                                               style: .continuous)
                         .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground)).ignoresSafeArea()
                         .shadow(color: Color.gray, radius: 5, x: 0, y: 2)
                     }
@@ -254,8 +250,25 @@ struct RecipePlayerView: View, PlayerDelegate {
                     
                 }
                 
+                //                if speech.showOverlay {
+                //
+                //                    ZStack{
+                //                        Rectangle()
+                //                            .opacity(0.5)
+                //                        VStack{
+                //                            Spacer()
+                //                            Rectangle()
+                //                                .foregroundColor(.white)
+                //                                .frame(height: 300)
+                //                                .overlay {
+                //
+                //                                    Text(speech.recognizedText)
+                //                                }
+                //                            Spacer()
+                //                        }
+                //                    }
+                //                }
                 
-               
             }
             .frame(width: geometry.size.width)
             .padding(0)
@@ -277,7 +290,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                     
                     Section("Display modes:"){
                         Button {
-                                   isTextFocused = true
+                            isTextFocused = true
                         } label: {
                             HStack {
                                 Text("Text Focused")
@@ -286,8 +299,8 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 if(isTextFocused){
                                     Image(systemName: "checkmark")
                                 }
-                                   
-                               
+                                
+                                
                             }
                         }
                         
@@ -301,7 +314,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 if(!isTextFocused){
                                     Image(systemName: "checkmark")
                                 }
-                               
+                                
                             }
                         }
                     }
@@ -313,15 +326,36 @@ struct RecipePlayerView: View, PlayerDelegate {
                 }
             }
         })
+        .overlay {
+            if speech.showOverlay {
+                ZStack{
+                    Rectangle()
+                        .opacity(0.5)
+                    VStack{
+                        Spacer()
+                        Rectangle()
+                            .foregroundColor(.white)
+                            .frame(width: 200, height: 100)
+                            .overlay {
+                                
+                                Text(speech.recognizedText)
+                            }
+                        Spacer()
+                    }
+                }
+            }
+        }
+        
         .onAppear{
+            speech.toggleRecording()
             self.playerViewModel.delegate = self
-           
+            self.speech.delegateView = self
             
         }
         
     }
     
-        
+    
 }
 
 
@@ -351,5 +385,61 @@ extension View {
     func `if`<Transform: View>(_ condition: Bool, transform: (Self) -> Transform) -> some View {
         if condition { transform(self) }
         else { self }
+    }
+}
+
+extension RecipePlayerView: SpeechViewDelegate {
+    
+    func next() {
+        print("next")
+        self.playerViewModel.nextStep()
+    }
+    
+    func previous() {
+        print("previous")
+        self.playerViewModel.previousStep()
+    }
+    
+    func finish() {
+        if self.playerViewModel.currentStepIndex == playerViewModel.recipe.steps.count - 1 {
+            print("finish")
+            self.playerViewModel.completeRecipe()
+            dismiss()
+        }
+    }
+    
+    func first() {
+        print("firstStep")
+        self.playerViewModel.firstStep()
+    }
+    
+    func last() {
+        print("lastStep")
+        self.playerViewModel.lastStep()
+    }
+    
+    func quit() {
+        print("quit")
+        dismiss()
+    }
+    
+    func mode() {
+        print("mode")
+        self.isTextFocused.toggle()
+    }
+    
+    func timer() {
+        timerViewModel.toggleTimer()
+    }
+    
+    func timerReset() {
+        print("timerReset")
+        timerViewModel.resetTimer()
+    }
+    
+    func tip() {
+        print("tip")
+        
+        self.isTipCollapsed.toggle()
     }
 }
