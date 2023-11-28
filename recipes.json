@@ -5,6 +5,10 @@
             "difficulty": 2,
             "rating": 4,
             "duration": 600,
+            "tags": [
+                "Mexican",
+                "Gluten Free"
+            ],
             "steps": [
                 {
                     "title": "Cooking",
