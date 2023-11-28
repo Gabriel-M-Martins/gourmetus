@@ -2,23 +2,6 @@
     "recipes" : [
         {
             "name": "Pasta",
-            "desc": "Pasta with tomato sauce",
-            "difficulty": 2,
-            "rating": 3.2,
-            "imageData": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
-            "duration": 600,
-            "ingredients": [
-                {
-                    "name": "Pasta",
-                    "quantity": 1,
-                    "unit": "Kg"
-                },
-                {
-                    "name": "Tomato",
-                    "quantity": 1,
-                    "unit": "Kg"
-                }
-            ],
             "steps": [
                 {
                     "title": "Cooking",
@@ -33,39 +16,16 @@
                             "unit": "Kg"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "Fried Rice",
-            "difficulty": 1,
-            "rating": 4.2,
-            "duration": 600,
-            "ingredients": [
-                {
-                    "name": "Rice",
-                    "quantity": 1,
-                    "unit": "Kg"
                 },
                 {
-                    "name": "Egg",
-                    "quantity": 1,
-                    "unit": "Kg"
-                }
-            ],
-            "steps": [
-                {
-                    "title": "Cooking",
-                    "texto": "Boil water",
+                    "title": "Cooking2",
+                    "texto": "Boil water2",
+                    "tip": "Add salt2",
+                    "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
                     "timer": 60,
                     "ingredients": [
                         {
-                            "name": "Pasta",
-                            "quantity": 1,
-                            "unit": "Kg"
-                        },
-                        {
-                            "name": "Egg",
+                            "name": "Tomato",
                             "quantity": 1,
                             "unit": "Kg"
                         }
