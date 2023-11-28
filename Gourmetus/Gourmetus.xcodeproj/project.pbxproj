@@ -66,6 +66,7 @@
 		CE22A9702AFC06760064EEAB /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22A96F2AFC06760064EEAB /* TagView.swift */; };
 		CE22A9722AFD5C000064EEAB /* ResizableTagGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22A9712AFD5C000064EEAB /* ResizableTagGroup.swift */; };
 		CE4265A82AE856A400FBD85B /* Cookbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4265A72AE856A400FBD85B /* Cookbook.swift */; };
+		CE5B49FA2B151D8400F3839B /* ImageToUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B49F92B151D8400F3839B /* ImageToUIImage.swift */; };
 		CE7F24CE2AF040F9004065C8 /* TimerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */; };
 		CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		CE22A96F2AFC06760064EEAB /* TagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		CE22A9712AFD5C000064EEAB /* ResizableTagGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableTagGroup.swift; sourceTree = "<group>"; };
 		CE4265A72AE856A400FBD85B /* Cookbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cookbook.swift; sourceTree = "<group>"; };
+		CE5B49F92B151D8400F3839B /* ImageToUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToUIImage.swift; sourceTree = "<group>"; };
 		CE7F24CD2AF040F9004065C8 /* TimerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotification.swift; sourceTree = "<group>"; };
 		CEF1414C2AE9A41300370031 /* ConfirmationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPopUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -326,6 +328,7 @@
 				A785B5522AE1C3A2002E1D1F /* Info.plist */,
 				7B98BD312AFD4695007E4F76 /* Design Assets.xcassets */,
 				A785B5492AE1C3A2002E1D1F /* Preview Content */,
+				CE5B49F92B151D8400F3839B /* ImageToUIImage.swift */,
 			);
 			path = Gourmetus;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				7B1EFD972B06980C001BBE04 /* CustomSearchBar.swift in Sources */,
 				CEF1414D2AE9A41300370031 /* ConfirmationPopUp.swift in Sources */,
 				A71E6B5E2AFD4DAA00F89E71 /* CookbookView.swift in Sources */,
+				CE5B49FA2B151D8400F3839B /* ImageToUIImage.swift in Sources */,
 				A71E6B602AFD62B900F89E71 /* CookbookCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,7 +8,15 @@
 import Foundation
 import CoreData
 
-struct Step: Identifiable, Hashable {
+final class Step: ObservableObject, Identifiable, Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+    
+    static func == (lhs: Step, rhs: Step) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     var id: UUID
     var title: String
     var texto: String?

@@ -36,7 +36,7 @@ extension Color{
     static let color_image_container_empty = Color("brandLightGray")
 }
 
-extension Image{
+extension Image {
     static let heartFill = Image(systemName: "heart.fill")
     static let heart = Image(systemName: "heart")
     static let personFill = Image(systemName: "person.fill")
