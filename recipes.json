@@ -15,7 +15,7 @@
                     "ingredients": [
                         {
                             "name": "Pasta",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "Kg"
                         }
                     ]
@@ -29,7 +29,7 @@
                     "ingredients": [
                         {
                             "name": "Tomato",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "Kg"
                         }
                     ]
