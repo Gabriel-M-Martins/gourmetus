@@ -30,6 +30,7 @@ struct RecipePlayerView: View, PlayerDelegate {
     
     init(recipe: Recipe, step: Int) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
+        self._timerViewModel = StateObject(wrappedValue: TimerViewModel(initialTime: recipe.steps[step].timer ?? 0, id: recipe.steps[step].id))
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
