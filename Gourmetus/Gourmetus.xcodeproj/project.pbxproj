@@ -46,6 +46,7 @@
 		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
 		A72EA1192B02919E0003008D /* FavoriteButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EA1182B02919E0003008D /* FavoriteButtonStyle.swift */; };
 		A72EA11C2B02A3E90003008D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EA11B2B02A3E90003008D /* SearchView.swift */; };
+		A73003812B16542200C0D772 /* DefaultRecipesUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73003802B16542200C0D772 /* DefaultRecipesUtility.swift */; };
 		A75BE2CD2AFC07DF001C299F /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75BE2CC2AFC07DF001C299F /* Tag.swift */; };
 		A75BE2CF2AFC0818001C299F /* TagEntityRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75BE2CE2AFC0818001C299F /* TagEntityRepresentable.swift */; };
 		A77D364C2AEC2CF3008CB1EA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D364B2AEC2CF3008CB1EA /* Repository.swift */; };
@@ -112,6 +113,7 @@
 		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
 		A72EA1182B02919E0003008D /* FavoriteButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButtonStyle.swift; sourceTree = "<group>"; };
 		A72EA11B2B02A3E90003008D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		A73003802B16542200C0D772 /* DefaultRecipesUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecipesUtility.swift; sourceTree = "<group>"; };
 		A75BE2CC2AFC07DF001C299F /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		A75BE2CE2AFC0818001C299F /* TagEntityRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagEntityRepresentable.swift; sourceTree = "<group>"; };
 		A77D364B2AEC2CF3008CB1EA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				A77D364B2AEC2CF3008CB1EA /* Repository.swift */,
 				A7CA1AF52AFAD1AA00BF334D /* EntityRepresentable */,
 				A75BE2CA2AFC0103001C299F /* CoreData */,
+				A73003802B16542200C0D772 /* DefaultRecipesUtility.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				3050D4C02AEA8EB000D26A87 /* CreateEditStepView.swift in Sources */,
 				7BE0A5A62AFAAE1B004550D5 /* RecipeCardVerticalSmallViewModel.swift in Sources */,
 				A77F458A2AFAD56300FDFB43 /* StepEntityRepresentable.swift in Sources */,
+				A73003812B16542200C0D772 /* DefaultRecipesUtility.swift in Sources */,
 				7BF5F8A62B0FE88100DBDE03 /* Speech.swift in Sources */,
 				A72EA1192B02919E0003008D /* FavoriteButtonStyle.swift in Sources */,
 				30CB53AF2AE84E3C0093A21D /* CreateEditRecipeView.swift in Sources */,

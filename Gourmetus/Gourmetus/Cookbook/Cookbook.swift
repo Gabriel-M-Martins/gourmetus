@@ -24,15 +24,16 @@ final class Cookbook: Hashable, ObservableObject {
     @Published var favorites: [Recipe]
     @Published var history: [Recipe]
     @Published var community: [Recipe]
-    @Published private var latestSize = 10
     
-    required init(id: UUID = UUID(), ownedRecipes: [Recipe] = [], favorites: [Recipe] = [], history: [Recipe] = [], community: [Recipe] = [], latestSize: Int = 10) {
+    private var historyMaxSize = 10
+    
+    required init(id: UUID = UUID(), ownedRecipes: [Recipe] = [], favorites: [Recipe] = [], history: [Recipe] = [], community: [Recipe] = [], historyMaxSize: Int = 10) {
         self.id = id
         self.ownedRecipes = ownedRecipes
         self.favorites = favorites
         self.history = history
         self.community = community
-        self.latestSize = latestSize
+        self.historyMaxSize = historyMaxSize
     }
     
     init(){
@@ -41,7 +42,7 @@ final class Cookbook: Hashable, ObservableObject {
         self.favorites = []
         self.history = []
         self.community = []
-        self.latestSize = 10
+        self.historyMaxSize = 10
     }
     
     func fetch() {
@@ -54,12 +55,15 @@ final class Cookbook: Hashable, ObservableObject {
             
         } else {
             self.id = UUID()
-            self.ownedRecipes = Constants.mockedRecipes
-            self.favorites = Constants.mockedRecipes
-            self.history = Constants.mockedRecipes
-            self.community = Constants.mockedRecipes
+            self.ownedRecipes = []
+            self.favorites = []
+            self.history = []
             
-            repo.save(self)
+            DefaultRecipesUtility.fetch { [weak self] result in
+                guard let self = self else { return }
+                self.community = result
+                repo.save(self)
+            }
         }
         
     }
@@ -113,12 +117,15 @@ final class Cookbook: Hashable, ObservableObject {
         self.favorites.contains(where: { $0.id == recipe.id })
     }
     
-    func addLatest(recipe: Recipe){
-        repo.delete(self)
-        recipe.delete()
-        if(history.count == latestSize){
-            history.remove(at: latestSize)
+    func addToHistory(recipe: Recipe){
+        if history.contains(recipe) {
+            return
         }
+        
+        if history.count == historyMaxSize {
+            history.remove(at: historyMaxSize)
+        }
+        
         history.append(recipe)
         repo.save(self)
         //        latest.sort(by: $0.date.compare($1.date) == orderedAscending)

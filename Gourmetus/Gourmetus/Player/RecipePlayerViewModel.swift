@@ -84,6 +84,6 @@ class RecipePlayerViewModel: ObservableObject {
     
     func completeRecipe(){
         recipe.completed = true
-        delegate?.cookbook.addLatest(recipe: recipe)
+        delegate?.cookbook.addToHistory(recipe: recipe)
     }
 }
