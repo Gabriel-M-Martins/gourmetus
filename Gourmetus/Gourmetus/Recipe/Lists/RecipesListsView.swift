@@ -104,6 +104,7 @@ struct RecipesListsView: View {
                 }
             }
         }
+        .padding(default_spacing)
         .navigationTitle(listType.title)
         .searchable(text: $searchedText, placement: .automatic, prompt: "Search")
         .sheet(isPresented: $presentTagSheet) {

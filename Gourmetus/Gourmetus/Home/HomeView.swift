@@ -312,5 +312,5 @@ extension HomeView {
     NavigationStack {
         HomeView()
     }
-    .environmentObject(Constants.mockedCookbookEmpty)
+    .environmentObject(Constants.mockedCookbook)
 }

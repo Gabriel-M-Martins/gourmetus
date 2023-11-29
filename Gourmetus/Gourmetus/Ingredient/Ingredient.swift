@@ -30,7 +30,7 @@ final class Ingredient: Equatable, Identifiable, Hashable{
     }
 }
 
-enum IngredientUnit: Codable, Identifiable, CaseIterable {
+enum IngredientUnit: String, Codable, Identifiable, CaseIterable {
     var id: Self {
 
            return self

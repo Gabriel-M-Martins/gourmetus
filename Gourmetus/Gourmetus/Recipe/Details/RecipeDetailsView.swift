@@ -263,6 +263,7 @@ struct RecipeDetailsView: View {
         }
         .onAppear {
             self.vm.delegate = self
+            self.cookbook.addToHistory(recipe: recipe)
         }
         
         .alert(isPresented: $showAlert, content: {
