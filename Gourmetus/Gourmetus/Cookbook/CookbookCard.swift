@@ -20,7 +20,7 @@ struct CookbookCard<Content: View>: View {
             case .history:
                 Image.bookHistory
             case .favorites:
-                Image.bookFavourites
+                Image.bookFavorites
             }
         }
     }
@@ -42,20 +42,21 @@ struct CookbookCard<Content: View>: View {
             }
             
             HStack {
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .modifier(Paragraph())
                     .foregroundStyle(Color.color_text_container_primary)
                 
                 Spacer()
             }
             
-            HStack {
+            HStack(spacing: 4) {
                 Text(subtitle)
-                    .modifier(Span())
-                    .foregroundStyle(Color.color_text_container_muted)
+                Text(LocalizedStringKey("Recipes Inside"))
                 
                 Spacer()
             }
+            .modifier(Span())
+            .foregroundStyle(Color.color_text_container_muted)
         }
         .padding(.vertical, default_spacing)
     }

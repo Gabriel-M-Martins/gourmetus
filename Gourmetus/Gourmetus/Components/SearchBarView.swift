@@ -16,7 +16,10 @@ struct SearchBarView: View {
                 .foregroundColor(Color.color_card_container_stroke)
                 
             HStack{
-                Text("\(Image(systemName: "magnifyingglass")) Search")
+                HStack{
+                    Text((Image(systemName: "magnifyingglass")))
+                    Text(LocalizedStringKey("Search"))
+                }
                     .padding(.horizontal,8)
                     .foregroundColor(.gray)
                 Spacer()

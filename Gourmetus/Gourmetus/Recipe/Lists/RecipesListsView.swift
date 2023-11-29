@@ -54,7 +54,7 @@ struct RecipesListsView: View {
             Divider()
             
             HStack {
-                Text(listType.subtitle)
+                Text(LocalizedStringKey(listType.subtitle))
                     .modifier(Header())
                     .padding(.leading, default_spacing)
                 Spacer()
@@ -90,7 +90,7 @@ struct RecipesListsView: View {
                             }
                             
                             RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
-                                _ = cookbook.toggleFavourite(recipe: recipe)
+                                _ = cookbook.toggleFavorite(recipe: recipe)
                             } })
                             .tint(Color(uiColor: UIColor.label))
                             .padding(.vertical, default_spacing)
@@ -105,7 +105,7 @@ struct RecipesListsView: View {
             }
         }
         .padding(default_spacing)
-        .navigationTitle(listType.title)
+        .navigationTitle(LocalizedStringKey(listType.title))
         .searchable(text: $searchedText, placement: .automatic, prompt: "Search")
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)

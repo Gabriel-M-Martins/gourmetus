@@ -62,7 +62,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                             
                                         }
                                         
-                                        .frame(width: 30)
+                                        //.frame(width: 30)
                                         
                                         Text(playerViewModel.currentStep.tip!)
                                             .frame(maxWidth: .infinity,alignment: .leading)
@@ -203,7 +203,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                             })
                             Spacer()
-                            Text(playerViewModel.currentStep.title)
+                            Text(LocalizedStringKey(playerViewModel.currentStep.title))
                                 .modifier(Span())
                                 .foregroundColor(Color.color_text_container_highlight)
                             Spacer()

@@ -77,7 +77,6 @@ struct Constants {
         Tag(name: "Low Fat"),
         Tag(name: "Low Sodium"),
         Tag(name: "Low Sugar"),
-        Tag(name: "Low Fat"),
         Tag(name: "Vegetarian"),
         Tag(name: "Vegan"),
         Tag(name: "Contains Alcohol"),
@@ -88,6 +87,7 @@ struct Constants {
     static let mockedRecipe1: Recipe = Recipe(id: UUID(),name: "Bala de banana", difficulty: 4,steps: Self.mockedSteps2, ingredients: Self.mockedIngredients2, tags: [ mockedTags[0], mockedTags[1], mockedTags[3]], duration: 300)
 
     static let mockedRecipe2: Recipe = Recipe(id: UUID(),name: "Brigadeiro de chocolate branco nadnsndasnhguyguguyguygdnasdnasndas", difficulty: 1, steps: Self.mockedSteps3, ingredients: Self.mockedIngredients3, tags: [ mockedTags[7], mockedTags[8], mockedTags[9]], duration: 300)
+
 
     static let mockedRecipes: [Recipe] = [mockedRecipe, mockedRecipe1, mockedRecipe2]
     
