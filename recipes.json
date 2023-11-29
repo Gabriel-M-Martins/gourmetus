@@ -21,27 +21,27 @@
                     "ingredients": [
                         {
                             "name": "All-Purpose Flour",
-                            "quantity": 2,
+                            "quantity": "2",
                             "unit": "cup"
                         },
                         {
                             "name": "Yeast",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "tbsp"
                         },
                         {
                             "name": "Water",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "cup"
                         },
                         {
                             "name": "Olive Oil",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "tbsp"
                         },
                         {
                             "name": "Salt",
-                            "quantity": 0.5,
+                            "quantity": "1/2",
                             "unit": "tsp"
                         }
                     ]
@@ -54,12 +54,12 @@
                     "ingredients": [
                         {
                             "name": "Tomato Sauce",
-                            "quantity": 0.5,
+                            "quantity": "1/2",
                             "unit": "cup"
                         },
                         {
                             "name": "Fresh Mozzarella",
-                            "quantity": 200,
+                            "quantity": "200",
                             "unit": "g"
                         },
                         {
@@ -95,22 +95,22 @@
                     "ingredients": [
                         {
                             "name": "Carrots",
-                            "quantity": 2,
+                            "quantity": "2",
                             "unit": "unity"
                         },
                         {
                             "name": "Bell Peppers",
-                            "quantity": 2,
+                            "quantity": "2",
                             "unit": "unity"
                         },
                         {
                             "name": "Broccoli",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "unity"
                         },
                         {
                             "name": "Tofu",
-                            "quantity": 200,
+                            "quantity": "200",
                             "unit": "g"
                         }
                     ]
@@ -123,17 +123,17 @@
                     "ingredients": [
                         {
                             "name": "Vegetable Oil",
-                            "quantity": 2,
+                            "quantity": "2",
                             "unit": "tbsp"
                         },
                         {
                             "name": "Soy Sauce",
-                            "quantity": 3,
+                            "quantity": "3",
                             "unit": "tbsp"
                         },
                         {
                             "name": "Ginger",
-                            "quantity": 1,
+                            "quantity": "1",
                             "unit": "tsp"
                         }
                     ]
