@@ -161,7 +161,7 @@ struct RecipeDetailsView: View {
                         
                         Spacer()
                         
-                        Text("\(ingredient.quantity) \(ingredient.unit.description)")
+                        Text("\(ingredient.quantity) \(ingredient.unit.rawValue)")
                             .foregroundStyle(Color.color_text_container_muted)
                     }
                 }
