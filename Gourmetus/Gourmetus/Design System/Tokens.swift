@@ -25,7 +25,7 @@ var borderWidth = 2.0
 extension Color{
     static let color_general_fixed_light = Color("brandWhite")
     static let color_general_fixed_dark = Color("brandBlack")
-    static let color_card_container_stroke = Color("brandLightGray")
+    static let color_card_container_stroke = Color("color-card-container-stroke")
     static let color_text_container_highlight = Color("brandGreen")
     static let color_button_container_primary = Color("brandOrange")
     static let color_background_container_primary = Color("color-background-container-primary")
@@ -60,10 +60,16 @@ extension Image{
     static let filter = Image(systemName: "slider.horizontal.3")
     static let collapse = Image(systemName: "chevron.down")
     static let contract = Image(systemName: "chevron.up")
+    static let settings = Image(systemName: "gearshape.fill")
+    static let share = Image(systemName: "square.and.arrow.up")
+    static let lock = Image(systemName: "lock")
+    static let chat = Image(systemName: "ellipsis.bubble.fill")
+    static let info = Image(systemName: "questionmark.circle")
     
-    static let bookFavourites = Image("Livro Favoritos")
+    static let bookFavorites = Image("Livro Favoritos")
     static let bookMyRecipes = Image("Livro Minhas Receitas")
     static let bookHistory = Image("Livro Historico")
+    
 }
 
 struct Header: ViewModifier {

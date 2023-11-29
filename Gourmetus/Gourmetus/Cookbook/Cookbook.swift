@@ -89,7 +89,7 @@ final class Cookbook: Hashable, ObservableObject {
     }
     
     @discardableResult
-    func toggleFavourite(recipe: Recipe) -> Bool {
+    func toggleFavorite(recipe: Recipe) -> Bool {
         let result: Bool
         if self.favorites.contains(where: { $0.id == recipe.id }) {
             self.favorites.removeAll(where: { $0.id == recipe.id })

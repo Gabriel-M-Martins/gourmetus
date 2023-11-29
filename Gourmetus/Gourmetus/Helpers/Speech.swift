@@ -15,10 +15,20 @@ protocol SpeechViewDelegate {
     func timer()
     func timerReset()
     func tip()
+    func help()
 }
 
 class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
-    //    static let shared = Speech()
+    
+    enum Status {
+        case inactive
+        case speeking
+        case waiting
+        case commandAccepted
+        
+    }
+    
+    @Published var status: Status = Status.inactive
     
     @Published var recognizedText = ""
     @Published var isRecording = false
@@ -26,18 +36,18 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     @Published var showOverlay: Bool = false
     
     //Comando principal
-    var commandsChef: [String] = ["hey", "chef", /*BR ->*/ "chefe", "chefinho"]
-    var commandsNext: [String] = ["next", "proceed", "proceeded", "forward", /*BR ->*/ "próximo", "próxima","avançar"]
-    var commandsPrevious: [String] = ["back", "previous", /*BR ->*/ "voltar", "anterior"]
-    var commandsQuit: [String] = ["stop", "terminate", "quit", /*BR ->*/ "sair"]
-    var commandsFirstStep: [String] = ["start", "starts", "initial", /*BR ->*/ "começo", "início"]
-    var commandsLastStep: [String] = ["end", "and", /*BR ->*/ "final"]
-    var commandsFinish: [String] = ["finish", "complete", "conclude", /*BR ->*/ "terminar", "vapo"]
-    //Fazer \/
-    var commandsMode: [String] = ["mode", "modes", /*BR ->*/ "modo", "modos"]
-    var commandsTimer: [String] = ["timer", /*BR ->*/ "cronômetro"]
-    var commandsTimerReset: [String] = ["reset", "restart", /*BR ->*/ "zerar", "recomeçar", "resetar"]
-    var commandsTip: [String] = ["tip", "tips", /*BR ->*/ "dica", "dicas"]
+    var commandsChef: [String] = Constants.commandsChefEN + Constants.commandsChefPT
+    var commandsNext: [String] = Constants.commandsNextEN + Constants.commandsNextPT
+    var commandsPrevious: [String] = Constants.commandsPreviousEN + Constants.commandsPreviousPT
+    var commandsQuit: [String] = Constants.commandsQuitEN + Constants.commandsQuitPT
+    var commandsFirstStep: [String] = Constants.commandsFirstStepEN + Constants.commandsFirstStepPT
+    var commandsLastStep: [String] = Constants.commandsLastStepEN + Constants.commandsLastStepPT
+    var commandsFinish: [String] = Constants.commandsFinishEN + Constants.commandsFinishPT
+    var commandsMode: [String] = Constants.commandsModeEN + Constants.commandsModePT
+    var commandsTimer: [String] = Constants.commandsTimerEN + Constants.commandsTimerPT
+    var commandsTimerReset: [String] = Constants.commandsTimerResetEN + Constants.commandsTimerResetPT
+    var commandsTip: [String] = Constants.commandsTipEN + Constants.commandsTipPT
+    var commandsHelp: [String] = Constants.commandsHelpEN + Constants.commandsHelpPT
     
     var allOneWordCommands: [String] {
         var aux: [String] = []
@@ -51,6 +61,7 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         aux.append(contentsOf: commandsTimer)
         aux.append(contentsOf: commandsTimerReset)
         aux.append(contentsOf: commandsTip)
+        aux.append(contentsOf: commandsHelp)
         return aux
     }
     
@@ -101,8 +112,6 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     }
 
     private func startRecording() {
-        recognizedText = "Diga algo, estou ouvindo!"
-
         do {
             try AVAudioSession.sharedInstance().setCategory(.record, mode: .measurement, options: .duckOthers)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
@@ -132,8 +141,6 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
                 self?.resultHandler(result: palavra )
                 self?.recognizedText = palavra
 
-                let recognizedText = result.bestTranscription.formattedString
-//                self?.recognizedText = recognizedText
                 isFinal = result.isFinal
             }
 
@@ -155,6 +162,7 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         do {
             try audioEngine.start()
             isRecording = true
+            status = .waiting
         } catch {
             print("Erro ao iniciar a engine de áudio: \(error)")
         }
@@ -162,20 +170,21 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     
     //Verificar a palavra que foi falada
     private func resultHandler(result: String) {
-        print(result)
-        
         if commandsChef.contains(result){
             print("- command - chefe")
             dispatchCancelChef?.cancel()
+            dispatchOverlay?.cancel()
             
             self.dispatchCancelChef = DispatchWorkItem {
                 print("passou 5 segundos")
                 self.isListening = false
+                self.status = .inactive
             }
             self.dispatchOverlay = DispatchWorkItem {
                 self.showOverlay = false
+                self.status = .inactive
             }
-            
+            status = .speeking
             isListening = true
             showOverlay = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: dispatchCancelChef!)
@@ -188,10 +197,12 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     
     private func commandHandler(result: String) {
         isListening = false
+        status = .commandAccepted
         dispatchCancelChef?.cancel()
         dispatchOverlay?.cancel()
         self.dispatchOverlay = DispatchWorkItem {
             self.showOverlay = false
+            self.status = .inactive
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: dispatchOverlay!)
         
@@ -255,10 +266,17 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
                 self.delegateView?.tip()
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: dispatchExecuteCommand!)
+        }else if commandsHelp.contains(result) {
+            print("- command - help")
+            self.dispatchExecuteCommand = DispatchWorkItem {
+                self.delegateView?.help()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: dispatchExecuteCommand!)
         }
+        self.status = .commandAccepted
     }
 
-    private func stopRecording() {
+    func stopRecording() {
         audioEngine.stop()
         recognitionRequest?.endAudio()
     }
@@ -278,7 +296,6 @@ class Speech: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
 
 func deviceLanguageBR() -> Bool{
     let locale = NSLocale.current.languageCode
-    print(locale)
     if locale == "pt" {
         return true
     } else {
