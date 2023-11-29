@@ -9,6 +9,33 @@ import Foundation
 import UIKit
 
 struct Constants {
+    
+    static let commandsChefEN: [String] = ["hey", "chef"]
+    static let commandsChefPT: [String] = ["chefe", "chefinho"]
+    static let commandsNextEN: [String] = ["next", "proceed", "proceeded", "forward"]
+    static let commandsNextPT: [String] = ["próximo", "próxima","avançar"]
+    static let commandsPreviousEN: [String] = ["back", "previous"]
+    static let commandsPreviousPT: [String] = ["voltar", "anterior"]
+    static let commandsQuitEN: [String] = ["terminate", "quit"]
+    static let commandsQuitPT: [String] = ["sair"]
+    static let commandsFirstStepEN: [String] = ["start", "starts", "initial"]
+    static let commandsFirstStepPT: [String] = ["começo", "início"]
+    static let commandsLastStepEN: [String] = ["end", "and"]
+    static let commandsLastStepPT: [String] = ["final"]
+    static let commandsFinishEN: [String] = ["finish", "complete", "conclude"]
+    static let commandsFinishPT: [String] = ["terminar", "vapo"]
+    //Fazer \/
+    static let commandsModeEN: [String] = ["mode", "modes"]
+    static let commandsModePT: [String] = ["modo", "modos"]
+    static let commandsTimerEN: [String] = ["timer"]
+    static let commandsTimerPT: [String] = ["cronômetro"]
+    static let commandsTimerResetEN: [String] = ["reset", "restart"]
+    static let commandsTimerResetPT: [String] = ["zerar", "recomeçar", "resetar"]
+    static let commandsTipEN: [String] = ["tip", "tips"]
+    static let commandsTipPT: [String] = ["dica", "dicas"]
+    static let commandsHelpEN: [String] = ["help", "command", "commands", "close"]
+    static let commandsHelpPT: [String] = ["ajuda", "commando", "commandos", "fechar"]
+    
     static let mockedSteps1: [Step] = [
         Step(id: UUID(), title: "passo 1", texto: "No liquidificador, bata os ovos, a margarina derretida, o leite e o açúcar.", tip: "Use um liquidijhhjjhkhh jkhjkhk kjhkjhj hkjhkj hjkh ficador.", imageData: UIImage(named: "banner-placeholder")!.pngData(), ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg)], order: 0 ),
         Step(id: UUID(), title: "passo 2", texto: "passo 2", order: 1),

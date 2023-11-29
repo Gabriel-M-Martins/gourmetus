@@ -7,17 +7,19 @@
 
 import SwiftUI
 
-protocol RecipePlayerTimerDelegate {
-    func toggleTimer()
-    func resetTimer()
-    
-}
+//protocol RecipePlayerTimerDelegate {
+//    func toggleTimer()
+//    func resetTimer()
+//    
+//}
 
 struct RecipePlayerView: View, PlayerDelegate {
     
     @State var isTextFocused : Bool = false
     
     @State var isTipCollapsed : Bool = true
+    
+    @State var showHelp: Bool = false
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     @StateObject var speech = Speech()
@@ -273,9 +275,7 @@ struct RecipePlayerView: View, PlayerDelegate {
             .frame(width: geometry.size.width)
             .padding(0)
             //.ignoresSafeArea()
-            
-            
-            
+                        
         }
         //.edgesIgnoringSafeArea(.all)
         //.ignoresSafeArea()
@@ -327,30 +327,43 @@ struct RecipePlayerView: View, PlayerDelegate {
             }
         })
         .overlay {
-            if speech.showOverlay {
-                ZStack{
-                    Rectangle()
-                        .opacity(0.5)
-                    VStack{
+                VStack{
+                    HStack{
                         Spacer()
-                        Rectangle()
-                            .foregroundColor(.white)
-                            .frame(width: 200, height: 100)
-                            .overlay {
+                        if speech.showOverlay || showHelp{
+                            VoiceCommandView(speechStatus: $speech.status, text: $speech.recognizedText, showHelp: $showHelp)
+                                .transition(.move(edge: .trailing))
+//
                                 
-                                Text(speech.recognizedText)
-                            }
-                        Spacer()
+                        } else {
+                            VoiceCommandView(speechStatus: $speech.status, text: $speech.recognizedText, showHelp: $showHelp)
+                                .opacity(0)
+                        }
                     }
+                    .animation(.spring, value: speech.showOverlay)
+                    
+                    
+                    if showHelp {
+                        CommandsListView(showHelp: $showHelp)
+                    }
+                    
+                    Spacer()
+                    
                 }
-            }
+                .padding(.top, default_spacing)
+                
         }
+
         
         .onAppear{
             speech.toggleRecording()
             self.playerViewModel.delegate = self
             self.speech.delegateView = self
             
+        }
+        
+        .onDisappear{
+            speech.stopRecording()
         }
         
     }
@@ -441,5 +454,11 @@ extension RecipePlayerView: SpeechViewDelegate {
         print("tip")
         
         self.isTipCollapsed.toggle()
+    }
+    
+    func help() {
+        print("help")
+        
+        self.showHelp.toggle()
     }
 }

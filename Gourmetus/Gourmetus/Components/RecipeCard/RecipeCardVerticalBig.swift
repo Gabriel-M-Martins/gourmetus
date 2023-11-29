@@ -17,20 +17,28 @@ struct RecipeCardVerticalBig: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             
+//            .resizable()
+//            .scaledToFill()
+//            .frame(height: UIScreen.main.bounds.width/2.5)
+//            .clipShape(RoundedRectangle(cornerSize: CGSize(width: smooth_radius, height: smooth_radius)))
+//            
             if let imgData = recipe.imageData,
                let img = UIImage(data: imgData) {
                 Image(uiImage: img)
                     .resizable()
-                    .cornerRadius(smooth_radius)
+                    .scaledToFill()
+                    .frame(height: 145)
+                    .clipShape(RoundedRectangle(cornerRadius: smooth_radius))
                     .padding(.top, default_spacing)
                     .padding(.horizontal, default_spacing)
             } else {
                 Image("DefaultRecipeImage")
                     .resizable()
-                    .cornerRadius(smooth_radius)
+                    .scaledToFill()
+                    .frame(height: 145)
+                    .clipShape(RoundedRectangle(cornerRadius: smooth_radius))
                     .padding(.top, default_spacing)
                     .padding(.horizontal, default_spacing)
-                    .frame(height: 145)
             }
             
             HStack {

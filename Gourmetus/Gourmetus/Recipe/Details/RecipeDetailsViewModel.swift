@@ -28,47 +28,33 @@ class RecipeDetailsViewModel: ObservableObject{
     
     func menuButtonClicked(_ option: MenuOption) {
         switch option {
-        case .Duplicate:
-            break
         case .Edit:
             delegate?.editRecipe()
         case .Delete:
             // 1 - Deleta
             delegate?.deleteRecipe()
             break
-        case .Report:
-            break
         }
     }
     
     enum MenuOption: CaseIterable {
-        case Duplicate
         case Edit
         case Delete
-        case Report
         
         var description: String {
             switch self {
-            case .Duplicate:
-                return "Duplicate"
             case .Edit:
                 return "Edit"
             case .Delete:
                 return "Delete"
-            case .Report:
-                return "Report"
             }
         }
         
         var isDestructive: Bool {
             switch self {
-            case .Duplicate:
-                return false
             case .Edit:
                 return false
             case .Delete:
-                return true
-            case .Report:
                 return true
             }
         }
