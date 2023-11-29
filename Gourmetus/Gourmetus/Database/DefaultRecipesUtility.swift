@@ -9,7 +9,7 @@ import Foundation
 
 public class DefaultRecipesUtility {
     static func fetch(_ completionBlock: @escaping ([Recipe]) -> ()) {
-        guard let url = URL(string: "https://raw.githubusercontent.com/Gabriel-M-Martins/gourmetus/dev/recipes.json") else { return }
+        guard let url = URL(string: "https://raw.githubusercontent.com/Gabriel-M-Martins/gourmetus/Receitas/recipes.json") else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let response = response as? HTTPURLResponse,

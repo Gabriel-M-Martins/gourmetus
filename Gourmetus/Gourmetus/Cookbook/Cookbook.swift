@@ -19,11 +19,11 @@ final class Cookbook: Hashable, ObservableObject {
         lhs.id == rhs.id
     }
     
-    @Published var id: UUID
-    @Published var ownedRecipes: [Recipe]
-    @Published var favorites: [Recipe]
-    @Published var history: [Recipe]
-    @Published var community: [Recipe]
+    @Published var id: UUID = UUID()
+    @Published var ownedRecipes: [Recipe] = []
+    @Published var favorites: [Recipe] = []
+    @Published var history: [Recipe] = []
+    @Published var community: [Recipe] = []
     
     private var historyMaxSize = 10
     
@@ -36,13 +36,8 @@ final class Cookbook: Hashable, ObservableObject {
         self.historyMaxSize = historyMaxSize
     }
     
-    init(){
-        self.id = UUID()
-        self.ownedRecipes = []
-        self.favorites = []
-        self.history = []
-        self.community = []
-        self.historyMaxSize = 10
+    init() {
+        fetch()
     }
     
     func fetch() {
@@ -58,14 +53,21 @@ final class Cookbook: Hashable, ObservableObject {
             self.ownedRecipes = []
             self.favorites = []
             self.history = []
-            
-            DefaultRecipesUtility.fetch { [weak self] result in
-                guard let self = self else { return }
-                self.community = result
-                repo.save(self)
-            }
+            self.community = []
         }
         
+        DefaultRecipesUtility.fetch { [weak self] result in
+            guard let self = self else { return }
+            repo.delete(self)
+            
+            for recipe in result {
+                if !self.community.contains(where: {$0.name == recipe.name}) {
+                    self.community.append(recipe)
+                }
+            }
+            
+            repo.save(self)
+        }
     }
     
     func fetch(id: UUID) {
@@ -78,21 +80,9 @@ final class Cookbook: Hashable, ObservableObject {
         self.community = cookbook.community
     }
     
-    func addFavorite(recipe: Recipe) {
-        favorites.append(recipe)
-    }
-    
-    func removeFavorite(recipe: Recipe){
-        for i in 0..<favorites.count {
-            if (favorites[i].id == recipe.id){
-                favorites.remove(at: i)
-            }
-        }
-    }
-    
     func removeOwned(recipe: Recipe) {
         for i in 0..<ownedRecipes.count {
-            if (ownedRecipes[i].id == recipe.id){
+            if (ownedRecipes[i].id == recipe.id) {
                 ownedRecipes.remove(at: i)
             }
         }
@@ -117,7 +107,7 @@ final class Cookbook: Hashable, ObservableObject {
         self.favorites.contains(where: { $0.id == recipe.id })
     }
     
-    func addToHistory(recipe: Recipe){
+    func addToHistory(recipe: Recipe) {
         if history.contains(recipe) {
             return
         }
