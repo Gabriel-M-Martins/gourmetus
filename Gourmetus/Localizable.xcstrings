@@ -31,6 +31,22 @@
         }
       }
     },
+    "%@ | %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ | %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ | %2$@"
+          }
+        }
+      }
+    },
     "%lld hour" : {
       "localizations" : {
         "pt-BR" : {
@@ -264,12 +280,32 @@
         }
       }
     },
+    "Call chef" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chamar Chef"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Change presentation mode" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mudar modo de apresentação"
           }
         }
       }
@@ -290,6 +326,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fechar"
+          }
+        }
+      }
+    },
+    "CLOSE" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FECHAR"
+          }
+        }
+      }
+    },
+    "Close recipe" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fechar receita"
           }
         }
       }
@@ -583,6 +639,16 @@
         }
       }
     },
+    "Finish recipe" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar receita"
+          }
+        }
+      }
+    },
     "For the Couple" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -666,6 +732,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sem Glúten"
+          }
+        }
+      }
+    },
+    "Go to first step" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ir para o primeiro passo"
+          }
+        }
+      }
+    },
+    "Go to last step" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ir para o último passo"
           }
         }
       }
@@ -890,6 +976,16 @@
         }
       }
     },
+    "Next step" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximo Passo"
+          }
+        }
+      }
+    },
     "No Ratings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -921,12 +1017,32 @@
         }
       }
     },
+    "Open/Close tip" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir/Fechar dica"
+          }
+        }
+      }
+    },
     "Permission required" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permissão necessária"
+          }
+        }
+      }
+    },
+    "Previous step" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passo Anterior"
           }
         }
       }
@@ -980,6 +1096,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reportar"
+          }
+        }
+      }
+    },
+    "Reset timer" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar cronômetro"
           }
         }
       }
@@ -1072,6 +1198,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Começar"
+          }
+        }
+      }
+    },
+    "Start/Stop timer" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Começar/Parar cronômetro"
           }
         }
       }
@@ -1218,7 +1354,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Colher de Chá"
+            "value" : "Colheres de Chá"
           }
         }
       }
@@ -1228,7 +1364,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unidade"
+            "value" : "Unidades"
           }
         }
       }

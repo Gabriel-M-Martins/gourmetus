@@ -27,6 +27,8 @@
 		7B2B6A9B2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */; };
 		7B2B6A9F2AE9A9DC00AFEFFA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */; };
 		7B50B8042AE852B700E00C04 /* RecipeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */; };
+		7B701E012B1654D9002306B1 /* VoiceCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B701E002B1654D9002306B1 /* VoiceCommandView.swift */; };
+		7B701E032B1669BD002306B1 /* CommandsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B701E022B1669BD002306B1 /* CommandsListView.swift */; };
 		7B9498DB2AF2E2E300323CF9 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9498DA2AF2E2E300323CF9 /* TabBarView.swift */; };
 		7BB063E02AE9C4DF0038EEDA /* RecipeCardMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB063DF2AE9C4DF0038EEDA /* RecipeCardMini.swift */; };
 		7BB063E22AEAB2A80038EEDA /* RecipeCardHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB063E12AEAB2A80038EEDA /* RecipeCardHorizontal.swift */; };
@@ -94,6 +96,8 @@
 		7B2B6A9A2AE9A98000AFEFFA /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 		7B2B6A9E2AE9A9DC00AFEFFA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7B50B8032AE852B700E00C04 /* RecipeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsView.swift; sourceTree = "<group>"; };
+		7B701E002B1654D9002306B1 /* VoiceCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommandView.swift; sourceTree = "<group>"; };
+		7B701E022B1669BD002306B1 /* CommandsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsListView.swift; sourceTree = "<group>"; };
 		7B9498DA2AF2E2E300323CF9 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		7BB063DF2AE9C4DF0038EEDA /* RecipeCardMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardMini.swift; sourceTree = "<group>"; };
 		7BB063E12AEAB2A80038EEDA /* RecipeCardHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardHorizontal.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				7BE13DDF2B029B7F00DFF8E3 /* KnifeView.swift */,
 				7B1EFD942B068A71001BBE04 /* SearchBarView.swift */,
 				7B1EFD962B06980C001BBE04 /* CustomSearchBar.swift */,
+				7B701E002B1654D9002306B1 /* VoiceCommandView.swift */,
+				7B701E022B1669BD002306B1 /* CommandsListView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -507,6 +513,7 @@
 				7B1539D82AF01BCD000B372A /* HomeViewModel.swift in Sources */,
 				CE22A9722AFD5C000064EEAB /* ResizableTagGroup.swift in Sources */,
 				A785B54D2AE1C3A2002E1D1F /* Persistence.swift in Sources */,
+				7B701E032B1669BD002306B1 /* CommandsListView.swift in Sources */,
 				30F09A062AF03A5100C502C2 /* RecipePlayerViewModel.swift in Sources */,
 				7BB063E22AEAB2A80038EEDA /* RecipeCardHorizontal.swift in Sources */,
 				7B2B6A9F2AE9A9DC00AFEFFA /* HomeView.swift in Sources */,
@@ -537,6 +544,7 @@
 				A7F16B2B2AE837C000F3ADF3 /* Recipe.swift in Sources */,
 				3050D4C52AEFEF5600D26A87 /* CreateEditStepViewModel.swift in Sources */,
 				A7CA1AF02AFAD09100BF334D /* EntityRepresentation.swift in Sources */,
+				7B701E012B1654D9002306B1 /* VoiceCommandView.swift in Sources */,
 				A7F16B362AE83B0300F3ADF3 /* Constants.swift in Sources */,
 				A75BE2CD2AFC07DF001C299F /* Tag.swift in Sources */,
 				A77F458C2AFAD67900FDFB43 /* IngredientEntityRepresentable.swift in Sources */,
@@ -679,7 +687,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = 73DNAYF2TM;
+				DEVELOPMENT_TEAM = RU3T8G764D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
@@ -696,7 +704,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.gabriel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.thiago;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -713,7 +721,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = 73DNAYF2TM;
+				DEVELOPMENT_TEAM = RU3T8G764D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
@@ -730,7 +738,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.gabriel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.thiago;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
