@@ -22,27 +22,27 @@
                         {
                             "name": "All-Purpose Flour",
                             "quantity": "2",
-                            "unit": "cup"
+                            "unit": "Cup"
                         },
                         {
                             "name": "Yeast",
                             "quantity": "1",
-                            "unit": "tbsp"
+                            "unit": "Tbsp"
                         },
                         {
                             "name": "Water",
                             "quantity": "1",
-                            "unit": "cup"
+                            "unit": "Cup"
                         },
                         {
                             "name": "Olive Oil",
                             "quantity": "1",
-                            "unit": "tbsp"
+                            "unit": "Tbsp"
                         },
                         {
                             "name": "Salt",
                             "quantity": "1/2",
-                            "unit": "tsp"
+                            "unit": "Tsp"
                         }
                     ]
                 },
@@ -55,17 +55,17 @@
                         {
                             "name": "Tomato Sauce",
                             "quantity": "1/2",
-                            "unit": "cup"
+                            "unit": "Cup"
                         },
                         {
                             "name": "Fresh Mozzarella",
                             "quantity": "200",
-                            "unit": "g"
+                            "unit": "G"
                         },
                         {
                             "name": "Fresh Basil Leaves",
-                            "quantity": "unity",
-                            "unit": "taste"
+                            "quantity": "",
+                            "unit": "Taste"
                         }
                     ]
                 },
@@ -96,22 +96,22 @@
                         {
                             "name": "Carrots",
                             "quantity": "2",
-                            "unit": "unity"
+                            "unit": "Unit"
                         },
                         {
                             "name": "Bell Peppers",
                             "quantity": "2",
-                            "unit": "unity"
+                            "unit": "Unit"
                         },
                         {
                             "name": "Broccoli",
                             "quantity": "1",
-                            "unit": "unity"
+                            "unit": "Unit"
                         },
                         {
                             "name": "Tofu",
                             "quantity": "200",
-                            "unit": "g"
+                            "unit": "G"
                         }
                     ]
                 },
@@ -124,17 +124,17 @@
                         {
                             "name": "Vegetable Oil",
                             "quantity": "2",
-                            "unit": "tbsp"
+                            "unit": "Tbsp"
                         },
                         {
                             "name": "Soy Sauce",
                             "quantity": "3",
-                            "unit": "tbsp"
+                            "unit": "Tbsp"
                         },
                         {
                             "name": "Ginger",
                             "quantity": "1",
-                            "unit": "tsp"
+                            "unit": "Tsp"
                         }
                     ]
                 },
