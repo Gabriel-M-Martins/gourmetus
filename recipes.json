@@ -1,7 +1,7 @@
 {
     "recipes" : [
         {
-            "name": "Classic Margherita Pizza",
+            "name": "Classic Margherita Pizza v.1",
             "difficulty": 3,
             "rating": 4,
             "duration": 5000,
