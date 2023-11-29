@@ -41,7 +41,7 @@
                         },
                         {
                             "name": "Salt",
-                            "quantity": 1/2,
+                            "quantity": 0.5,
                             "unit": "tsp"
                         }
                     ]
@@ -54,7 +54,7 @@
                     "ingredients": [
                         {
                             "name": "Tomato Sauce",
-                            "quantity": 1/2,
+                            "quantity": 0.5,
                             "unit": "cup"
                         },
                         {
