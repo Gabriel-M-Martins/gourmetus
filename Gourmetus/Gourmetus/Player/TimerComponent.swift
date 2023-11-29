@@ -23,6 +23,15 @@ class TimerViewModel: ObservableObject {
         self.id = id
     }
     
+    func resetVM(initialTime: Int, id: UUID){
+        isRunning = false
+        self.initialTime = initialTime
+        self.remainingTime = initialTime
+        self.id = id
+        timer?.invalidate()
+        timer = nil
+    }
+    
     func custom() {
         let (date, integer) = retrieveData()
         
@@ -73,6 +82,13 @@ class TimerViewModel: ObservableObject {
         }
     }
     
+    func verifyLeft(){
+        if(remainingTime != 0 && remainingTime != initialTime){
+           // vm.saveData()
+            print("saiu no meio")
+        }
+    }
+    
     func startTimer() {
         notificationId = NotificationService.setTimer(time: remainingTime, title: "Notificacao", subtitle: "Funcionou")
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
@@ -106,10 +122,10 @@ class TimerViewModel: ObservableObject {
         }
         timer?.invalidate()
         timer = nil
-        let dateKey = "Date-\(id)"
-        let integerKey = "Integer-\(id)"
-        UserDefaults.standard.removeObject(forKey: dateKey)
-        UserDefaults.standard.removeObject(forKey: integerKey)
+//        let dateKey = "Date-\(id)"
+//        let integerKey = "Integer-\(id)"
+//        UserDefaults.standard.removeObject(forKey: dateKey)
+//        UserDefaults.standard.removeObject(forKey: integerKey)
     }
     
     func saveData() {
@@ -153,7 +169,7 @@ class TimerViewModel: ObservableObject {
 struct TimerView: View {
     @ObservedObject var vm: TimerViewModel
     
-    init(vm: TimerViewModel = TimerViewModel(initialTime: 10, id: UUID())) {
+    init(vm: TimerViewModel) {
         self.vm = vm
     }
     
@@ -217,31 +233,39 @@ struct TimerView: View {
                 vm.custom()
             }
             
-        }.onDisappear{
-            if(vm.remainingTime != 0 && vm.remainingTime != vm.initialTime){
-                vm.saveData()
-            }
+        }
+        .onDisappear{
+//            if(vm.remainingTime != 0 && vm.remainingTime != vm.initialTime){
+//               // vm.saveData()
+//                print("saiu no meio")
+//            }
+            vm.stopTimer()
             
         }
-        .onAppear{
-            let (date, integer) = vm.retrieveData()
-            
-            var diff = 0
-            
-            if let oldDate = date{
-                let newDate = Date()
-                
-                diff = vm.secondsBetweenDates(oldDate, newDate)
-                print(diff)
-            }
-            
-            if integer != 0 {
-                vm.remainingTime = integer - diff - 1
-                vm.isRunning.toggle()
-                vm.startTimerNoNotification()
-            }
-            
-        }
+//        .onAppear{
+//            if($vm.recipe.steps[$vm.currentStepIndex].timer != 0){
+//                vm.resetVM(initialTime: vm.recipe.steps[vm.currentStepIndex].timer!, id: vm.recipe.steps[vm.currentStepIndex].id)
+//            }
+//        }
+//        .onAppear{
+//            let (date, integer) = vm.retrieveData()
+//            
+//            var diff = 0
+//            
+//            if let oldDate = date{
+//                let newDate = Date()
+//                
+//                diff = vm.secondsBetweenDates(oldDate, newDate)
+//                print(diff)
+//            }
+//            
+//            if integer != 0 {
+//                vm.remainingTime = integer - diff - 1
+//                vm.isRunning.toggle()
+//                vm.startTimerNoNotification()
+//            }
+//            
+//        }
         .padding(0)
         .background(Color(UIColor.secondarySystemGroupedBackground))
         .cornerRadius(5)
@@ -254,7 +278,7 @@ struct TimerView: View {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
-
-#Preview {
-    TimerView()
-}
+//
+//#Preview {
+//    TimerView()
+//}

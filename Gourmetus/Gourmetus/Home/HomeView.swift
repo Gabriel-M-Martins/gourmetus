@@ -80,8 +80,8 @@ struct HomeView: View {
                     //                VStack(spacing: 0){
                     //
                     //                    if !cookbook.favorites.isEmpty {
-                    //                        titleFavourites
-                    //                        scrollViewFavourites
+                    //                        titleFavorites
+                    //                        scrollViewFavorites
                     //                    }
                     //                }
                     //                .padding(.bottom, default_spacing)
@@ -175,12 +175,12 @@ extension HomeView {
         .scrollIndicators(.hidden)
     }
     
-    private var titleFavourites: some View {
+    private var titleFavorites: some View {
         NavigationLink{
             RecipesListsView(listType: .Favorites)
         }label: {
             HStack(alignment: .bottom, spacing: default_spacing){
-                Text("Favourites")
+                Text("Favorites")
                     .modifier(Header())
                     .foregroundStyle(Color.color_text_container_highlight)
                 Spacer()
@@ -193,7 +193,7 @@ extension HomeView {
         .padding(.vertical, default_spacing)
     }
     
-    private var scrollViewFavourites: some View {
+    private var scrollViewFavorites: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing) {
                 ForEach(favorites) { recipe in
@@ -265,7 +265,7 @@ extension HomeView {
                     RecipeDetailsView(recipe: recipe)
                 } label: {
                     RecipeCardVerticalBig(recipe: recipe, isFavorite: .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) }, set: {_ in return}), favoriteButtonClosure: { withAnimation {
-                        _ = cookbook.toggleFavourite(recipe: recipe)
+                        _ = cookbook.toggleFavorite(recipe: recipe)
                     } })
                     .tint(Color(uiColor: UIColor.label))
                     .padding(.bottom, default_spacing)
@@ -312,5 +312,5 @@ extension HomeView {
     NavigationStack {
         HomeView()
     }
-    .environmentObject(Constants.mockedCookbookEmpty)
+    .environmentObject(Constants.mockedCookbook)
 }

@@ -32,6 +32,7 @@ struct RecipePlayerView: View, PlayerDelegate {
     
     init(recipe: Recipe, step: Int) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
+        self._timerViewModel = StateObject(wrappedValue: TimerViewModel(initialTime: recipe.steps[step].timer ?? 0, id: recipe.steps[step].id))
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
@@ -63,7 +64,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                             
                                         }
                                         
-                                        .frame(width: 30)
+                                        //.frame(width: 30)
                                         
                                         Text(playerViewModel.currentStep.tip!)
                                             .frame(maxWidth: .infinity,alignment: .leading)
@@ -183,9 +184,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                         HStack(spacing: 0){
                             //Previous Step
                             Button(action: {
+                             
+                                
                                 withAnimation{
                                     playerViewModel.previousStep()
+                                    
                                 }
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
+
                             }, label: {
                                 Image(systemName: "chevron.left")
                                     .resizable()
@@ -196,16 +205,24 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                             })
                             Spacer()
-                            Text(playerViewModel.currentStep.title)
+                            Text(LocalizedStringKey(playerViewModel.currentStep.title))
                                 .modifier(Span())
                                 .foregroundColor(Color.color_text_container_highlight)
                             Spacer()
                             //Next Step
                             
                             Button(action: {
+                               
+                               
+                                
                                 withAnimation{
                                     playerViewModel.nextStep()
                                 }
+                                
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
                                 
                                 
                             }, label: {

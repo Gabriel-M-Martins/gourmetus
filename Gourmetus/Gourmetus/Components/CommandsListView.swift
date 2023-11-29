@@ -81,7 +81,7 @@ struct CommandsListView: View {
                             .foregroundColor(Color.color_text_container_primary)
                     }
                     
-                    Text("Close recipe player")
+                    Text("Close recipe")
                         .padding(.top, 8)
                         .modifier(Header())
                         .foregroundColor(Color.color_text_container_highlight)

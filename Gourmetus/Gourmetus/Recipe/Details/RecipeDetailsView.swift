@@ -54,7 +54,7 @@ struct RecipeDetailsView: View {
         }
         
         //        guard let data = recipe.imageData,
-        //              let uiimage = UIImage(data: data) else { return Image.bookFavourites }
+        //              let uiimage = UIImage(data: data) else { return Image.bookFavorites }
         //
         //        return Image(uiImage: uiimage)
     }
@@ -105,11 +105,15 @@ struct RecipeDetailsView: View {
                                 .alignmentGuide(.subCenter) { d in d.width/2 }
                             
                             HStack {
-                                Image.starFill
-                                Text("\(recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", recipe.rating))")
+                                    Text(Image.starFill)
+                                    if recipe.rating==0 {
+                                        Text(LocalizedStringKey("No Ratings"))
+                                    } else {
+                                        Text(String(format: "%.1f", recipe.rating))
+                                    }
+                                }
                                     .modifier(Span())
-                            }
-                            .foregroundStyle(Color.color_text_review_primary)
+                                    .foregroundStyle(Color.color_text_review_primary)
                             
                             Spacer()
                         }
@@ -160,8 +164,11 @@ struct RecipeDetailsView: View {
                         Text(ingredient.name)
                         
                         Spacer()
-                        
-                        Text("\(ingredient.quantity) \(ingredient.unit.description)")
+                        HStack{
+                            Text(ingredient.quantity)
+                            Text(LocalizedStringKey(ingredient.unit.rawValue))
+                        }
+                        //Text("\(ingredient.quantity) \(ingredient.unit.description)")
                             .foregroundStyle(Color.color_text_container_muted)
                     }
                 }
@@ -219,7 +226,7 @@ struct RecipeDetailsView: View {
                 .overlay(
                     GeometryReader { proxy in
                         Button("") {
-                            cookbook.toggleFavourite(recipe: recipe)
+                            cookbook.toggleFavorite(recipe: recipe)
                         }
                         .buttonStyle(FavoriteButtonStyle(isFavorited:
                                 .init(get: { cookbook.isFavoritedRecipe(recipe: recipe) },
@@ -242,7 +249,7 @@ struct RecipeDetailsView: View {
                         Button(role: option.isDestructive ? ButtonRole.destructive : nil) {
                             vm.menuButtonClicked(option)
                         } label: {
-                            Text(option.description)
+                            Text(LocalizedStringKey(option.description))
                         }
                     }
                 } label: {
@@ -263,6 +270,7 @@ struct RecipeDetailsView: View {
         }
         .onAppear {
             self.vm.delegate = self
+            self.cookbook.addToHistory(recipe: recipe)
         }
         
         .alert(isPresented: $showAlert, content: {

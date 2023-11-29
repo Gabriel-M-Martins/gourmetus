@@ -14,52 +14,52 @@ struct RecipeCardVerticalBig: View {
     
     var favoriteButtonClosure: () -> ()
     
+    private var image: Image {
+        if let imgData = recipe.imageData,
+           let img = UIImage(data: imgData) {
+            return Image(uiImage: img)
+        }
+        
+        return Image("DefaultRecipeImage")
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            
-//            .resizable()
-//            .scaledToFill()
-//            .frame(height: UIScreen.main.bounds.width/2.5)
-//            .clipShape(RoundedRectangle(cornerSize: CGSize(width: smooth_radius, height: smooth_radius)))
-//            
-            if let imgData = recipe.imageData,
-               let img = UIImage(data: imgData) {
-                Image(uiImage: img)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 145)
-                    .clipShape(RoundedRectangle(cornerRadius: smooth_radius))
-                    .padding(.top, default_spacing)
-                    .padding(.horizontal, default_spacing)
-            } else {
-                Image("DefaultRecipeImage")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 145)
-                    .clipShape(RoundedRectangle(cornerRadius: smooth_radius))
-                    .padding(.top, default_spacing)
-                    .padding(.horizontal, default_spacing)
-            }
-            
+            image
+                .resizable()
+                .scaledToFill()
+                .frame(width: 325, height: 145) // TODO: ??????? essa porra aqui não tava querendo clippar certo sem uma porra dum frame fixo por algum motivo desgraçado
+                .clipped()
+                .cornerRadius(smooth_radius)
+
             HStack {
-                VStack(alignment: .leading, spacing: half_spacing){
+                VStack(alignment: .leading, spacing: half_spacing) {
+                    Spacer()
+                    
                     Text(recipe.name)
                         .modifier(Paragraph())
                         .foregroundColor(Color.color_button_container_primary)
                         .lineLimit(1)
                     
                     KnifeView(recipe: recipe)
+                    HStack {
+                        Text(Image.starFill)
+                        if recipe.rating==0 {
+                            Text(LocalizedStringKey("No Ratings"))
+                        } else {
+                            Text(String(format: "%.1f", recipe.rating))
+                        }
+                    }
+                    .modifier(Paragraph())
+                    .foregroundStyle(Color.color_text_review_primary)
                     
-                    Text("\(Image.starFill) \(recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", recipe.rating))")
-                        .modifier(Paragraph())
-                        .foregroundStyle(Color.color_text_review_primary)
+                    
+//                    Text("\(Image.starFill) \(recipe.rating==0 ?  : String(format: "%.1f", recipe.rating))")
                     Text("By \(Image.personCircle)")
                         .modifier(Span())
                         .foregroundColor(Color.color_text_container_muted)
                         .truncationMode(.tail)
                         .lineLimit(1)
-                        
-                    
                 }
                 
                 Spacer()
@@ -73,12 +73,8 @@ struct RecipeCardVerticalBig: View {
                     .buttonStyle(FavoriteButtonStyle(isFavorited: $isFavorite))
                 }
             }
-
-            .padding(.horizontal, default_spacing)
-            .padding(.bottom, default_spacing)
-            
         }
-        .frame(width: 357, height: 260)
+        .padding(default_spacing)
         .cornerRadius(smooth_radius)
         .overlay(
             RoundedRectangle(cornerRadius: smooth_radius)

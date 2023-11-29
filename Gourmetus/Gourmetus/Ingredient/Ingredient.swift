@@ -30,7 +30,7 @@ final class Ingredient: Equatable, Identifiable, Hashable{
     }
 }
 
-enum IngredientUnit: Codable, Identifiable, CaseIterable {
+enum IngredientUnit: String, Codable, Identifiable, CaseIterable {
     var id: Self {
 
            return self
@@ -41,19 +41,29 @@ enum IngredientUnit: Codable, Identifiable, CaseIterable {
     case L
     case Kg
     case G
+    case Tbsp
+    case Tsp
+    case Unit
+    case Taste
     
-    var description: String {
-        switch self {
-        case .Cup:
-            return "Cup"
-        case .Ml:
-            return "Ml"
-        case .L:
-            return "L"
-        case .Kg:
-            return "Kg"
-        case .G:
-            return "G"
-        }
-    }
+//    var description: String {
+//        switch self {
+//        case .Cup:
+//            return "Cup"
+//        case .Ml:
+//            return "Ml"
+//        case .L:
+//            return "L"
+//        case .Kg:
+//            return "Kg"
+//        case .G:
+//            return "G"
+//        case .Tbsp:
+//            return "Tbsp"
+//        case .Tsp:
+//            return "Tsp"
+//        case .Unity:
+//            return "Taste"
+//        }
+//    }
 }
