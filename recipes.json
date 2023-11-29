@@ -1,7 +1,7 @@
 {
     "recipes" : [
         {
-            "name": "Classic Margherita Pizza v.1",
+            "name": "Classic Margherita Pizza",
             "difficulty": 3,
             "rating": 4,
             "duration": 5000,
@@ -17,48 +17,72 @@
                     "texto": "Mix 2 cups of all-purpose flour, 1 tbsp of yeast, 1 cup of water, 1 tbsp of olive oil and 0.5 tsp of salt. Knead into a smooth dough. Let it rise for 1 hour.",
                     "tip": "Use warm water for faster yeast activation.",
                     "image": "https://www.seriouseats.com/thmb/ACyF6kv3V4qAo_H9E-98X5jhuDc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20211115-OONI-PIZZA-ARMENIAN-ANDREW-JANJIGIAN-23-5447ecc61b12450d9a09f38cca67c19c.jpg",
-                    "timer": 3600
+                    "timer": 3600,
+                    "ingredients": [
+                        {
+                            "name": "All-Purpose Flour",
+                            "quantity": "2",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Yeast",
+                            "quantity": "1",
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Water",
+                            "quantity": "1",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Olive Oil",
+                            "quantity": "1",
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Salt",
+                            "quantity": "1/2",
+                            "unit": "Tsp"
+                        }
+                    ]
                 },
                 {
                     "title": "Assemble Pizza",
                     "texto": "Roll out the dough, spread 0.5 cup of tomato sauce, add 200g of fresh mozzarella and basil leaves (to taste). Bake at 220°C for 12-15 minutes.",
+                    "tip": "PLACEHOLDER",
                     "image": "https://media.blueapron.com/recipes/1343/recipe_steps/5807/20150928-2125-32-0165/2P_082515_1_R_092514_1_Spinach_FreshMozzarellaPizza_20-_204446.jpg?width=512",
-                    "timer": 900
+                    "timer": 900,
+                    "ingredients": [
+                        {
+                            "name": "Tomato Sauce",
+                            "quantity": "1/2",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Fresh Mozzarella",
+                            "quantity": "200",
+                            "unit": "G"
+                        },
+                        {
+                            "name": "Fresh Basil Leaves",
+                            "quantity": "",
+                            "unit": "Taste"
+                        }
+                    ]
                 },
                 {
                     "title": "Serve",
                     "texto": "Slice the pizza and serve hot. Drizzle with olive oil if desired.",
-                    "image": "https://anamariabraga.globo.com/wp-content/uploads/2020/08/pizza-margherita.jpg"
-                }
-            ]
-        },
-                {
-            "name": "Vegetable Stir-Fry",
-            "difficulty": 2,
-            "rating": 4,
-            "duration": 900,
-            "image": "https://hips.hearstapps.com/hmg-prod/images/190130-tofu-stir-fry-horizontal-150-1549302524.jpg",
-            "tags": [
-                "Asian",
-                "For the Family",
-                "Vegetarian",
-                "Low Fat"
-            ],
-            "steps": [
-                {
-                    "title": "Prepare Vegetables",
-                    "texto": "Slice 2 medium carrots, 2 bell peppers (mixed colors), 1 head of broccoli, and 200g of tofu into bite-sized pieces."
-                },
-                {
-                    "title": "Stir-Fry",
-                    "texto": "Heat 2 tbsp of vegetable oil in a wok, add vegetables and tofu. Stir-fry until tender. Season with 3 tbsp of soy sauce and 1 tsp of ginger.",
-                    "image": "https://i0.wp.com/www.onceuponachef.com/images/2017/02/stir-fry3-1.jpg?resize=575%2C381&ssl=1",
-                    "timer": 600
-                },
-                {
-                    "title": "Serve",
-                    "texto": "Garnish with green onions and sesame seeds. Serve over rice or noodles.",
-                    "image": "https://hips.hearstapps.com/hmg-prod/images/190130-tofu-stir-fry-horizontal-150-1549302524.jpg"
+                    "tip": "PLACEHOLDER",
+                    "image": "https://anamariabraga.globo.com/wp-content/uploads/2020/08/pizza-margherita.jpg",
+                    "timer": 100,
+                    "ingredients":[
+                        {
+                            "name": "PLACEHOLDER",
+                            "quantity": "1",
+                            "unit": "Kg"
+                        }
+                    ]
                 }
             ]
         }
