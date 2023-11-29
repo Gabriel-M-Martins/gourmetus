@@ -153,7 +153,7 @@ struct CreateEditRecipeView: View {
                                 Spacer()
                                 Text(ingredient.quantity)
                                     .foregroundColor(.secondary)
-                                Text(ingredient.unit.description)
+                                Text(LocalizedStringKey(ingredient.unit.description))
                                     .foregroundColor(.secondary)
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.secondary)

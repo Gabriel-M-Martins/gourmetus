@@ -61,7 +61,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                             
                                         }
                                         
-                                        .frame(width: 30)
+                                        //.frame(width: 30)
                                         
                                         Text(playerViewModel.currentStep.tip!)
                                             .frame(maxWidth: .infinity,alignment: .leading)

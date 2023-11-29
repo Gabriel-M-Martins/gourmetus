@@ -1,5 +1,5 @@
 //
-//  FavouritesRow.swift
+//  FavoritesRow.swift
 //  Gourmetus
 //
 //  Created by Thiago Defini on 26/10/23.
@@ -45,7 +45,14 @@ struct RecipeCardHorizontal: View {
                 }
                 KnifeView(recipe: vm.recipe)
                 
-                Text("\(Image.starFill) \(vm.recipe.rating==0 ? String("No Ratings") : String(format: "%.1f", vm.recipe.rating))")
+                HStack {
+                    Text(Image.starFill)
+                    if vm.recipe.rating==0 {
+                        Text(LocalizedStringKey("No Ratings"))
+                    } else {
+                        Text(String(format: "%.1f", vm.recipe.rating))
+                    }
+                }
                     .modifier(Paragraph())
                     .foregroundStyle(Color.color_text_review_primary)
                 Text("By \(Image.personCircle)")
