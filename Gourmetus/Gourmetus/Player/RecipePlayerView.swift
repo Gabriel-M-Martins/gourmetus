@@ -194,7 +194,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                             })
                             Spacer()
-                            Text(playerViewModel.currentStep.title)
+                            Text(LocalizedStringKey(playerViewModel.currentStep.title))
                                 .modifier(Span())
                                 .foregroundColor(Color.color_text_container_highlight)
                             Spacer()

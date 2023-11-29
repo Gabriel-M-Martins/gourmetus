@@ -1107,6 +1107,28 @@
         }
       }
     },
+    "Taste" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A gosto"
+          }
+        }
+      }
+    },
+    "Tbsp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colheres de Sopa"
+          }
+        }
+      }
+    },
     "Text" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1186,6 +1208,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Para ser notificado quando seu timer terminar, precisamos da sua permissão para enviar notificações. Acesse suas configurações para permitir o envio de notificações."
+          }
+        }
+      }
+    },
+    "Tsp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colher de Chá"
           }
         }
       }

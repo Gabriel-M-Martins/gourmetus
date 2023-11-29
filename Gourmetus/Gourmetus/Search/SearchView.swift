@@ -14,6 +14,7 @@ class TagFilterSearchViewModel: ObservableObject {
     
     func fetchTags() {
         self.tags = repo.fetch()
+        
         if self.tags.isEmpty {
             self.tags = Constants.mockedTags
             repo.save(self.tags)

@@ -1,0 +1,45 @@
+{
+    "recipes" : [
+        {
+            "name": "Pasta",
+            "difficulty": 2,
+            "rating": 4,
+            "duration": 600,
+            "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
+            "tags": [
+                "Mexican",
+                "Gluten Free"
+            ],
+            "steps": [
+                {
+                    "title": "Cooking",
+                    "texto": "Boil water",
+                    "tip": "Add salt",
+                    "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
+                    "timer": 60,
+                    "ingredients": [
+                        {
+                            "name": "Pasta",
+                            "quantity": "1",
+                            "unit": "Kg"
+                        }
+                    ]
+                },
+                {
+                    "title": "Cooking2",
+                    "texto": "Boil water2",
+                    "tip": "Add salt2",
+                    "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
+                    "timer": 60,
+                    "ingredients": [
+                        {
+                            "name": "Tomato",
+                            "quantity": "1",
+                            "unit": "Kg"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

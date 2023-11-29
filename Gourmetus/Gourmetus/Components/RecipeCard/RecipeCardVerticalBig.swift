@@ -14,27 +14,28 @@ struct RecipeCardVerticalBig: View {
     
     var favoriteButtonClosure: () -> ()
     
+    private var image: Image {
+        if let imgData = recipe.imageData,
+           let img = UIImage(data: imgData) {
+            return Image(uiImage: img)
+        }
+        
+        return Image("DefaultRecipeImage")
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            
-            if let imgData = recipe.imageData,
-               let img = UIImage(data: imgData) {
-                Image(uiImage: img)
-                    .resizable()
-                    .cornerRadius(smooth_radius)
-                    .padding(.top, default_spacing)
-                    .padding(.horizontal, default_spacing)
-            } else {
-                Image("DefaultRecipeImage")
-                    .resizable()
-                    .cornerRadius(smooth_radius)
-                    .padding(.top, default_spacing)
-                    .padding(.horizontal, default_spacing)
-                    .frame(height: 145)
-            }
-            
+            image
+                .resizable()
+                .scaledToFill()
+                .frame(width: 325, height: 145) // TODO: ??????? essa porra aqui não tava querendo clippar certo sem uma porra dum frame fixo por algum motivo desgraçado
+                .clipped()
+                .cornerRadius(smooth_radius)
+
             HStack {
-                VStack(alignment: .leading, spacing: half_spacing){
+                VStack(alignment: .leading, spacing: half_spacing) {
+                    Spacer()
+                    
                     Text(recipe.name)
                         .modifier(Paragraph())
                         .foregroundColor(Color.color_button_container_primary)
@@ -59,8 +60,6 @@ struct RecipeCardVerticalBig: View {
                         .foregroundColor(Color.color_text_container_muted)
                         .truncationMode(.tail)
                         .lineLimit(1)
-                        
-                    
                 }
                 
                 Spacer()
@@ -74,12 +73,8 @@ struct RecipeCardVerticalBig: View {
                     .buttonStyle(FavoriteButtonStyle(isFavorited: $isFavorite))
                 }
             }
-
-            .padding(.horizontal, default_spacing)
-            .padding(.bottom, default_spacing)
-            
         }
-        .frame(width: 357, height: 260)
+        .padding(default_spacing)
         .cornerRadius(smooth_radius)
         .overlay(
             RoundedRectangle(cornerRadius: smooth_radius)

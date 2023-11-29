@@ -166,7 +166,7 @@ struct RecipeDetailsView: View {
                         Spacer()
                         HStack{
                             Text(ingredient.quantity)
-                            Text(LocalizedStringKey(ingredient.unit.description))
+                            Text(LocalizedStringKey(ingredient.unit.rawValue))
                         }
                         //Text("\(ingredient.quantity) \(ingredient.unit.description)")
                             .foregroundStyle(Color.color_text_container_muted)
@@ -270,6 +270,7 @@ struct RecipeDetailsView: View {
         }
         .onAppear {
             self.vm.delegate = self
+            self.cookbook.addToHistory(recipe: recipe)
         }
         
         .alert(isPresented: $showAlert, content: {

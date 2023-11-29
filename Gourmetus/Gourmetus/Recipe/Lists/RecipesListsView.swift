@@ -104,8 +104,9 @@ struct RecipesListsView: View {
                 }
             }
         }
+        .padding(default_spacing)
         .navigationTitle(LocalizedStringKey(listType.title))
-        .searchable(text: $searchedText, placement: .automatic, prompt: LocalizedStringKey("Search"))
+        .searchable(text: $searchedText, placement: .automatic, prompt: "Search")
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)
             .presentationDetents([.fraction(1 * 0.8), .large])
