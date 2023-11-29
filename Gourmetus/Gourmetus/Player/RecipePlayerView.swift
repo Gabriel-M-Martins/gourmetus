@@ -181,9 +181,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                         HStack(spacing: 0){
                             //Previous Step
                             Button(action: {
+                             
+                                
                                 withAnimation{
                                     playerViewModel.previousStep()
+                                    
                                 }
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
+
                             }, label: {
                                 Image(systemName: "chevron.left")
                                     .resizable()
@@ -201,9 +209,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                             //Next Step
                             
                             Button(action: {
+                               
+                               
+                                
                                 withAnimation{
                                     playerViewModel.nextStep()
                                 }
+                                
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
                                 
                                 
                             }, label: {
