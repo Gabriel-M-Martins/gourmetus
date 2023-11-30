@@ -129,13 +129,13 @@ final class CreateEditStepViewModelV2: ObservableObject {
         }
         
         if chosenComponents.contains(.tip) {
-            step.tip = nil
+            step.tip = self.tip
         }
         
         step.ingredients = chosenIngredients
         
-        if chosenComponents.contains(.timer) {
-            step.timer = nil
+        if !chosenComponents.contains(.timer) {
+            step.timer = (timerMinutes * 60) + timerSeconds
         }
         
         if let idx = recipe.steps.firstIndex(where: { $0.id == step.id }) {
