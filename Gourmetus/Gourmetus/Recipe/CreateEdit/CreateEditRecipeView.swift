@@ -183,7 +183,6 @@ struct CreateEditRecipeView: View {
                 }
                 
                 Section {
-                    
                     HStack{
                         Text("Add Steps")
                             .foregroundColor(.accentColor)
@@ -224,13 +223,7 @@ struct CreateEditRecipeView: View {
                     .onDelete { indexSet in
                         createEditViewModel.steps.remove(atOffsets: indexSet)
                     }
-                    
-                    
                 }
-                
-                
-                
-                
             }
             .sheet(isPresented: $isPresentingNewSheet) {
 //                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)

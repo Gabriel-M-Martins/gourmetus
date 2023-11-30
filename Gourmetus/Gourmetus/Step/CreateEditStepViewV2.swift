@@ -14,6 +14,7 @@ final class CreateEditStepViewModelV2: ObservableObject {
         case tip = "Tip"
         case timer = "Timer"
         case ingredients = "Ingredients"
+        case description = "Description"
     }
     
     struct OrderedComponent: Hashable {
@@ -27,23 +28,25 @@ final class CreateEditStepViewModelV2: ObservableObject {
         
         let component: Component
         let order: Int
+        
+        static let imagePicker: OrderedComponent = OrderedComponent(component: .imagePicker, order: 0)
+        static let description: OrderedComponent = OrderedComponent(component: .description, order: 1)
+        static let tip: OrderedComponent = OrderedComponent(component: .tip, order: 2)
+        static let ingredients: OrderedComponent = OrderedComponent(component: .ingredients, order: 3)
+        static let timer: OrderedComponent = OrderedComponent(component: .timer, order: 4)
+        
+        static let availableComponents: [OrderedComponent] = [
+            .imagePicker,
+            .description,
+            .tip,
+            .ingredients,
+            .timer
+        ]
     }
 
-    var title: Binding<String> {
-        Binding {
-            self.step.title
-        } set: { newValue in
-            self.step.title = newValue
-        }
-    }
-    
-    var tip: Binding<String> {
-        Binding {
-            self.step.tip ?? ""
-        } set: { newValue in
-            self.step.tip = newValue
-        }
-    }
+    @Published var title: String = ""
+    @Published var tip: String = ""
+    @Published var description: String = ""
     
     @Published var timerMinutes: Int = 0
     @Published var timerSeconds: Int = 0
@@ -54,13 +57,6 @@ final class CreateEditStepViewModelV2: ObservableObject {
     var orderedComponents: [CreateEditStepViewModelV2.OrderedComponent] {
         Array(chosenComponents).sorted(by: {$0.order < $1.order})
     }
-    
-    static let availableComponents: [OrderedComponent] = [
-        OrderedComponent(component: .imagePicker, order: 0),
-        OrderedComponent(component: .tip, order: 1),
-        OrderedComponent(component: .ingredients, order: 2),
-        OrderedComponent(component: .timer, order: 3)
-    ]
     
     @Published var chosenIngredients: [Ingredient] = []
     var availableIngredients: [Ingredient] {
@@ -77,29 +73,37 @@ final class CreateEditStepViewModelV2: ObservableObject {
         self._photosViewModel = .init(wrappedValue: PhotoPickerViewModel())
         self.photosViewModel.completionBlock = { [weak self] img in
             self?.image = img
-            self?.chosenComponents.insert(Self.availableComponents[0])
+            self?.chosenComponents.insert(.imagePicker)
         }
         
-        if self.step.tip != nil {
-            chosenComponents.insert(Self.availableComponents[1])
+        self.title = self.step.title
+        
+        if let description = self.step.texto {
+            self.description = description
+            chosenComponents.insert(.description)
+        }
+        
+        if let tip = self.step.tip {
+            self.tip = tip
+            chosenComponents.insert(.tip)
         }
         
         chosenIngredients.append(contentsOf: self.step.ingredients)
         if !chosenIngredients.isEmpty {
-            chosenComponents.insert(Self.availableComponents[2])
+            chosenComponents.insert(.ingredients)
         }
         
         if let timer = self.step.timer {
             let (quotient, reminder) = timer.quotientAndRemainder(dividingBy: 60)
             self.timerMinutes = quotient
             self.timerSeconds = reminder
-            chosenComponents.insert(Self.availableComponents[3])
+            chosenComponents.insert(.timer)
         }
         
         if let data = self.step.imageData,
            let image = UIImage(data: data) {
             self.image = image
-            chosenComponents.insert(Self.availableComponents[0])
+            chosenComponents.insert(.imagePicker)
         }
     }
     
@@ -112,19 +116,25 @@ final class CreateEditStepViewModelV2: ObservableObject {
     }
     
     func save() {
-        if chosenComponents.contains(Self.availableComponents[0]),
+        step.title = title
+        
+        if chosenComponents.contains(.imagePicker),
            let image = self.image,
            let data = image.pngData() {
             step.imageData = data
         }
         
-        if chosenComponents.contains(Self.availableComponents[1]) {
+        if chosenComponents.contains(.description) {
+            step.texto = self.description
+        }
+        
+        if chosenComponents.contains(.tip) {
             step.tip = nil
         }
         
         step.ingredients = chosenIngredients
         
-        if chosenComponents.contains(Self.availableComponents[3]) {
+        if chosenComponents.contains(.timer) {
             step.timer = nil
         }
     }
@@ -155,13 +165,16 @@ struct CreateEditStepViewV2: View {
                 Section {
                     HStack {
                         Text("Title")
-                        TextField("Step Title", text: vm.title)
+                        TextField("Step Title", text: $vm.title)
                     }
                 }
                 
                 ForEach(vm.orderedComponents, id: \.self) { orderedComponent in
                     Section {
                         switch orderedComponent.component {
+                        case .description:
+                            TextField("Description", text: $vm.description, axis: .vertical)
+                                .lineLimit(1...4)
                         case .imagePicker:
                             VStack {
                                 if let image = vm.image {
@@ -207,7 +220,7 @@ struct CreateEditStepViewV2: View {
                                 }
                             }
                         case .tip:
-                            TextField("Tip", text: vm.tip, axis: .vertical)
+                            TextField("Tip", text: $vm.tip, axis: .vertical)
                                 .lineLimit(1...4)
                         case .ingredients:
                             VStack {
@@ -251,7 +264,7 @@ struct CreateEditStepViewV2: View {
             NavigationStack {
                 List {
                     Section {
-                        ForEach(CreateEditStepViewModelV2.availableComponents, id: \.self) { orderedComponent in
+                        ForEach(CreateEditStepViewModelV2.OrderedComponent.availableComponents, id: \.self) { orderedComponent in
                             switch orderedComponent.component {
                             case .ingredients:
                                 HStack {
@@ -324,12 +337,12 @@ struct CreateEditStepViewV2: View {
             }
             .opacity(selectedDetent == .fraction(Self.sheetDefaultSize) ? 1 : 0)
             .animation(.easeInOut, value: selectedDetent)
-            .interactiveDismissDisabled()
+//            .interactiveDismissDisabled()
             .presentationDetents([.fraction(Self.sheetDefaultSize), .fraction(Self.sheetMininumSize)], selection: $selectedDetent)
             .presentationDragIndicator(.visible)
             .presentationBackgroundInteraction(.enabled)
         })
-        .interactiveDismissDisabled(false)
+//        .interactiveDismissDisabled(false)
         .navigationTitle("Create Step")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
