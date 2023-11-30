@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "DefaultRecipeImage.png",
+      "filename" : "Recipefy.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "DefaultRecipeImage@2x.png",
+      "filename" : "Recipefy@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "DefaultRecipeImage@3x.png",
+      "filename" : "Recipefy@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

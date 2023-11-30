@@ -42,6 +42,7 @@
 		7BE609842AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */; };
 		7BE615D02B0D1CA400E82BD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE615CF2B0D1CA400E82BD4 /* SceneDelegate.swift */; };
 		7BF5F8A62B0FE88100DBDE03 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5F8A52B0FE88100DBDE03 /* Speech.swift */; };
+		92644A422B18FBE000ECC074 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92644A412B18FBE000ECC074 /* Launch Screen.storyboard */; };
 		A71E6B5E2AFD4DAA00F89E71 /* CookbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E6B5D2AFD4DAA00F89E71 /* CookbookView.swift */; };
 		A71E6B602AFD62B900F89E71 /* CookbookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E6B5F2AFD62B900F89E71 /* CookbookCard.swift */; };
 		A7271B1E2AEAEB6E00F7CD16 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */; };
@@ -111,6 +112,7 @@
 		7BE609832AFAA4990031614A /* RecipeCardVerticalBigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCardVerticalBigViewModel.swift; sourceTree = "<group>"; };
 		7BE615CF2B0D1CA400E82BD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7BF5F8A52B0FE88100DBDE03 /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
+		92644A412B18FBE000ECC074 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A71E6B5D2AFD4DAA00F89E71 /* CookbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookView.swift; sourceTree = "<group>"; };
 		A71E6B5F2AFD62B900F89E71 /* CookbookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookCard.swift; sourceTree = "<group>"; };
 		A7271B1D2AEAEB6E00F7CD16 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				A785B5512AE1C3A2002E1D1F /* Gourmetus.entitlements */,
 				A785B5522AE1C3A2002E1D1F /* Info.plist */,
 				A785B5492AE1C3A2002E1D1F /* Preview Content */,
+				92644A412B18FBE000ECC074 /* Launch Screen.storyboard */,
 			);
 			path = Gourmetus;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 			files = (
 				A785B54B2AE1C3A2002E1D1F /* Preview Assets.xcassets in Resources */,
 				CE5B4A002B16561200F3839B /* Localizable.xcstrings in Resources */,
+				92644A422B18FBE000ECC074 /* Launch Screen.storyboard in Resources */,
 				A785B5482AE1C3A2002E1D1F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,28 +691,34 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = RU3T8G764D;
+				DEVELOPMENT_TEAM = F3LPWZ43F8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Recipefy;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow the app to use the microphone";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Please allow the app to use the speech recognition";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.thiago;
+				PRODUCT_BUNDLE_IDENTIFIER = com.godinho.Recipefy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -721,28 +731,34 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gourmetus/Preview Content\"";
-				DEVELOPMENT_TEAM = RU3T8G764D;
+				DEVELOPMENT_TEAM = F3LPWZ43F8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gourmetus/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Recipefy;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow the app to use the microphone";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Please allow the app to use the speech recognition";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dev.gourmetus.thiago;
+				PRODUCT_BUNDLE_IDENTIFIER = com.godinho.Recipefy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
