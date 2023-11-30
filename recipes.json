@@ -325,11 +325,11 @@
       "duration": 7200,
       "desc": "A hearty Brazilian black bean stew with a variety of pork, sausages, and served with rice.",
       "image": "https://example.com/feijoada.jpg",
-      "tags": ["Brazilian", "For the Family", "Stew"],
+      "tags": ["Brazilian", "For the Family"],
       "steps": [
         {
       "title": "Soak Black Beans",
-      "text": "Rinse and soak 2 cups of black beans in cold water overnight. Drain before cooking.",
+      "texto": "Rinse and soak 2 cups of black beans in cold water overnight. Drain before cooking.",
       "timer": 600,
       "ingredients": [
         {
@@ -341,35 +341,35 @@
     },
     {
       "title": "Prepare Meats",
-      "text": "In a large pot, combine 1/2 lb of smoked sausage, 1/2 lb of chorizo, 1/2 lb of bacon, and 1 lb of pork shoulder. Cook until browned.",
+      "texto": "In a large pot, combine 1/2 lb of smoked sausage, 1/2 lb of chorizo, 1/2 lb of bacon, and 1 lb of pork shoulder. Cook until browned.",
       "image": "https://example.com/preparing_meats.jpg",
       "timer": 900,
       "ingredients": [
         {
           "name": "Smoked Sausage",
           "quantity": "1/2",
-          "unit": "lb"
+          "unit": "Unit"
         },
         {
           "name": "Chorizo",
           "quantity": "1/2",
-          "unit": "lb"
+          "unit": "Unit"
         },
         {
           "name": "Bacon",
           "quantity": "1/2",
-          "unit": "lb"
+          "unit": "Unit"
         },
         {
           "name": "Pork Shoulder",
           "quantity": "1",
-          "unit": "lb"
+          "unit": "Unit"
         }
       ]
     },
     {
       "title": "Cook Onion and Garlic",
-      "text": "Add 1 diced onion and 4 cloves of minced garlic to the pot. Sauté until the onion is translucent.",
+      "texto": "Add 1 diced onion and 4 cloves of minced garlic to the pot. Sauté until the onion is translucent.",
       "image": "https://example.com/saute_onion_garlic.jpg",
       "timer": 300,
       "ingredients": [
@@ -382,35 +382,35 @@
         {
           "name": "Garlic",
           "quantity": "4",
-          "unit": "Cloves",
+          "unit": "Unit",
           "tip": "Minced"
         }
       ]
     },
     {
       "title": "Add Black Beans",
-      "text": "Pour in the soaked black beans, cover with water, and bring to a boil. Reduce heat and simmer for 1 hour or until beans are tender.",
+      "texto": "Pour in the soaked black beans, cover with water, and bring to a boil. Reduce heat and simmer for 1 hour or until beans are tender.",
       "image": "https://example.com/adding_black_beans.jpg",
       "timer": 3600
     },
     {
       "title": "Season and Add Meats",
-      "text": "Season with salt, pepper, bay leaves, and paprika. Add the browned meats back to the pot and simmer for another hour.",
+      "texto": "Season with salt, pepper, bay leaves, and paprika. Add the browned meats back to the pot and simmer for another hour.",
       "image": "https://example.com/seasoning_and_adding_meats.jpg",
       "timer": 3600,
       "ingredients": [
         {
           "name": "Salt",
-          "quantity": "To taste"
+          "quantity": "Taste"
         },
         {
           "name": "Pepper",
-          "quantity": "To taste"
+          "quantity": "Taste"
         },
         {
           "name": "Bay Leaves",
           "quantity": "2",
-          "unit": "Leaves"
+          "unit": "Unit"
         },
         {
           "name": "Paprika",
@@ -421,22 +421,22 @@
     },
     {
       "title": "Serve with Rice",
-      "text": "Serve the feijoada hot over white rice. Garnish with chopped fresh parsley and orange slices.",
+      "texto": "Serve the feijoada hot over white rice. Garnish with chopped fresh parsley and orange slices.",
       "image": "https://example.com/serving_feijoada.jpg",
       "ingredients": [
         {
           "name": "White Rice",
-          "quantity": "As needed",
+          "unit": "Taste",
           "tip": "Cooked"
         },
         {
           "name": "Fresh Parsley",
-          "quantity": "As needed",
+          "unit": "Taste",
           "tip": "Chopped"
         },
         {
           "name": "Orange Slices",
-          "quantity": "As needed",
+          "unit": "Taste",
           "tip": "For garnish"
         }
       ]
