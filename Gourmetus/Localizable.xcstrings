@@ -287,6 +287,16 @@
         }
       }
     },
+    "By %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "By %1$@ %2$@"
+          }
+        }
+      }
+    },
     "Call chef" : {
       "localizations" : {
         "pt-BR" : {
@@ -1342,7 +1352,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "titúlo"
+            "value" : "título"
           }
         }
       }
@@ -1352,7 +1362,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Titúlo"
+            "value" : "Título"
           }
         }
       }
