@@ -115,22 +115,22 @@
         {
           "name": "Ground Beef",
           "quantity": "500",
-          "unit": "g"
+          "unit": "G"
         },
         {
           "name": "Onion",
           "quantity": "1",
-          "unit": "unit"
+          "unit": "Unit"
         },
         {
           "name": "Garlic",
           "quantity": "2",
-          "unit": "unit"
+          "unit": "Unit"
         },
         {
           "name": "Tomato Sauce",
           "quantity": "400",
-          "unit": "g"
+          "unit": "G"
         }
       ]
     },
@@ -143,12 +143,12 @@
         {
           "name": "Parmesan Cheese",
           "quantity": "1",
-          "unit": "cup"
+          "unit": "Cup"
         },
         {
           "name": "Fresh Basil",
           "quantity": "1",
-          "unit": "cup"
+          "unit": "Cup"
         }
       ]
     }
