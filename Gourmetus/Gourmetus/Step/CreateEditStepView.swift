@@ -187,19 +187,21 @@ struct CreateEditStepView: View {
 }
 
 #Preview {
-    CreateEditStepView(editingStep: .constant(Constants.mockedSteps1[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
-                                                                                      Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)], recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
+//    CreateEditStepView(editingStep: .constant(Constants.mockedSteps1[0]),ingredients: [Ingredient(id: UUID(), name: "Farinha", quantity: "0.5", unit: .Kg),
+//                                                                                      Ingredient(id: UUID(), name: "Ovo", quantity: "3", unit: .L)], recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
+    
+    Text("Coe")
 }
 
 
-struct TimePicker: View {
+public struct TimePicker: View {
     @Binding var totalTime: Int?
     @State var selectedHour: Int = 0
     @State var selectedMinute: Int = 0
     @State private var isHourPickerVisible = false
     @State private var isMinutePickerVisible = false
     
-    var body: some View {
+    public var body: some View {
         VStack {
             HStack {
                 Text("Hour: \(selectedHour) hours")

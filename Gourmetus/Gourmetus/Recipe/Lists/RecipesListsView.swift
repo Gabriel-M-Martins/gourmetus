@@ -59,7 +59,7 @@ struct RecipesListsView: View {
                     .padding(.leading, default_spacing)
                 Spacer()
             }
-            .padding(.vertical ,default_spacing)
+            .padding(.vertical, default_spacing)
             
             Divider()
             

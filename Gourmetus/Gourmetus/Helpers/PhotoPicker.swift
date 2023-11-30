@@ -17,6 +17,11 @@ final class PhotoPickerViewModel: ObservableObject {
         }
     }
     
+    var completionBlock: (UIImage) -> ()
+    
+    init(completionBlock: @escaping (UIImage) -> Void = { _ in }) {
+        self.completionBlock = completionBlock
+    }
     
     private func setImage(from selection: PhotosPickerItem?){
         guard let selection else { return }
@@ -24,8 +29,9 @@ final class PhotoPickerViewModel: ObservableObject {
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self) {
                 if let uiImage = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.selectedImage = uiImage
+                    DispatchQueue.main.async { [weak self] in
+                        self?.selectedImage = uiImage
+                        self?.completionBlock(uiImage)
                     }
                 }
             }

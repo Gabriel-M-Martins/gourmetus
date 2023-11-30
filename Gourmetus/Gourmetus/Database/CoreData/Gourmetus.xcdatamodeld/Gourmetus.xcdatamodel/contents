@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="CookbookEntity" representedClassName="CookbookEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="community" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="community" inverseEntity="RecipeEntity"/>
         <relationship name="favorites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="favorites" inverseEntity="RecipeEntity"/>
-        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="latest" inverseEntity="RecipeEntity"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecipeEntity" inverseName="latest" inverseEntity="RecipeEntity"/>
         <relationship name="ownedRecipes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="ownedRecipes" inverseEntity="RecipeEntity"/>
     </entity>
     <entity name="IngredientEntity" representedClassName="IngredientEntity" syncable="YES" codeGenerationType="class">
@@ -27,6 +27,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="owner" optional="YES" attributeType="String"/>
         <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="community" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="community" inverseEntity="CookbookEntity"/>
         <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="favorites" inverseEntity="CookbookEntity"/>

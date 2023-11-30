@@ -31,6 +31,9 @@
         }
       }
     },
+    ":" : {
+
+    },
     "%@ | %@" : {
       "localizations" : {
         "en" : {
@@ -46,6 +49,9 @@
           }
         }
       }
+    },
+    "%lld" : {
+
     },
     "%lld hour" : {
       "localizations" : {
@@ -178,6 +184,7 @@
       }
     },
     "Add recipe" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -299,6 +306,9 @@
           }
         }
       }
+    },
+    "Change" : {
+
     },
     "Change presentation mode" : {
       "localizations" : {
@@ -966,6 +976,9 @@
         }
       }
     },
+    "Minutes" : {
+
+    },
     "My Recipes" : {
       "localizations" : {
         "pt-BR" : {
@@ -1089,6 +1102,9 @@
         }
       }
     },
+    "Remove" : {
+
+    },
     "Report" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1140,6 +1156,9 @@
           }
         }
       }
+    },
+    "Seconds" : {
+
     },
     "Select Hour" : {
       "localizations" : {
@@ -1412,6 +1431,7 @@
       }
     },
     "YOU" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {

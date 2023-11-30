@@ -22,10 +22,6 @@ class RecipeDetailsViewModel: ObservableObject{
         .Delete
     ]
     
-//    func convertHoursMinutes() -> String{
-//        return String(format: "%02d:%02d", self.recipe.duration/60, self.recipe.duration%60)
-//    }
-    
     func menuButtonClicked(_ option: MenuOption) {
         switch option {
         case .Edit:
@@ -59,8 +55,4 @@ class RecipeDetailsViewModel: ObservableObject{
             }
         }
     }
-    
-//    func deleteRecipe(recipe: Recipe){
-//        
-//    }
 }

@@ -28,7 +28,6 @@ struct RecipeCardVerticalBig: View {
             image
                 .resizable()
                 .scaledToFill()
-                .frame(width: 325, height: 145) // TODO: ??????? essa porra aqui não tava querendo clippar certo sem uma porra dum frame fixo por algum motivo desgraçado
                 .clipped()
                 .cornerRadius(smooth_radius)
 
@@ -55,7 +54,7 @@ struct RecipeCardVerticalBig: View {
                     
                     
 //                    Text("\(Image.starFill) \(recipe.rating==0 ?  : String(format: "%.1f", recipe.rating))")
-                    Text("By \(Image.personCircle)")
+                    Text("By \(Image.personCircle) \(recipe.owner)")
                         .modifier(Span())
                         .foregroundColor(Color.color_text_container_muted)
                         .truncationMode(.tail)

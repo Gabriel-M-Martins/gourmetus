@@ -15,22 +15,6 @@ struct HomeView: View {
     @State private var presentTagSheet: Bool = false
     @State private var selectedTags: Set<String> = []
     
-    var history: [Recipe] {
-        filterRecipes(cookbook.history)
-    }
-    
-    var favorites: [Recipe] {
-        filterRecipes(cookbook.favorites)
-    }
-    
-    var ownedRecipes: [Recipe] {
-        filterRecipes(cookbook.ownedRecipes)
-    }
-    
-    var community: [Recipe] {
-        filterRecipes(cookbook.community)
-    }
-    
     private func filterRecipes(_ recipes: [Recipe]) -> [Recipe] {
         var result: [Recipe] = recipes
         
@@ -76,32 +60,6 @@ struct HomeView: View {
                     
                     Divider()
                     
-                    //Favorites
-                    //                VStack(spacing: 0){
-                    //
-                    //                    if !cookbook.favorites.isEmpty {
-                    //                        titleFavorites
-                    //                        scrollViewFavorites
-                    //                    }
-                    //                }
-                    //                .padding(.bottom, default_spacing)
-                    //
-                    //                Divider()
-                    
-                    //Owned
-                    //                VStack(spacing: 0){
-                    //                    titleMyRecipes
-                    //                    if cookbook.ownedRecipes.isEmpty {
-                    //                        emptyState
-                    //                        createRecipeButton
-                    //                    } else {
-                    //                        scrollViewMyRecipes
-                    //                    }
-                    //                }
-                    //                .padding(.bottom, default_spacing)
-                    //
-                    //                Divider()
-                    
                     //Community
                     VStack(spacing: 0){
                         
@@ -117,12 +75,22 @@ struct HomeView: View {
         .scrollDismissesKeyboard(.interactively)
         .searchable(text: $searchedText)
         .navigationTitle("Menu")
+        
         .sheet(isPresented: $presentTagSheet) {
             TagFilterSearchView(selectedTags: $selectedTags)
                 .presentationDetents([.fraction(1 * 0.8), .large])
                 .presentationDragIndicator(.visible)
         }
         .toolbar(content: {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    CreateEditRecipeView()
+                } label: {
+                    Image.plus
+                        .foregroundStyle(Color.color_button_container_primary)
+                }
+            }
+            
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     presentTagSheet = true
@@ -160,7 +128,7 @@ extension HomeView {
     private var scrollViewRecentlyAccessed: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing) {
-                ForEach(history) { recipe in
+                ForEach(filterRecipes(cookbook.history)) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
@@ -196,7 +164,7 @@ extension HomeView {
     private var scrollViewFavorites: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing) {
-                ForEach(favorites) { recipe in
+                ForEach(filterRecipes(cookbook.favorites)) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     } label: {
@@ -232,7 +200,7 @@ extension HomeView {
     private var scrollViewMyRecipes: some View {
         ScrollView(.horizontal){
             HStack(spacing: default_spacing){
-                ForEach(ownedRecipes) { recipe in
+                ForEach(filterRecipes(cookbook.ownedRecipes)) { recipe in
                     NavigationLink{
                         RecipeDetailsView(recipe: recipe)
                     }label: {
@@ -260,7 +228,7 @@ extension HomeView {
     
     private var scrollViewCommunity: some View {
         VStack(spacing: default_spacing){
-            ForEach(community) { recipe in
+            ForEach(filterRecipes(cookbook.community)) { recipe in
                 NavigationLink {
                     RecipeDetailsView(recipe: recipe)
                 } label: {
@@ -290,22 +258,7 @@ extension HomeView {
             }
         }
     }
-    
-    private var createRecipeButton: some View {
-        NavigationLink{
-            let recipe: Binding<Recipe?> = .constant(nil)
-            CreateEditRecipeView()
-        } label: {
-            Text("Add recipe")
-                .frame(width: UIScreen.main.bounds.width * 0.55, height: UIScreen.main.bounds.width * 0.075)
-                .foregroundStyle(Color.color_general_fixed_light)
-                .modifier(Header())
-            
-        }
-        .tint(.color_button_container_primary)
-        .buttonStyle(.borderedProminent)
-        
-    }
+
 }
 
 #Preview {

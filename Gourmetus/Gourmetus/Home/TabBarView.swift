@@ -31,7 +31,7 @@ struct TabBarView: View {
             }
             
 //            NavigationStack {
-//                SearchView()
+//                CreateEditStepViewV2(recipe: Constants.mockedRecipe)
 //            }
 //            .environmentObject(cookbook)
 //            .tabItem {
