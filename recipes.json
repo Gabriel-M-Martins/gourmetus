@@ -84,11 +84,11 @@
   "duration": 1200,
   "desc": "A colorful and nutritious stir-fry featuring tofu and a variety of fresh vegetables.",
   "image": "https://img.freepik.com/free-photo/top-view-high-protein-meal-assortment_23-2149089637.jpg?size=626&ext=jpg&ga=GA1.1.1093209122.1701366746&semt=ais",
-  "tags": ["Vegetarian", "Vegan", “For You”],
+  "tags": ["Vegetarian", "Vegan", "For You"],
   "steps": [
     {
       "title": "Prepare Tofu",
-      "texto: "Press and cube 400g of firm tofu. Season with soy sauce and let it marinate for 15 minutes.",
+      "texto": "Press and cube 400g of firm tofu. Season with soy sauce and let it marinate for 15 minutes.",
       "tip": "Pressing tofu removes excess water, allowing for better flavor absorption.",
       "image": "https://img.freepik.com/free-photo/tofu-made-from-soybeans-food-nutrition-concept_1150-26357.jpg?size=626&ext=jpg&ga=GA1.1.1093209122.1701366746&semt=sph",
       "timer": 900,
@@ -96,7 +96,7 @@
         {
           "name": "Firm Tofu",
           "quantity": "400",
-          "unit": “G”
+          "unit": "G"
         },
         {
           "name": "Soy Sauce",
@@ -108,7 +108,7 @@
       
     {
       "title": "Stir-Fry Tofu",
-      "texto”: "In a hot wok, stir-fry marinated tofu until golden brown. Set aside.",
+      "texto": "In a hot wok, stir-fry marinated tofu until golden brown. Set aside.",
       "tip": "Use high heat for a nice sear on the tofu.",
       "image": "https://example.com/stir_frying_tofu.jpg",
       "timer": 300,
@@ -116,7 +116,7 @@
     },
     {
       "title": "Prepare Vegetables",
-      "texto”: "Chop 1 bell pepper, 1 zucchini, and 1 carrot into bite-sized pieces.",
+      "texto": "Chop 1 bell pepper, 1 zucchini, and 1 carrot into bite-sized pieces.",
       "image": "https://img.freepik.com/free-photo/fresh-vegetables-cooking-pan-home-kitchen-closeup_1220-6309.jpg?w=1800&t=st=1701370573~exp=1701371173~hmac=aaf0ad9a385e077500b2031c7dce71b109dc7d8e67790b77ba92952d77f8b0f9",
       "ingredients": [
         {
@@ -138,7 +138,7 @@
     },
     {
       "title": "Vegetable Stir-Fry",
-      "texto”: "Stir-fry chopped vegetables until tender-crisp. Add tofu, soy sauce, and sesame oil. Cook for an additional 5 minutes.",
+      "texto": "Stir-fry chopped vegetables until tender-crisp. Add tofu, soy sauce, and sesame oil. Cook for an additional 5 minutes.",
       "tip": "Add a dash of sesame oil for a rich flavor.",
       "image": "https://img.freepik.com/free-photo/high-angle-vegetables-getting-sauteed-pan_23-2149720776.jpg?w=740&t=st=1701370614~exp=1701371214~hmac=4297fb6a774308b32c6ff31ea8a29d18c076f245206beac3744de6184b8c8b0a",
       "timer": 600,
@@ -152,7 +152,7 @@
     },
     {
       "title": "Serve",
-      "texto”: "Garnish with chopped green onions and sesame seeds. Serve over rice or noodles.",
+      "texto": "Garnish with chopped green onions and sesame seeds. Serve over rice or noodles.",
       "tip": "For added crunch, sprinkle with toasted sesame seeds.",
       "image": "https://img.freepik.com/free-photo/top-view-high-protein-meal-assortment_23-2149089637.jpg?size=626&ext=jpg&ga=GA1.1.1093209122.1701366746&semt=ais",
       "ingredients": [
