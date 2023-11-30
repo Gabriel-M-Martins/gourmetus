@@ -4,24 +4,17 @@ import PhotosUI
 struct CreateEditRecipeView: View {
     
     @StateObject private var imageViewModel = PhotoPickerViewModel()
-    @StateObject private var createEditViewModel = CreateEditRecipeViewModel()
+    @StateObject private var createEditViewModel: CreateEditRecipeViewModel
     
     @State private var isPresentingNewSheet = false
     @State private var isPresentingEditSheet = false
     @State private var isPresentingIngredientSheet = false
     @State private var isTimePickerPresented = false
     
-    @State private var editingStep: Step?
-    
-    @ObservedObject var recipe: Recipe
-    var editing: Bool = false
+    @EnvironmentObject var envCookbook: Cookbook
     
     init(recipe: Recipe? = nil) {
-        if let recipe = recipe {
-            editing = true
-        }
-        
-        self._recipe = .init(wrappedValue: recipe ?? Recipe())
+        _createEditViewModel = .init(wrappedValue: CreateEditRecipeViewModel(recipe: recipe ?? Recipe(), editing: recipe != nil))
     }
     
     @State private var selectedDifficulty: Int = 1
@@ -30,8 +23,6 @@ struct CreateEditRecipeView: View {
     
     @State var hourSelection = 0
     @State var minuteSelection = 0
-    
-    @EnvironmentObject var cookbook: Cookbook
     
     @State private var selectedTime = Date()
     
@@ -98,21 +89,17 @@ struct CreateEditRecipeView: View {
                             .presentationDetents([.fraction(0.3)])
                     }
                     .onTapGesture {
-                        print(isTimePickerPresented)
                         isTimePickerPresented.toggle()
-                        print(isTimePickerPresented)
                     }
                     
-                    VStack{
+                    VStack {
                         Picker("Difficulty", selection: $createEditViewModel.difficulty) {
-                            
                             Text("1").tag(1)
                             Text("2").tag(2)
                             Text("3").tag(3)
                             Text("4").tag(4)
                             Text("5").tag(5)
                         }
-                        
                         .pickerStyle(DefaultPickerStyle())
                     }
                     
@@ -125,18 +112,15 @@ struct CreateEditRecipeView: View {
                 .listStyle(.plain)
                 
                 Section {
-                    
-                    
                     TextEditor(text: $createEditViewModel.desc)
                         .frame(height: 100)
                     
-                }header: {
+                } header: {
                     Text("Description")
                 }
                 
                 
                 Section {
-                    
                     HStack{
                         Text("Add Ingredient")
                             .foregroundColor(.accentColor)
@@ -175,51 +159,8 @@ struct CreateEditRecipeView: View {
                         createEditViewModel.ingredients.remove(atOffsets: indexSet)
                     }
                 }
-                //                Section {
-                //                    ForEach(createEditViewModel.ingredients) { ingredient in
-                //                        HStack{
-                //                            Text(ingredient.name)
-                //                            Spacer()
-                //                            Text(ingredient.quantity)
-                //                                .foregroundColor(.secondary)
-                //                            Text(ingredient.unit.description)
-                //                                .foregroundColor(.secondary)
-                //                            Image(systemName: "chevron.right")
-                //                                .foregroundColor(.secondary)
-                //                        }
-                //                        .contentShape(Rectangle())
-                //
-                //                        .onTapGesture{
-                //                            createEditViewModel.editingIngredient = ingredient
-                //                            isPresentingIngredientSheet.toggle()
-                //                        }
-                //
-                //                    }
-                //                    .onDelete { indexSet in
-                //                        createEditViewModel.ingredients.remove(atOffsets: indexSet)
-                //                    }
-                //                }
                 
                 Section {
-                    HStack{
-                        Text("Add Steps")
-                            .foregroundColor(.accentColor)
-                        Spacer()
-                        Text("+")
-                            .foregroundColor(.accentColor)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture{
-                        createEditViewModel.editingStep = nil
-                        isPresentingEditSheet.toggle()
-                    }
-                } header: {
-                    Text("Steps")
-                }
-                
-                
-                Section {
-                    
                     ForEach(createEditViewModel.ingredients) { ingredient in
                         HStack{
                             Text(ingredient.name)
@@ -244,13 +185,29 @@ struct CreateEditRecipeView: View {
                     
                 }
                 
+                // TODO: - AQUI
+                Section {
+                    HStack{
+                        Text("Add Steps")
+                            .foregroundColor(.accentColor)
+                        Spacer()
+                        Text("+")
+                            .foregroundColor(.accentColor)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture{
+                        createEditViewModel.editingStep = Step()
+                        isPresentingEditSheet.toggle()
+                    }
+                } header: {
+                    Text("Steps")
+                }
+                
                 Section {
                     ForEach(createEditViewModel.steps) { step in
                         HStack{
-                            Text(step.tip ?? "texto default")
+                            Text(step.title)
                             Spacer()
-                            //                                Text(ingredient.quantity)
-                            //                                Text(ingredient.unit.description)
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.accentColor)
                         }
@@ -270,21 +227,15 @@ struct CreateEditRecipeView: View {
                 }
             }
             .sheet(isPresented: $isPresentingNewSheet) {
-                //                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
-                CreateEditStepViewV2(recipe: recipe)
+                CreateEditStepViewV2(recipe: createEditViewModel.recipe, steps: $createEditViewModel.steps)
             }
             .sheet(isPresented: $isPresentingEditSheet) {
-                //                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
-                if let step = createEditViewModel.editingStep {
-                    CreateEditStepViewV2(recipe: recipe, step: step)
-                } else {
-                    CreateEditStepViewV2(recipe: recipe)
-                }
+                CreateEditStepViewV2(recipe: createEditViewModel.recipe, step: createEditViewModel.editingStep, steps: $createEditViewModel.steps)
             }
             .sheet(isPresented: $isPresentingIngredientSheet) {
                 ZStack {
                     Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-                    CreateEditIngredientView(editingIngredient: $createEditViewModel.editingIngredient,recipeViewModel: createEditViewModel, showSheet: $isPresentingIngredientSheet)
+                    CreateEditIngredientView(editingIngredient: $createEditViewModel.editingIngredient, recipeViewModel: createEditViewModel, showSheet: $isPresentingIngredientSheet)
                 }
                 
                 .presentationDetents([.fraction(0.3)])
@@ -293,31 +244,32 @@ struct CreateEditRecipeView: View {
             .listStyle(.insetGrouped)
             .scrollDismissesKeyboard(.immediately)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(editing ? "Edit Recipe" : "Add Recipe")
+            .navigationTitle(createEditViewModel.editing ? "Edit Recipe" : "Add Recipe")
             .toolbar {
                 Button(action: {
                     if let image = imageViewModel.selectedImage {
                         self.createEditViewModel.image = image
                     }
-                    createEditViewModel.populateCookbook(cookbook: cookbook)
-                    createEditViewModel.save(recipe: recipe)
+                    createEditViewModel.populateCookbook(cookbook: envCookbook)
+                    createEditViewModel.save()
                     isPresentingNewSheet = false
                     dismiss()
                 }) {
                     Text("Save")
                 }
+                .disabled(createEditViewModel.recipeTitle.isEmpty || (createEditViewModel.hourSelection == 0 && createEditViewModel.minuteSelection == 0))
             }
         }
         .onAppear {
-            createEditViewModel.editRecipe(recipe: recipe)
+            createEditViewModel.populateCookbook(cookbook: self.envCookbook)
             
-            if let imageData = recipe.imageData {
+            if let imageData = createEditViewModel.recipe.imageData {
                 imageViewModel.selectedImage = UIImage(data: imageData)
             } else {
                 imageViewModel.selectedImage = UIImage(named: "banner-placeholder")
             }
             
-            self.createEditViewModel.populateCookbook(cookbook: self.cookbook)
+            self.createEditViewModel.populateCookbook(cookbook: self.envCookbook)
         }
     }
     

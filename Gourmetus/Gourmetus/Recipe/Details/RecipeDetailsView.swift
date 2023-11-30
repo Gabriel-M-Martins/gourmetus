@@ -13,7 +13,7 @@ struct RecipeDetailsView: View {
         case Edit
     }
     
-    var recipe: Recipe
+    @ObservedObject var recipe: Recipe
     
     @StateObject var vm: RecipeDetailsViewModel = RecipeDetailsViewModel()
     @EnvironmentObject var cookbook: Cookbook
@@ -26,25 +26,6 @@ struct RecipeDetailsView: View {
     
     @Injected private var repo: any Repository<Recipe>
     
-    var image2: Image {
-        if let imgData = recipe.imageData,
-           let img = UIImage(data: imgData) {
-            Image(uiImage: img)
-                .resizable()
-            //                .cornerRadius(smooth_radius)
-            //                .padding(.top, default_spacing)
-            //                .padding(.horizontal, default_spacing)
-        } else {
-            Image("DefaultRecipeImage")
-                .resizable()
-            //                .cornerRadius(smooth_radius)
-            //                .padding(.top, default_spacing)
-            //                .padding(.horizontal, default_spacing)
-            //                .frame(height: 145)
-        }
-    }
-    
-    // TODO: essa porra aqui sempre ta vindo nil por algum motivo
     var image: Image {
         if let imgData = recipe.imageData,
            let img = UIImage(data: imgData) {
@@ -52,11 +33,6 @@ struct RecipeDetailsView: View {
         } else {
             return Image("DefaultRecipeImage")
         }
-        
-        //        guard let data = recipe.imageData,
-        //              let uiimage = UIImage(data: data) else { return Image.bookFavorites }
-        //
-        //        return Image(uiImage: uiimage)
     }
     
     var body: some View {
@@ -84,49 +60,50 @@ struct RecipeDetailsView: View {
                             HStack {
                                 Text("BY")
                                 Image.personCircle
-                                Text("YOU")
+                                Text(recipe.owner)
                             }
                             
                             Spacer()
                         }
                         .foregroundStyle(Color.color_text_container_muted)
                         
-                        HStack(alignment: .center) {
-                            Spacer()
-                            
-                            // TODO: foreach de dificuldade || componente de dificuldade
+                        if self.cookbook.ownedRecipes.contains(where: { $0.id == recipe.id }) {
                             HStack {
+                                Spacer()
+                                
                                 KnifeView(recipe: recipe)
+                                
+                                Spacer()
                             }
-                            
-                            Text("・")
-                                .alignmentGuide(.subCenter) { d in d.width/2 }
-                            
-                            HStack {
-                                    Text(Image.starFill)
-                                    if recipe.rating==0 {
-                                        Text(LocalizedStringKey("No Ratings"))
-                                    } else {
-                                        Text(String(format: "%.1f", recipe.rating))
-                                    }
+                        } else {
+                            HStack(alignment: .center) {
+                                Spacer()
+                                
+                                HStack {
+                                    KnifeView(recipe: recipe)
                                 }
-                                    .modifier(Span())
-                                    .foregroundStyle(Color.color_text_review_primary)
-                            
-                            Spacer()
+                                
+                                Text("・")
+                                    .alignmentGuide(.subCenter) { d in d.width/2 }
+                                
+                                HStack {
+                                        Text(Image.starFill)
+                                        if recipe.rating==0 {
+                                            Text(LocalizedStringKey("No Ratings"))
+                                        } else {
+                                            Text(String(format: "%.1f", recipe.rating))
+                                        }
+                                    }
+                                        .modifier(Span())
+                                        .foregroundStyle(Color.color_text_review_primary)
+                                
+                                Spacer()
+                            }
                         }
                     }
                     .modifier(Span())
                     
-                    // TODO: componente de resizable tag collection
                     ScrollView{
-                        //                        ResizableTagGroup(visualContent: vm.recipe.tags.map({ tag in
-                        //                            TagView(Tag: tag.name) {
-                        //                                Text("Nothing to see here yet.")
-                        //                                    .modifier(Title())
-                        //                                    .foregroundStyle(Color.color_text_container_highlight)
-                        //                            }
-                        //                        }))
                         ChipsStack {
                             ForEach(recipe.tags) { tag in
                                 TagView(text: tag.name, selected: .constant(true))
@@ -182,15 +159,12 @@ struct RecipeDetailsView: View {
                             .foregroundColor(Color.color_button_container_primary)
                     }
                     .background(
-                        // TODO: Ir para o player no passo escolhido
-                        
                         NavigationLink(destination: RecipePlayerView(recipe: recipe, step: idx), label: {})
                     )
                 }
             } header: {
                 Text("Steps")
             }
-            
             
             HStack {
                 Spacer()
@@ -237,18 +211,20 @@ struct RecipeDetailsView: View {
         }
         .toolbarRole(.editor)
         .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(RecipeDetailsViewModel.MenuOption.allCases, id: \.self) { option in
-                        Button(role: option.isDestructive ? ButtonRole.destructive : nil) {
-                            vm.menuButtonClicked(option)
-                        } label: {
-                            Text(LocalizedStringKey(option.description))
+            if self.cookbook.ownedRecipes.contains(where: { $0.id == recipe.id }) {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        ForEach(RecipeDetailsViewModel.MenuOption.allCases, id: \.self) { option in
+                            Button(role: option.isDestructive ? ButtonRole.destructive : nil) {
+                                vm.menuButtonClicked(option)
+                            } label: {
+                                Text(LocalizedStringKey(option.description))
+                            }
                         }
+                    } label: {
+                        Image.ellipsisCircle
+                            .foregroundStyle(Color.color_button_container_primary)
                     }
-                } label: {
-                    Image.ellipsisCircle
-                        .foregroundStyle(Color.color_button_container_primary)
                 }
             }
         })
@@ -266,7 +242,6 @@ struct RecipeDetailsView: View {
             self.vm.delegate = self
             self.cookbook.addToHistory(recipe: recipe)
         }
-        
         .alert(isPresented: $showAlert, content: {
             Alert(title: Text("Permission required"), message: Text("To be able to be notified of when your timer ends, we need your permission to send you notifications. Head to your settings to allow the app to send notifications."), primaryButton: .destructive(Text("Cancel").bold(), action: {self.startRecipe()}), secondaryButton: .default(Text("Ok"), action: {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!); self.startRecipe()
@@ -300,6 +275,7 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
     func deleteRecipe(){
         self.repo.delete(recipe)
         self.cookbook.removeOwned(recipe: recipe)
+        self.cookbook.history.removeAll(where: { $0.id == recipe.id })
         self.dismiss()
     }
 }

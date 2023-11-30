@@ -184,6 +184,7 @@
       }
     },
     "Add recipe" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
@@ -1430,6 +1431,7 @@
       }
     },
     "YOU" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {

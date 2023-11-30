@@ -64,11 +64,14 @@ final class CreateEditStepViewModelV2: ObservableObject {
     }
     
     @ObservedObject var recipe: Recipe
+    
+    @Binding var steps: [Step]
     @ObservedObject var step: Step
     @ObservedObject var photosViewModel: PhotoPickerViewModel
     
-    init(recipe: Recipe, step: Step? = nil) {
+    init(recipe: Recipe, step: Step? = nil, steps: Binding<[Step]>) {
         self.recipe = recipe
+        self._steps = steps
         self.step = step ?? Step()
         self._photosViewModel = .init(wrappedValue: PhotoPickerViewModel())
         self.photosViewModel.completionBlock = { [weak self] img in
@@ -93,7 +96,8 @@ final class CreateEditStepViewModelV2: ObservableObject {
             chosenComponents.insert(.ingredients)
         }
         
-        if let timer = self.step.timer {
+        if let timer = self.step.timer,
+           timer != 0 {
             let (quotient, reminder) = timer.quotientAndRemainder(dividingBy: 60)
             self.timerMinutes = quotient
             self.timerSeconds = reminder
@@ -138,11 +142,11 @@ final class CreateEditStepViewModelV2: ObservableObject {
             step.timer = (timerMinutes * 60) + timerSeconds
         }
         
-        if let idx = recipe.steps.firstIndex(where: { $0.id == step.id }) {
-            recipe.steps[idx] = step
+        if let idx = steps.firstIndex(where: { $0.id == step.id }) {
+            steps[idx] = step
         } else {
-            step.order = recipe.steps.count
-            recipe.steps.append(step)
+            step.order = steps.count
+            steps.append(step)
         }
     }
 }
@@ -160,10 +164,10 @@ struct CreateEditStepViewV2: View {
     @Environment(\.dismiss) var dismiss
     
     static private let sheetMininumSize: Double = 0.03
-    static private let sheetDefaultSize: Double = 0.3
+    static private let sheetDefaultSize: Double = 0.42
     
-    init(recipe: Recipe, step: Step? = nil) {
-        self._vm = .init(wrappedValue: CreateEditStepViewModelV2(recipe: recipe, step: step))
+    init(recipe: Recipe, step: Step? = nil, steps: Binding<[Step]>) {
+        self._vm = .init(wrappedValue: CreateEditStepViewModelV2(recipe: recipe, step: step, steps: steps))
     }
     
     var body: some View {
@@ -389,7 +393,7 @@ struct CreateEditStepViewV2: View {
 
 #Preview {
     NavigationStack {
-        CreateEditStepViewV2(recipe: Constants.mockedRecipe, step: Constants.mockedRecipe.steps[0])
+        CreateEditStepViewV2(recipe: Constants.mockedRecipe, step: Constants.mockedRecipe.steps[0], steps: .constant(Constants.mockedRecipe.steps))
     }
     .environmentObject(Constants.mockedCookbook)
     .tint(Color.color_button_container_primary)

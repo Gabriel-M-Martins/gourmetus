@@ -12,8 +12,10 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var recipeTitle = ""
     @Published var desc = ""
     @Published var difficulty = 1
+    
     @Published var ingredients: [Ingredient] = []
     @Published var steps: [Step] = []
+    
     @Published var image: UIImage = UIImage()
     @Published var isAddingIngredient = false
     @Published var ingredientName = ""
@@ -22,15 +24,25 @@ class CreateEditRecipeViewModel: ObservableObject {
     @Published var ingredientsBeingEdited: [Ingredient] = []
     @Published var hourSelection = 0
     @Published var minuteSelection = 0
+    @Published var editing: Bool = false
     
+    @ObservedObject var recipe: Recipe
     
-    var cookbook: Cookbook = Cookbook()
+    @Published var cookbook: Cookbook = Cookbook()
     
-    @Published var editingStep: Step?
+    @Published var editingStep: Step = Step()
     @Published var editingIngredient: Ingredient?
     
     @Injected private var repo: any Repository<Recipe>
     @Injected private var repoCookbook: any Repository<Cookbook>
+    
+    init(recipe: Recipe, editing: Bool = false) {
+        self._recipe = .init(wrappedValue: recipe)
+        
+        self.editing = editing
+        
+        editRecipe(recipe: recipe)
+    }
     
     func populateCookbook(cookbook: Cookbook) {
         self.cookbook = cookbook
@@ -44,20 +56,25 @@ class CreateEditRecipeViewModel: ObservableObject {
         ingredientUnit = .Kg
     }
     
-    func save(recipe: Recipe?) {
+    func save() {
         let calculatedDuration = hourSelection * 60 + minuteSelection
-        if (recipe != nil){
-            let data = image.pngData()
-            let rec = Recipe(id: recipe!.id, name: recipeTitle, difficulty: difficulty, imageData: data,steps: steps, ingredients: ingredients, duration: calculatedDuration)
-            
-            repo.save(rec)
+        
+        recipe.imageData = image.pngData()
+        recipe.name = recipeTitle
+        recipe.difficulty = difficulty
+        recipe.steps = steps
+        recipe.ingredients = ingredients
+        recipe.duration = calculatedDuration
+        recipe.owner = "YOU"
+        
+        if let idx = cookbook.ownedRecipes.firstIndex(where: { $0.id == recipe.id }) {
+            cookbook.ownedRecipes[idx] = recipe
         } else {
-            let data = image.pngData()
-            let rec = Recipe(id: UUID(), name: recipeTitle, difficulty: difficulty, imageData: data, steps: steps, ingredients: ingredients, duration: calculatedDuration)
-            cookbook.ownedRecipes.append(rec)
-            repo.save(rec)
-            repoCookbook.save(cookbook)
+            cookbook.ownedRecipes.append(recipe)
         }
+        
+        repoCookbook.save(cookbook)
+        
     }
     
     func deleteIngredient(ingredient: Ingredient){
@@ -125,6 +142,5 @@ class CreateEditRecipeViewModel: ObservableObject {
         difficulty = recipe.difficulty
         hourSelection = recipe.duration / 60
         minuteSelection = recipe.duration % 60
-        
     }
 }

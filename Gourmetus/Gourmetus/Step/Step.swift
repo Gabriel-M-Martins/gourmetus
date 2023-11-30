@@ -17,16 +17,16 @@ final class Step: ObservableObject, Identifiable, Hashable {
         lhs.id == rhs.id
     }
     
-    var id: UUID
-    var title: String
-    var texto: String?
-    var tip: String?
-    var imageData: Data?
-    var timer: Int?
-    var ingredients: [Ingredient]
-    var order: Int
+    @Published var id: UUID
+    @Published var title: String
+    @Published var texto: String?
+    @Published var tip: String?
+    @Published var imageData: Data?
+    @Published var timer: Int?
+    @Published var ingredients: [Ingredient]
+    @Published var order: Int
     
-    init(id: UUID = UUID(), title: String = "default", texto: String? = nil, tip: String? = nil, imageData: Data? = nil, timer: Int? = nil, ingredients: [Ingredient] = [], order: Int = -1) {
+    init(id: UUID = UUID(), title: String = "", texto: String? = nil, tip: String? = nil, imageData: Data? = nil, timer: Int? = nil, ingredients: [Ingredient] = [], order: Int = -1) {
         self.id = id
         self.title = title
         self.texto = texto

@@ -74,5 +74,6 @@ struct DurationPickerView: View {
 }
 
 #Preview {
-    CreateEditIngredientView( editingIngredient: .constant(Constants.mockedIngredients1[0]) , recipeViewModel: CreateEditRecipeViewModel(), showSheet: .constant(false))
+//    CreateEditIngredientView( editingIngredient: .constant(Constants.mockedIngredients1[0]) , recipeViewModel: CreateEditRecipeViewModel(recipe: Constants.mockedRecipe), showSheet: .constant(false))
+    Text("Coe")
 }

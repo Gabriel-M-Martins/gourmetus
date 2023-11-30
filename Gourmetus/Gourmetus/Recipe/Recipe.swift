@@ -27,13 +27,13 @@ final class Recipe: ObservableObject, Identifiable, Hashable {
     var imageData: Data?
     var duration: Int
     var completed: Bool
-    
+    var owner: String
     var steps: [Step]
     var ingredients: [Ingredient]
     var tags: [Tag]
     
     
-    required init(id: UUID = UUID(), name: String = "", desc: String? = nil, difficulty: Int = 0, rating: Float = 0, imageData: Data? = nil, steps: [Step] = [], ingredients: [Ingredient] = [], tags: [Tag] = [], duration: Int = 0, completed: Bool = false) {
+    required init(id: UUID = UUID(), name: String = "", desc: String? = nil, difficulty: Int = 1, rating: Float = 0, imageData: Data? = nil, steps: [Step] = [], ingredients: [Ingredient] = [], tags: [Tag] = [], duration: Int = 0, completed: Bool = false, owner: String = "Recipefy") {
         self.id = id
         self.name = name
         self.desc = desc
@@ -41,6 +41,7 @@ final class Recipe: ObservableObject, Identifiable, Hashable {
         self.rating = 0
         self.imageData = imageData
         self.duration = duration
+        self.owner = owner
         
         self.steps = steps
         
