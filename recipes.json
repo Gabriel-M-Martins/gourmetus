@@ -15,7 +15,7 @@
             "steps": [
                 {
                     "title": "Prepare Dough",
-                    "texto": "Mix 2 cups of all-purpose flour, 1 tbsp of yeast, 1 cup of water, 1 tbsp of olive oil and 0.5 tsp of salt. Knead into a smooth dough. Let it rise for 1 hour.",
+                    "texto": "Mix 2 cups of all-purpose flour, 1 tbsp of yeast, 1 cup of water, 1 tbsp of olive oil and 1/2 tsp of salt. Knead into a smooth dough. Let it rise for 1 hour.",
                     "tip": "Use warm water for faster yeast activation.",
                     "image": "https://www.seriouseats.com/thmb/ACyF6kv3V4qAo_H9E-98X5jhuDc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20211115-OONI-PIZZA-ARMENIAN-ANDREW-JANJIGIAN-23-5447ecc61b12450d9a09f38cca67c19c.jpg",
                     "timer": 3600,
@@ -49,7 +49,7 @@
                 },
                 {
                     "title": "Assemble Pizza",
-                    "texto": "Roll out the dough, spread 0.5 cup of tomato sauce, add 200g of fresh mozzarella and basil leaves (to taste). Bake at 220°C for 12-15 minutes.",
+                    "texto": "Roll out the dough, spread 1/2 cup of tomato sauce, add 200g of fresh mozzarella and basil leaves (to taste). Bake at 220°C for 12-15 minutes.",
                     "image": "https://media.blueapron.com/recipes/1343/recipe_steps/5807/20150928-2125-32-0165/2P_082515_1_R_092514_1_Spinach_FreshMozzarellaPizza_20-_204446.jpg?width=512",
                     "timer": 900,
                     "ingredients": [
