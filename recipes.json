@@ -83,12 +83,12 @@
   "rating": 4,
   "duration": 1800,
   "desc": "A hearty Italian dish with savory meat sauce served over perfectly cooked spaghetti.",
-  "image": "https://thehealthycookingblog.com/public/uploads/2019/01/Meat-Sauce-Bolognaise.jpg",
+  "image": "https://cdn.cdkitchen.com/recipes/images/2016/01/28679-3981-mx.jpg",
   "tags": ["Italian", "For the Family","Cooked"],
   "steps": [
     {
       "title": "Cook Pasta",
-      "text": "Boil a pot of water, add salt, and cook 1kg of pasta until al dente.",
+      "texto": "Boil a pot of water, add salt, and cook 1kg of pasta until al dente.",
       "tip": "Stir occasionally to prevent sticking.",
       "image": "https://example.com/boiling_pasta.jpg",
       "timer": 600,
@@ -107,7 +107,7 @@
     },
     {
       "title": "Prepare Bolognese Sauce",
-      "text": "In a pan, brown 500g of ground beef. Add diced onions, garlic, and tomato sauce. Simmer for 15 minutes.",
+      "texto": "In a pan, brown 500g of ground beef. Add diced onions, garlic, and tomato sauce. Simmer for 15 minutes.",
       "tip": "Use a mix of beef and pork for extra flavor.",
       "image": "https://freefoodphotos.com/imagelibrary/cooking/slides/browning_mince_beef.jpg",
       "timer": 900,
@@ -136,7 +136,7 @@
     },
     {
       "title": "Combine and Serve",
-      "text": "Mix the cooked pasta with the bolognese sauce. Garnish with grated Parmesan and fresh basil.",
+      "texto": "Mix the cooked pasta with the bolognese sauce. Garnish with grated Parmesan and fresh basil.",
       "tip": "Let it rest for a few minutes to enhance flavors.",
       "image": "https://cdn.cdkitchen.com/recipes/images/2016/01/28679-3981-mx.jpg",
       "ingredients": [
