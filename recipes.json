@@ -77,6 +77,83 @@
                 }
             ]
         },
+        {
+  "name": "Classic Spaghetti Bolognese",
+  "difficulty": 3,
+  "rating": 4,
+  "duration": 1800,
+  "desc": "A hearty Italian dish with savory meat sauce served over perfectly cooked spaghetti.",
+  "image": "https://www.thespruceeats.com/thmb/WxHqS3AF7FlWzMfRxQjYDtlkGy0=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/meat-sauce-spaghetti-2500-56dc8ae53df78c5ba053531b.jpg",
+  "tags": ["Italian", "For the Family","Cooked"],
+  "steps": [
+    {
+      "title": "Cook Pasta",
+      "text": "Boil a pot of water, add salt, and cook 1kg of pasta until al dente.",
+      "tip": "Stir occasionally to prevent sticking.",
+      "image": "https://example.com/boiling_pasta.jpg",
+      "timer": 600,
+      "ingredients": [
+        {
+          "name": "Pasta",
+          "quantity": "1",
+          "unit": "Kg"
+        },
+        {
+          "name": "Salt",
+          "quantity": "1",
+          "unit": "Tbsp"
+        }
+      ]
+    },
+    {
+      "title": "Prepare Bolognese Sauce",
+      "text": "In a pan, brown 500g of ground beef. Add diced onions, garlic, and tomato sauce. Simmer for 15 minutes.",
+      "tip": "Use a mix of beef and pork for extra flavor.",
+      "image": "https://freefoodphotos.com/imagelibrary/cooking/slides/browning_mince_beef.jpg",
+      "timer": 900,
+      "ingredients": [
+        {
+          "name": "Ground Beef",
+          "quantity": "500",
+          "unit": "g"
+        },
+        {
+          "name": "Onion",
+          "quantity": "1",
+          "unit": "unit"
+        },
+        {
+          "name": "Garlic",
+          "quantity": "2",
+          "unit": "cloves"
+        },
+        {
+          "name": "Tomato Sauce",
+          "quantity": "400",
+          "unit": "g"
+        }
+      ]
+    },
+    {
+      "title": "Combine and Serve",
+      "text": "Mix the cooked pasta with the bolognese sauce. Garnish with grated Parmesan and fresh basil.",
+      "tip": "Let it rest for a few minutes to enhance flavors.",
+      "image": "https://cdn.cdkitchen.com/recipes/images/2016/01/28679-3981-mx.jpg",
+      "ingredients": [
+        {
+          "name": "Parmesan Cheese",
+          "quantity": "1",
+          "unit": "cup"
+        },
+        {
+          "name": "Fresh Basil",
+          "quantity": "1",
+          "unit": "cup"
+        }
+      ]
+    }
+  ]
+},
                 {
             "name": "Vegetable Stir-Fry",
             "difficulty": 2,
