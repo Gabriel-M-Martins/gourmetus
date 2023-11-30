@@ -44,7 +44,7 @@ class CreateEditRecipeViewModel: ObservableObject {
         ingredientUnit = .Kg
     }
     
-    func saveRepo(recipe: Recipe?) {
+    func save(recipe: Recipe?) {
         let calculatedDuration = hourSelection * 60 + minuteSelection
         if (recipe != nil){
             let data = image.pngData()

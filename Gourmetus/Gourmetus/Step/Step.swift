@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class Step: Identifiable, Hashable {
+final class Step: ObservableObject, Identifiable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.id)
     }

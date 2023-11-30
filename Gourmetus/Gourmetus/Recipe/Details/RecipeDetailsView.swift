@@ -69,8 +69,6 @@ struct RecipeDetailsView: View {
                         .frame(height: UIScreen.main.bounds.width/2.5)
                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: smooth_radius, height: smooth_radius)))
                     
-                    
-                    
                     VStack(alignment: .subCenter, spacing: half_spacing) {
                         HStack(alignment: .top) {
                             Spacer()
@@ -127,11 +125,6 @@ struct RecipeDetailsView: View {
                         //                        }))
                         ChipsStack {
                             ForEach(recipe.tags) { tag in
-                                //                                Button {
-                                //
-                                //                                } label: {
-                                //                                    TagView(text: tag.name, selected: .constant(true))
-                                //                                }
                                 TagView(text: tag.name, selected: .constant(true))
                                     .padding(.trailing, half_spacing)
                                     .padding(.bottom, half_spacing)

@@ -192,14 +192,14 @@ struct CreateEditStepView: View {
 }
 
 
-struct TimePicker: View {
+public struct TimePicker: View {
     @Binding var totalTime: Int?
     @State var selectedHour: Int = 0
     @State var selectedMinute: Int = 0
     @State private var isHourPickerVisible = false
     @State private var isMinutePickerVisible = false
     
-    var body: some View {
+    public var body: some View {
         VStack {
             HStack {
                 Text("Hour: \(selectedHour) hours")

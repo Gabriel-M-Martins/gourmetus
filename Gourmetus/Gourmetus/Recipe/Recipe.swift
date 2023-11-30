@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class Recipe: Identifiable, Hashable {
+final class Recipe: ObservableObject, Identifiable, Hashable {
     @Injected private var repo: any Repository<Recipe>
     
     func hash(into hasher: inout Hasher) {

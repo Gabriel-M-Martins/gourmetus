@@ -13,6 +13,8 @@ struct TagView: View{
 
     @Binding var selected: Bool
     
+    var color: Color = Color.color_button_container_primary
+    
     var body: some View {
         Text(text)
             .modifier(Span())
@@ -23,7 +25,7 @@ struct TagView: View{
             .background {
                 if selected {
                     RoundedRectangle(cornerRadius: hard_radius)
-                        .fill(Color.color_button_container_primary)
+                        .fill(color)
                 } else {
                     RoundedRectangle(cornerRadius: hard_radius)
                         .strokeBorder(Color.color_button_container_primary, lineWidth: 2)
