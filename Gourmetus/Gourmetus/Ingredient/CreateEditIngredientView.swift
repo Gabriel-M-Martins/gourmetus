@@ -55,6 +55,7 @@ struct CreateEditIngredientView: View {
                 }, label: {
                     Text("Save")
                 })
+                .disabled(ingredientViewModel.ingredientName == "" && ingredientViewModel.ingredientQuantity == "")
                 
             }
             

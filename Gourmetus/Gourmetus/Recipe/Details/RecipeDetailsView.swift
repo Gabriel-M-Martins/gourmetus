@@ -221,6 +221,7 @@ struct RecipeDetailsView: View {
                         .modifier(Header())
                     
                 }
+                .disabled(recipe.steps.count == 0)
                 .tint(.color_button_container_primary)
                 .buttonStyle(.borderedProminent)
                 .overlay(
