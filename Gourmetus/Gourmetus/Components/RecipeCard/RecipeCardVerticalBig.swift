@@ -54,7 +54,7 @@ struct RecipeCardVerticalBig: View {
                     
                     
 //                    Text("\(Image.starFill) \(recipe.rating==0 ?  : String(format: "%.1f", recipe.rating))")
-                    Text("By \(Image.personCircle)")
+                    Text("By \(Image.personCircle) \(recipe.owner)")
                         .modifier(Span())
                         .foregroundColor(Color.color_text_container_muted)
                         .truncationMode(.tail)

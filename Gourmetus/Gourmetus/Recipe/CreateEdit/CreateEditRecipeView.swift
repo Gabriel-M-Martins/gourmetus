@@ -160,30 +160,6 @@ struct CreateEditRecipeView: View {
                     }
                 }
                 
-                Section {
-                    ForEach(createEditViewModel.ingredients) { ingredient in
-                        HStack{
-                            Text(ingredient.name)
-                            Spacer()
-                            Text(ingredient.quantity)
-                                .foregroundColor(.secondary)
-                            Text(LocalizedStringKey(ingredient.unit.rawValue))
-                                .foregroundColor(.secondary)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture{
-                            createEditViewModel.editingIngredient = ingredient
-                            isPresentingIngredientSheet.toggle()
-                        }
-                        
-                    }
-                    .onDelete { indexSet in
-                        createEditViewModel.ingredients.remove(atOffsets: indexSet)
-                    }
-                    
-                }
                 
                 // TODO: - AQUI
                 Section {
@@ -227,10 +203,10 @@ struct CreateEditRecipeView: View {
                 }
             }
             .sheet(isPresented: $isPresentingNewSheet) {
-                CreateEditStepViewV2(recipe: createEditViewModel.recipe, steps: $createEditViewModel.steps)
+                CreateEditStepViewV2(ingredients: createEditViewModel.ingredients, steps: $createEditViewModel.steps)
             }
             .sheet(isPresented: $isPresentingEditSheet) {
-                CreateEditStepViewV2(recipe: createEditViewModel.recipe, step: createEditViewModel.editingStep, steps: $createEditViewModel.steps)
+                CreateEditStepViewV2(ingredients: createEditViewModel.ingredients, step: createEditViewModel.editingStep, steps: $createEditViewModel.steps)
             }
             .sheet(isPresented: $isPresentingIngredientSheet) {
                 ZStack {

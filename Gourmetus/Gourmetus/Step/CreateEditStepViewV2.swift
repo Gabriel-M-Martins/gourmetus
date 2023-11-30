@@ -60,18 +60,18 @@ final class CreateEditStepViewModelV2: ObservableObject {
     
     @Published var chosenIngredients: [Ingredient] = []
     var availableIngredients: [Ingredient] {
-        recipe.ingredients.filter( { !chosenIngredients.contains($0) } )
+        ingredients.filter( { !chosenIngredients.contains($0) } )
     }
-    
-    @ObservedObject var recipe: Recipe
     
     @Binding var steps: [Step]
     @ObservedObject var step: Step
     @ObservedObject var photosViewModel: PhotoPickerViewModel
     
-    init(recipe: Recipe, step: Step? = nil, steps: Binding<[Step]>) {
-        self.recipe = recipe
+    private let ingredients: [Ingredient]
+    
+    init(ingredients: [Ingredient], step: Step? = nil, steps: Binding<[Step]>) {
         self._steps = steps
+        self.ingredients = ingredients
         self.step = step ?? Step()
         self._photosViewModel = .init(wrappedValue: PhotoPickerViewModel())
         self.photosViewModel.completionBlock = { [weak self] img in
@@ -166,8 +166,8 @@ struct CreateEditStepViewV2: View {
     static private let sheetMininumSize: Double = 0.03
     static private let sheetDefaultSize: Double = 0.42
     
-    init(recipe: Recipe, step: Step? = nil, steps: Binding<[Step]>) {
-        self._vm = .init(wrappedValue: CreateEditStepViewModelV2(recipe: recipe, step: step, steps: steps))
+    init(ingredients: [Ingredient], step: Step? = nil, steps: Binding<[Step]>) {
+        self._vm = .init(wrappedValue: CreateEditStepViewModelV2(ingredients: ingredients, step: step, steps: steps))
     }
     
     var body: some View {
@@ -393,7 +393,7 @@ struct CreateEditStepViewV2: View {
 
 #Preview {
     NavigationStack {
-        CreateEditStepViewV2(recipe: Constants.mockedRecipe, step: Constants.mockedRecipe.steps[0], steps: .constant(Constants.mockedRecipe.steps))
+        CreateEditStepViewV2(ingredients: Constants.mockedRecipe.ingredients, step: Constants.mockedRecipe.steps[0], steps: .constant(Constants.mockedRecipe.steps))
     }
     .environmentObject(Constants.mockedCookbook)
     .tint(Color.color_button_container_primary)

@@ -60,11 +60,7 @@ final class Cookbook: Hashable, ObservableObject {
             guard let self = self else { return }
             repo.delete(self)
             
-            for recipe in result {
-                if !self.community.contains(where: {$0.name == recipe.name}) {
-                    self.community.append(recipe)
-                }
-            }
+            self.community = result
             
             repo.save(self)
         }

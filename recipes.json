@@ -1,43 +1,226 @@
 {
     "recipes" : [
         {
-            "name": "Pasta",
-            "difficulty": 2,
+            "name": "Classic Margherita Pizza",
+            "difficulty": 3,
             "rating": 4,
-            "duration": 600,
-            "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
+            "duration": 5000,
+            "desc": "Indulge in the timeless delight of Classic Margherita Pizza. A perfect harmony of freshly risen dough, vibrant tomato sauce, and the creamy goodness of mozzarella, topped with fragrant basil leaves. This Italian classic delivers a burst of flavors in every slice, creating a culinary masterpiece for family gatherings or casual evenings.",
+            "image": "https://blog.praticabr.com/wp-content/uploads/2023/06/margherita-1024x682.jpg",
             "tags": [
-                "Mexican",
-                "Gluten Free"
+                "Italian",
+                "For the Family",
+                "Vegetarian"
             ],
             "steps": [
                 {
-                    "title": "Cooking",
-                    "texto": "Boil water",
-                    "tip": "Add salt",
-                    "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
-                    "timer": 60,
+                    "title": "Prepare Dough",
+                    "texto": "Mix 2 cups of all-purpose flour, 1 tbsp of yeast, 1 cup of water, 1 tbsp of olive oil and 1/2 tsp of salt. Knead into a smooth dough. Let it rise for 1 hour.",
+                    "tip": "Use warm water for faster yeast activation.",
+                    "image": "https://www.seriouseats.com/thmb/ACyF6kv3V4qAo_H9E-98X5jhuDc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20211115-OONI-PIZZA-ARMENIAN-ANDREW-JANJIGIAN-23-5447ecc61b12450d9a09f38cca67c19c.jpg",
+                    "timer": 3600,
                     "ingredients": [
                         {
-                            "name": "Pasta",
+                            "name": "All-Purpose Flour",
+                            "quantity": "2",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Yeast",
                             "quantity": "1",
-                            "unit": "Kg"
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Water",
+                            "quantity": "1",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Olive Oil",
+                            "quantity": "1",
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Salt",
+                            "quantity": "1/2",
+                            "unit": "Tsp"
                         }
                     ]
                 },
                 {
-                    "title": "Cooking2",
-                    "texto": "Boil water2",
-                    "tip": "Add salt2",
-                    "image": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg",
-                    "timer": 60,
+                    "title": "Assemble Pizza",
+                    "texto": "Roll out the dough, spread 1/2 cup of tomato sauce, add 200g of fresh mozzarella and basil leaves (to taste). Bake at 220°C for 12-15 minutes.",
+                    "image": "https://media.blueapron.com/recipes/1343/recipe_steps/5807/20150928-2125-32-0165/2P_082515_1_R_092514_1_Spinach_FreshMozzarellaPizza_20-_204446.jpg?width=512",
+                    "timer": 900,
                     "ingredients": [
                         {
-                            "name": "Tomato",
-                            "quantity": "1",
-                            "unit": "Kg"
+                            "name": "Tomato Sauce",
+                            "quantity": "1/2",
+                            "unit": "Cup"
+                        },
+                        {
+                            "name": "Fresh Mozzarella",
+                            "quantity": "200",
+                            "unit": "G"
+                        },
+                        {
+                            "name": "Fresh Basil Leaves",
+                            "quantity": "",
+                            "unit": "Taste"
                         }
                     ]
+                },
+                {
+                    "title": "Serve",
+                    "texto": "Slice the pizza and serve hot. Drizzle with olive oil if desired.",
+                    "image": "https://anamariabraga.globo.com/wp-content/uploads/2020/08/pizza-margherita.jpg"
+                }
+            ]
+        },
+        {
+  "name": "Classic Spaghetti Bolognese",
+  "difficulty": 3,
+  "rating": 4,
+  "duration": 1800,
+  "desc": "A hearty Italian dish with savory meat sauce served over perfectly cooked spaghetti.",
+  "image": "https://thehealthycookingblog.com/public/uploads/2019/01/Meat-Sauce-Bolognaise.jpg",
+  "tags": ["Italian", "For the Family","Cooked"],
+  "steps": [
+    {
+      "title": "Cook Pasta",
+      "text": "Boil a pot of water, add salt, and cook 1kg of pasta until al dente.",
+      "tip": "Stir occasionally to prevent sticking.",
+      "image": "https://example.com/boiling_pasta.jpg",
+      "timer": 600,
+      "ingredients": [
+        {
+          "name": "Pasta",
+          "quantity": "1",
+          "unit": "Kg"
+        },
+        {
+          "name": "Salt",
+          "quantity": "1",
+          "unit": "Tbsp"
+        }
+      ]
+    },
+    {
+      "title": "Prepare Bolognese Sauce",
+      "text": "In a pan, brown 500g of ground beef. Add diced onions, garlic, and tomato sauce. Simmer for 15 minutes.",
+      "tip": "Use a mix of beef and pork for extra flavor.",
+      "image": "https://freefoodphotos.com/imagelibrary/cooking/slides/browning_mince_beef.jpg",
+      "timer": 900,
+      "ingredients": [
+        {
+          "name": "Ground Beef",
+          "quantity": "500",
+          "unit": "g"
+        },
+        {
+          "name": "Onion",
+          "quantity": "1",
+          "unit": "unit"
+        },
+        {
+          "name": "Garlic",
+          "quantity": "2",
+          "unit": "cloves"
+        },
+        {
+          "name": "Tomato Sauce",
+          "quantity": "400",
+          "unit": "g"
+        }
+      ]
+    },
+    {
+      "title": "Combine and Serve",
+      "text": "Mix the cooked pasta with the bolognese sauce. Garnish with grated Parmesan and fresh basil.",
+      "tip": "Let it rest for a few minutes to enhance flavors.",
+      "image": "https://cdn.cdkitchen.com/recipes/images/2016/01/28679-3981-mx.jpg",
+      "ingredients": [
+        {
+          "name": "Parmesan Cheese",
+          "quantity": "1",
+          "unit": "cup"
+        },
+        {
+          "name": "Fresh Basil",
+          "quantity": "1",
+          "unit": "cup"
+        }
+      ]
+    }
+  ]
+},
+                {
+            "name": "Vegetable Stir-Fry",
+            "difficulty": 2,
+            "rating": 4,
+            "duration": 900,
+            "desc": "Experience the sizzle of Vegetable Stir-Fry, a quick and wholesome Asian delight. Crisp, colorful vegetables and tofu dance in a savory blend of soy sauce and ginger. This low-fat, vegetarian dish is a vibrant medley of flavors and textures, served over rice or noodles. Perfect for a speedy, nutritious meal any day of the week.",
+            "image": "https://hips.hearstapps.com/hmg-prod/images/190130-tofu-stir-fry-horizontal-150-1549302524.jpg",
+            "tags": [
+                "Asian",
+                "For the Family",
+                "Vegetarian",
+                "Low Fat"
+            ],
+            "steps": [
+                {
+                    "title": "Prepare Vegetables",
+                    "texto": "Slice 2 medium carrots, 2 bell peppers (mixed colors), 1 head of broccoli, and 200g of tofu into bite-sized pieces.",
+                    "ingredients": [
+                        {
+                            "name": "Carrots",
+                            "quantity": "2",
+                            "unit": "Unit"
+                        },
+                        {
+                            "name": "Bell Peppers",
+                            "quantity": "2",
+                            "unit": "Unit"
+                        },
+                        {
+                            "name": "Broccoli",
+                            "quantity": "1",
+                            "unit": "Unit"
+                        },
+                        {
+                            "name": "Tofu",
+                            "quantity": "200",
+                            "unit": "G"
+                        }
+                    ]
+                },
+                {
+                    "title": "Stir-Fry",
+                    "texto": "Heat 2 tbsp of vegetable oil in a wok, add vegetables and tofu. Stir-fry until tender. Season with 3 tbsp of soy sauce and 1 tsp of ginger.",
+                    "image": "https://i0.wp.com/www.onceuponachef.com/images/2017/02/stir-fry3-1.jpg?resize=575%2C381&ssl=1",
+                    "timer": 600,
+                    "ingredients": [
+                        {
+                            "name": "Vegetable Oil",
+                            "quantity": "2",
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Soy Sauce",
+                            "quantity": "3",
+                            "unit": "Tbsp"
+                        },
+                        {
+                            "name": "Ginger",
+                            "quantity": "1",
+                            "unit": "Tsp"
+                        }
+                    ]
+                },
+                {
+                    "title": "Serve",
+                    "texto": "Garnish with green onions and sesame seeds. Serve over rice or noodles.",
+                    "image": "https://hips.hearstapps.com/hmg-prod/images/190130-tofu-stir-fry-horizontal-150-1549302524.jpg"
                 }
             ]
         }
