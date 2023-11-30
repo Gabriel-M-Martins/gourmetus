@@ -24,7 +24,7 @@ class RecipeCardVerticalBigViewModel: ObservableObject {
         return false
     }
 
-    func toggleFavourite(favorites: [Recipe]) -> [Recipe] {
+    func toggleFavorite(favorites: [Recipe]) -> [Recipe] {
         var favoritesAux = favorites
         if self.isFavorite(favorites: favorites){
             print("Removendo dos favoritos")

@@ -153,34 +153,52 @@ struct CreateEditRecipeView: View {
                     Text("Ingredients")
                 }
                 
-                
                 Section {
-                    
                     ForEach(createEditViewModel.ingredients) { ingredient in
-                        HStack{
+                        HStack {
                             Text(ingredient.name)
                             Spacer()
                             Text(ingredient.quantity)
                                 .foregroundColor(.secondary)
-                            Text(ingredient.unit.description)
+                            Text(ingredient.unit.rawValue)
                                 .foregroundColor(.secondary)
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.secondary)
                         }
                         .contentShape(Rectangle())
-                        
                         .onTapGesture{
                             createEditViewModel.editingIngredient = ingredient
                             isPresentingIngredientSheet.toggle()
                         }
-                        
                     }
                     .onDelete { indexSet in
                         createEditViewModel.ingredients.remove(atOffsets: indexSet)
                     }
-                    
-                    
                 }
+                //                Section {
+                //                    ForEach(createEditViewModel.ingredients) { ingredient in
+                //                        HStack{
+                //                            Text(ingredient.name)
+                //                            Spacer()
+                //                            Text(ingredient.quantity)
+                //                                .foregroundColor(.secondary)
+                //                            Text(ingredient.unit.description)
+                //                                .foregroundColor(.secondary)
+                //                            Image(systemName: "chevron.right")
+                //                                .foregroundColor(.secondary)
+                //                        }
+                //                        .contentShape(Rectangle())
+                //
+                //                        .onTapGesture{
+                //                            createEditViewModel.editingIngredient = ingredient
+                //                            isPresentingIngredientSheet.toggle()
+                //                        }
+                //
+                //                    }
+                //                    .onDelete { indexSet in
+                //                        createEditViewModel.ingredients.remove(atOffsets: indexSet)
+                //                    }
+                //                }
                 
                 Section {
                     HStack{
@@ -195,9 +213,35 @@ struct CreateEditRecipeView: View {
                         createEditViewModel.editingStep = nil
                         isPresentingEditSheet.toggle()
                     }
-                    
                 } header: {
                     Text("Steps")
+                }
+                
+                
+                Section {
+                    
+                    ForEach(createEditViewModel.ingredients) { ingredient in
+                        HStack{
+                            Text(ingredient.name)
+                            Spacer()
+                            Text(ingredient.quantity)
+                                .foregroundColor(.secondary)
+                            Text(LocalizedStringKey(ingredient.unit.rawValue))
+                                .foregroundColor(.secondary)
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture{
+                            createEditViewModel.editingIngredient = ingredient
+                            isPresentingIngredientSheet.toggle()
+                        }
+                        
+                    }
+                    .onDelete { indexSet in
+                        createEditViewModel.ingredients.remove(atOffsets: indexSet)
+                    }
+                    
                 }
                 
                 Section {
@@ -226,11 +270,11 @@ struct CreateEditRecipeView: View {
                 }
             }
             .sheet(isPresented: $isPresentingNewSheet) {
-//                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
+                //                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingNewSheet)
                 CreateEditStepViewV2(recipe: recipe)
             }
             .sheet(isPresented: $isPresentingEditSheet) {
-//                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
+                //                CreateEditStepView(editingStep: $createEditViewModel.editingStep, recipeViewModel: createEditViewModel, showSheet: $isPresentingEditSheet)
                 if let step = createEditViewModel.editingStep {
                     CreateEditStepViewV2(recipe: recipe, step: step)
                 } else {

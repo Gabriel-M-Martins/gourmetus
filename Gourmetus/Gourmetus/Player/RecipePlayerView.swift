@@ -7,17 +7,19 @@
 
 import SwiftUI
 
-protocol RecipePlayerTimerDelegate {
-    func toggleTimer()
-    func resetTimer()
-    
-}
+//protocol RecipePlayerTimerDelegate {
+//    func toggleTimer()
+//    func resetTimer()
+//    
+//}
 
 struct RecipePlayerView: View, PlayerDelegate {
     
     @State var isTextFocused : Bool = false
     
     @State var isTipCollapsed : Bool = true
+    
+    @State var showHelp: Bool = false
     
     @StateObject var playerViewModel: RecipePlayerViewModel
     @StateObject var speech = Speech()
@@ -30,6 +32,7 @@ struct RecipePlayerView: View, PlayerDelegate {
     
     init(recipe: Recipe, step: Int) {
         self._playerViewModel = StateObject(wrappedValue: RecipePlayerViewModel(recipe: recipe,initialStepIndex: step))
+        self._timerViewModel = StateObject(wrappedValue: TimerViewModel(initialTime: recipe.steps[step].timer ?? 0, id: recipe.steps[step].id))
     }
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
@@ -61,7 +64,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                             
                                         }
                                         
-                                        .frame(width: 30)
+                                        //.frame(width: 30)
                                         
                                         Text(playerViewModel.currentStep.tip!)
                                             .frame(maxWidth: .infinity,alignment: .leading)
@@ -181,9 +184,17 @@ struct RecipePlayerView: View, PlayerDelegate {
                         HStack(spacing: 0){
                             //Previous Step
                             Button(action: {
+                             
+                                
                                 withAnimation{
                                     playerViewModel.previousStep()
+                                    
                                 }
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer ?? 0, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
+
                             }, label: {
                                 Image(systemName: "chevron.left")
                                     .resizable()
@@ -194,16 +205,24 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 
                             })
                             Spacer()
-                            Text(playerViewModel.currentStep.title)
+                            Text(LocalizedStringKey(playerViewModel.currentStep.title))
                                 .modifier(Span())
                                 .foregroundColor(Color.color_text_container_highlight)
                             Spacer()
                             //Next Step
                             
                             Button(action: {
+                               
+                               
+                                
                                 withAnimation{
                                     playerViewModel.nextStep()
                                 }
+                                
+                                if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer ?? 0, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                }
+                                
                                 
                                 
                             }, label: {
@@ -273,9 +292,7 @@ struct RecipePlayerView: View, PlayerDelegate {
             .frame(width: geometry.size.width)
             .padding(0)
             //.ignoresSafeArea()
-            
-            
-            
+                        
         }
         //.edgesIgnoringSafeArea(.all)
         //.ignoresSafeArea()
@@ -327,30 +344,43 @@ struct RecipePlayerView: View, PlayerDelegate {
             }
         })
         .overlay {
-            if speech.showOverlay {
-                ZStack{
-                    Rectangle()
-                        .opacity(0.5)
-                    VStack{
+                VStack{
+                    HStack{
                         Spacer()
-                        Rectangle()
-                            .foregroundColor(.white)
-                            .frame(width: 200, height: 100)
-                            .overlay {
+                        if speech.showOverlay || showHelp{
+                            VoiceCommandView(speechStatus: $speech.status, text: $speech.recognizedText, showHelp: $showHelp)
+                                .transition(.move(edge: .trailing))
+//
                                 
-                                Text(speech.recognizedText)
-                            }
-                        Spacer()
+                        } else {
+                            VoiceCommandView(speechStatus: $speech.status, text: $speech.recognizedText, showHelp: $showHelp)
+                                .opacity(0)
+                        }
                     }
+                    .animation(.spring, value: speech.showOverlay)
+                    
+                    
+                    if showHelp {
+                        CommandsListView(showHelp: $showHelp)
+                    }
+                    
+                    Spacer()
+                    
                 }
-            }
+                .padding(.top, default_spacing)
+                
         }
+
         
         .onAppear{
             speech.toggleRecording()
             self.playerViewModel.delegate = self
             self.speech.delegateView = self
             
+        }
+        
+        .onDisappear{
+            speech.stopRecording()
         }
         
     }
@@ -441,5 +471,11 @@ extension RecipePlayerView: SpeechViewDelegate {
         print("tip")
         
         self.isTipCollapsed.toggle()
+    }
+    
+    func help() {
+        print("help")
+        
+        self.showHelp.toggle()
     }
 }

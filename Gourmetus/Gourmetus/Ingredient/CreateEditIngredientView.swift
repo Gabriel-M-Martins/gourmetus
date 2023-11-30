@@ -55,6 +55,7 @@ struct CreateEditIngredientView: View {
                 }, label: {
                     Text("Save")
                 })
+                .disabled(ingredientViewModel.ingredientName == "" && ingredientViewModel.ingredientQuantity == "")
                 
             }
             
@@ -86,7 +87,7 @@ struct CreateEditIngredientView: View {
                     Spacer()
                     Picker("Unit", selection: $ingredientViewModel.ingredientUnit) {
                         ForEach(IngredientUnit.allCases) { unit in
-                            Text(unit.description)
+                            Text(LocalizedStringKey(unit.rawValue))
                             }
                     }
                     .pickerStyle(DefaultPickerStyle())

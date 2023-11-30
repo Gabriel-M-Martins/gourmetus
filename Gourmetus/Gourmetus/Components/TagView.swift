@@ -16,7 +16,7 @@ struct TagView: View{
     var color: Color = Color.color_button_container_primary
     
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .modifier(Span())
             .foregroundStyle(selected ? Color.color_general_fixed_light : Color.color_text_container_primary)
             .padding(.vertical, half_spacing)

@@ -41,11 +41,19 @@ struct RecipeCardVerticalBig: View {
                         .lineLimit(1)
                     
                     KnifeView(recipe: recipe)
+                    HStack {
+                        Text(Image.starFill)
+                        if recipe.rating==0 {
+                            Text(LocalizedStringKey("No Ratings"))
+                        } else {
+                            Text(String(format: "%.1f", recipe.rating))
+                        }
+                    }
+                    .modifier(Paragraph())
+                    .foregroundStyle(Color.color_text_review_primary)
                     
-                    Text("\(Image.starFill) \(recipe.rating == 0 ? String("No Ratings") : String(format: "%.1f", recipe.rating))")
-                        .modifier(Paragraph())
-                        .foregroundStyle(Color.color_text_review_primary)
                     
+//                    Text("\(Image.starFill) \(recipe.rating==0 ?  : String(format: "%.1f", recipe.rating))")
                     Text("By \(Image.personCircle)")
                         .modifier(Span())
                         .foregroundColor(Color.color_text_container_muted)

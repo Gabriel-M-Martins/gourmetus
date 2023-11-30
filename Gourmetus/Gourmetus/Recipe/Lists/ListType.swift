@@ -16,7 +16,7 @@ enum ListType: String, Codable {
         switch self {
         case .History: return "Recently Accessed"
         case .Owned: return "My Recipes"
-        case .Favorites: return "Favourites Recipes"
+        case .Favorites: return "Favorite Recipes"
         }
     }
     
@@ -24,7 +24,7 @@ enum ListType: String, Codable {
         switch self {
         case .History: return "History of Recipes"
         case .Owned: return "Your Recipes"
-        case .Favorites: return "Added to Favourites"
+        case .Favorites: return "Added to Favorites"
         }
     }
     

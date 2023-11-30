@@ -19,7 +19,7 @@ struct TabBarView: View {
             }
             .environmentObject(cookbook)
             .tabItem {
-                Label("Home", systemImage: "house")
+                Label("Home", systemImage: "fork.knife")
             }
             
             NavigationStack {
