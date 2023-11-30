@@ -43,7 +43,7 @@ final class CreateEditStepViewModelV2: ObservableObject {
             .timer
         ]
     }
-
+    
     @Published var title: String = ""
     @Published var tip: String = ""
     @Published var description: String = ""
@@ -137,6 +137,13 @@ final class CreateEditStepViewModelV2: ObservableObject {
         if chosenComponents.contains(.timer) {
             step.timer = nil
         }
+        
+        if let idx = recipe.steps.firstIndex(where: { $0.id == step.id }) {
+            recipe.steps[idx] = step
+        } else {
+            step.order = recipe.steps.count
+            recipe.steps.append(step)
+        }
     }
 }
 
@@ -151,7 +158,7 @@ struct CreateEditStepViewV2: View {
     @State private var presentSheet: Bool = true
     
     @Environment(\.dismiss) var dismiss
-
+    
     static private let sheetMininumSize: Double = 0.03
     static private let sheetDefaultSize: Double = 0.3
     
@@ -160,105 +167,127 @@ struct CreateEditStepViewV2: View {
     }
     
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    HStack {
-                        Text("Title")
-                        TextField("Step Title", text: $vm.title)
-                    }
+        List {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancel")
+                        .foregroundStyle(Color.color_button_container_primary)
+                        .bold()
                 }
                 
-                ForEach(vm.orderedComponents, id: \.self) { orderedComponent in
-                    Section {
-                        switch orderedComponent.component {
-                        case .description:
-                            TextField("Description", text: $vm.description, axis: .vertical)
-                                .lineLimit(1...4)
-                        case .imagePicker:
+                Spacer()
+                
+                Button {
+                    vm.save()
+                    dismiss()
+                } label: {
+                    Text("Save")
+                        .foregroundStyle(Color.color_button_container_primary)
+                        .bold()
+                }
+            }
+            .padding(.horizontal, default_spacing)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+            Section {
+                HStack {
+                    Text("Title")
+                    TextField("Step Title", text: $vm.title)
+                }
+            }
+            
+            ForEach(vm.orderedComponents, id: \.self) { orderedComponent in
+                Section {
+                    switch orderedComponent.component {
+                    case .description:
+                        TextField("Description", text: $vm.description, axis: .vertical)
+                            .lineLimit(1...4)
+                    case .imagePicker:
+                        VStack {
+                            if let image = vm.image {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(height: UIScreen.main.bounds.width * 0.5)
+                                    .cornerRadius(hard_radius)
+                            } else {
+                                EmptyView()
+                            }
+                        }
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                        
+                    case .timer:
+                        HStack {
                             VStack {
-                                if let image = vm.image {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(height: UIScreen.main.bounds.width * 0.5)
-                                        .cornerRadius(hard_radius)
-                                } else {
+                                Picker(selection: $vm.timerMinutes) {
+                                    ForEach(0..<60) { idx in
+                                        Text("\(idx)").tag(idx)
+                                    }
+                                } label: {
                                     EmptyView()
                                 }
+                                .pickerStyle(.wheel)
+                                Text("Minutes")
                             }
-                            .listRowInsets(EdgeInsets())
-                            .listRowBackground(Color.clear)
                             
-                        case .timer:
-                            HStack {
-                                VStack {
-                                    Picker(selection: $vm.timerMinutes) {
-                                        ForEach(0..<60) { idx in
-                                            Text("\(idx)").tag(idx)
-                                        }
-                                    } label: {
-                                        EmptyView()
-                                    }
-                                    .pickerStyle(.wheel)
-                                    Text("Minutes")
-                                }
-                                
-                                Text(":")
-                                    .font(.title)
-                                
-                                VStack {
-                                    Picker(selection: $vm.timerSeconds) {
-                                        ForEach(0..<60) { idx in
-                                            Text("\(idx)").tag(idx)
-                                        }
-                                    } label: {
-                                        EmptyView()
-                                    }
-                                    .pickerStyle(.wheel)
-                                    Text("Seconds")
-                                }
-                            }
-                        case .tip:
-                            TextField("Tip", text: $vm.tip, axis: .vertical)
-                                .lineLimit(1...4)
-                        case .ingredients:
+                            Text(":")
+                                .font(.title)
+                            
                             VStack {
-                                HStack {
-                                    Text("Ingredients")
-                                    Spacer()
+                                Picker(selection: $vm.timerSeconds) {
+                                    ForEach(0..<60) { idx in
+                                        Text("\(idx)").tag(idx)
+                                    }
+                                } label: {
+                                    EmptyView()
+                                }
+                                .pickerStyle(.wheel)
+                                Text("Seconds")
+                            }
+                        }
+                    case .tip:
+                        TextField("Tip", text: $vm.tip, axis: .vertical)
+                            .lineLimit(1...4)
+                    case .ingredients:
+                        VStack {
+                            HStack {
+                                Text("Ingredients")
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                ChipsStack {
+                                    ForEach(vm.chosenIngredients) { tag in
+                                        TagView(text: tag.name, selected: .constant(true), color: Color.color_text_container_highlight)
+                                            .padding(.trailing, half_spacing)
+                                            .padding(.bottom, half_spacing)
+                                    }
                                 }
                                 
-                                HStack {
-                                    ChipsStack {
-                                        ForEach(vm.chosenIngredients) { tag in
-                                            TagView(text: tag.name, selected: .constant(true), color: Color.color_text_container_highlight)
-                                                .padding(.trailing, half_spacing)
-                                                .padding(.bottom, half_spacing)
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                }
+                                Spacer()
                             }
                         }
                     }
                 }
-                .onDelete(perform: { indexSet in
-                    withAnimation {
-                        for i in indexSet {
-                            let orderedComponent = vm.orderedComponents[i]
-                            
-                            if orderedComponent.component == .ingredients {
-                                vm.chosenIngredients = []
-                            }
-                            
-                            vm.chosenComponents.remove(orderedComponent)
-                        }
-                    }
-                })
             }
+            .onDelete(perform: { indexSet in
+                withAnimation {
+                    for i in indexSet {
+                        let orderedComponent = vm.orderedComponents[i]
+                        
+                        if orderedComponent.component == .ingredients {
+                            vm.chosenIngredients = []
+                        }
+                        
+                        vm.chosenComponents.remove(orderedComponent)
+                    }
+                }
+            })
         }
+        .scrollDismissesKeyboard(.immediately)
         .listSectionSpacing(half_spacing)
         .sheet(isPresented: $presentSheet, content: {
             NavigationStack {
@@ -289,7 +318,7 @@ struct CreateEditStepViewV2: View {
                                             .foregroundStyle(vm.availableIngredients.isEmpty ? Color.color_text_container_muted : Color.color_button_container_primary)
                                             .animation(.easeInOut, value: vm.availableIngredients.isEmpty)
                                     }
-
+                                    
                                 }
                                 
                             case .imagePicker:
@@ -337,24 +366,23 @@ struct CreateEditStepViewV2: View {
             }
             .opacity(selectedDetent == .fraction(Self.sheetDefaultSize) ? 1 : 0)
             .animation(.easeInOut, value: selectedDetent)
-//            .interactiveDismissDisabled()
+            .interactiveDismissDisabled()
             .presentationDetents([.fraction(Self.sheetDefaultSize), .fraction(Self.sheetMininumSize)], selection: $selectedDetent)
             .presentationDragIndicator(.visible)
             .presentationBackgroundInteraction(.enabled)
         })
-//        .interactiveDismissDisabled(false)
-        .navigationTitle("Create Step")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    vm.save()
-                    dismiss()
-                } label: {
-                    Text("Save")
-                }
-            }
-        }
+//        .navigationTitle("Create Step")
+//        .navigationBarTitleDisplayMode(.inline)
+//        .toolbar {
+//            ToolbarItem(placement: .confirmationAction) {
+//                Button {
+//                    vm.save()
+//                    dismiss()
+//                } label: {
+//                    Text("Save")
+//                }
+//            }
+//        }
         
     }
 }
