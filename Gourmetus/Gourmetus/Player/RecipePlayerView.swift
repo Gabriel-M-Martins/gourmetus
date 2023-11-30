@@ -191,7 +191,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                     
                                 }
                                 if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
-                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer ?? 0, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
                                 }
                                 
 
@@ -220,7 +220,7 @@ struct RecipePlayerView: View, PlayerDelegate {
                                 }
                                 
                                 if(playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer != 0){
-                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer!, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
+                                    timerViewModel.resetVM(initialTime: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].timer ?? 0, id: playerViewModel.recipe.steps[playerViewModel.currentStepIndex].id)
                                 }
                                 
                                 
