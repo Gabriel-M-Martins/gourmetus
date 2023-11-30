@@ -76,14 +76,15 @@
                     "image": "https://anamariabraga.globo.com/wp-content/uploads/2020/08/pizza-margherita.jpg"
                 }
             ]
-        },{
+        },
+        {
   "name": "Classic Spaghetti Bolognese",
   "difficulty": 3,
   "rating": 4,
   "duration": 1800,
   "desc": "A hearty Italian dish with savory meat sauce served over perfectly cooked spaghetti.",
-  "image": "https://example.com/spaghetti_bolognese.jpg",
-  "tags": ["Italian", "For the Family", "Meat", "Pasta"],
+  "image": "https://www.thespruceeats.com/thmb/WxHqS3AF7FlWzMfRxQjYDtlkGy0=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/meat-sauce-spaghetti-2500-56dc8ae53df78c5ba053531b.jpg",
+  "tags": ["Italian", "For the Family","Cooked"],
   "steps": [
     {
       "title": "Cook Pasta",
