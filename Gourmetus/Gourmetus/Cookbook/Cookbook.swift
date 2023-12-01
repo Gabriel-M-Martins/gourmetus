@@ -58,11 +58,10 @@ final class Cookbook: Hashable, ObservableObject {
         
         DefaultRecipesUtility.fetch { [weak self] result in
             guard let self = self else { return }
-            repo.delete(self)
             
+            self.repo.delete(self)
             self.community = result
-            
-            repo.save(self)
+            self.repo.save(self)
         }
     }
     
@@ -115,5 +114,11 @@ final class Cookbook: Hashable, ObservableObject {
         history.append(recipe)
         repo.save(self)
         //        latest.sort(by: $0.date.compare($1.date) == orderedAscending)
+    }
+    
+    func deleteRecipe(recipe: Recipe) {
+        self.history.removeAll(where: { $0.id == recipe.id })
+        self.favorites.removeAll(where: { $0.id == recipe.id })
+        self.ownedRecipes.removeAll(where: { $0.id == recipe.id })
     }
 }

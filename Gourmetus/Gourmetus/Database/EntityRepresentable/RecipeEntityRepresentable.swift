@@ -23,7 +23,7 @@ extension Recipe : EntityRepresentable {
               let stepsRepresentations = representation.toManyRelationships["steps"],
               let tagsRepresentations = representation.toManyRelationships["tags"],
               let ingredientsRepresentations = representation.toManyRelationships["ingredients"] else { return nil }
-
+        
         let desc = representation.values["desc"] as? String
         let imageData = representation.values["image"] as? Data
         

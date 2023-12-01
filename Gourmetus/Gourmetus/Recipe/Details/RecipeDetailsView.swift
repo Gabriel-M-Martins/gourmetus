@@ -67,7 +67,7 @@ struct RecipeDetailsView: View {
                         }
                         .foregroundStyle(Color.color_text_container_muted)
                         
-                        if self.cookbook.ownedRecipes.contains(where: { $0.id == recipe.id }) {
+                        if self.cookbook.ownedRecipes.contains(recipe) {
                             HStack {
                                 Spacer()
                                 
@@ -274,8 +274,9 @@ extension RecipeDetailsView: RecipeDetailsDelegate {
     
     func deleteRecipe(){
         self.repo.delete(recipe)
-        self.cookbook.removeOwned(recipe: recipe)
-        self.cookbook.history.removeAll(where: { $0.id == recipe.id })
+        
+        self.cookbook.deleteRecipe(recipe: recipe)
+        
         self.dismiss()
     }
 }

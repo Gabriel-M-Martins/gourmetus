@@ -4,7 +4,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="community" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="community" inverseEntity="RecipeEntity"/>
         <relationship name="favorites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="favorites" inverseEntity="RecipeEntity"/>
-        <relationship name="history" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecipeEntity" inverseName="latest" inverseEntity="RecipeEntity"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="latest" inverseEntity="RecipeEntity"/>
         <relationship name="ownedRecipes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="ownedRecipes" inverseEntity="RecipeEntity"/>
     </entity>
     <entity name="IngredientEntity" representedClassName="IngredientEntity" syncable="YES" codeGenerationType="class">
@@ -31,10 +31,10 @@
         <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="community" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="community" inverseEntity="CookbookEntity"/>
         <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="favorites" inverseEntity="CookbookEntity"/>
-        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientEntity" inverseName="recipe" inverseEntity="IngredientEntity"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="IngredientEntity" inverseName="recipe" inverseEntity="IngredientEntity"/>
         <relationship name="latest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="history" inverseEntity="CookbookEntity"/>
         <relationship name="ownedRecipes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookbookEntity" inverseName="ownedRecipes" inverseEntity="CookbookEntity"/>
-        <relationship name="steps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StepEntity" inverseName="recipe" inverseEntity="StepEntity"/>
+        <relationship name="steps" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StepEntity" inverseName="recipe" inverseEntity="StepEntity"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="recipes" inverseEntity="TagEntity"/>
     </entity>
     <entity name="StepEntity" representedClassName="StepEntity" syncable="YES" codeGenerationType="class">

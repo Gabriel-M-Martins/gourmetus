@@ -12,6 +12,8 @@ struct RecipeCardVerticalBig: View {
     @State var recipe: Recipe
     @Binding var isFavorite: Bool
     
+    @EnvironmentObject var cookbook: Cookbook
+    
     var favoriteButtonClosure: () -> ()
     
     private var image: Image {
@@ -41,9 +43,16 @@ struct RecipeCardVerticalBig: View {
                         .lineLimit(1)
                     
                     KnifeView(recipe: recipe)
+                    
                     HStack {
-                        Text(Image.starFill)
-                        if recipe.rating==0 {
+                        if !self.cookbook.ownedRecipes.contains(recipe) {
+                            Text(Image.starFill)
+                        }
+                        
+                        if self.cookbook.ownedRecipes.contains(recipe) {
+                            EmptyView()
+                        }
+                        else if recipe.rating == 0 {
                             Text(LocalizedStringKey("No Ratings"))
                         } else {
                             Text(String(format: "%.1f", recipe.rating))

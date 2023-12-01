@@ -61,13 +61,11 @@ struct HomeView: View {
                     Divider()
                     
                     //Community
-                    VStack(spacing: 0){
-                        
-                        if !cookbook.community.isEmpty{
-                            titleCommunity
-                            scrollViewCommunity
-                        }
+                    if !cookbook.community.isEmpty{
+                        titleCommunity
+                        scrollViewCommunity
                     }
+                    
                     
                 }
             }

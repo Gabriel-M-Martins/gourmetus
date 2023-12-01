@@ -38,7 +38,7 @@ final class Recipe: ObservableObject, Identifiable, Hashable {
         self.name = name
         self.desc = desc
         self.difficulty = difficulty
-        self.rating = 0
+        self.rating = rating
         self.imageData = imageData
         self.duration = duration
         self.owner = owner
