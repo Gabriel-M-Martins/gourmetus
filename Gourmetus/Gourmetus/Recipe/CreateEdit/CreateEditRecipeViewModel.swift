@@ -61,6 +61,7 @@ class CreateEditRecipeViewModel: ObservableObject {
         
         recipe.imageData = image.pngData()
         recipe.name = recipeTitle
+        recipe.desc = desc.isEmpty ? nil : desc
         recipe.difficulty = difficulty
         recipe.steps = steps
         recipe.ingredients = ingredients
