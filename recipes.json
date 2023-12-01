@@ -1,6 +1,52 @@
 {
     "recipes" : [
         {
+            "name": "Sorvete de manga com banana",
+            "difficulty": 31,
+            "rating": 5,
+            "duration": 600,
+            "desc": "Um delicioso sorvete de manga com banana perfeito para aqueles dias quentes de verão! Aproveite ao máximo o que essas frutas têm a oferecer sem a adição de nenhum açucar! Uma receita simple e deliciosa que você deve tentar.",
+            "image": "https://img.cybercook.com.br/receitas/1/sorvete-de-manga-com-banana-1.jpeg",
+            "tags": [
+                "For the Friend Group",
+                "For the Family",
+                "Low Sugar"
+            ],
+            "steps": [
+                {
+                    "title": "Deixe tudo preparado",
+                    "texto": "Pegue um liquidificador, uma colher, uma vasilha e 1/2 de manga congelada e também 1 banana congelada. Se quiser fazer mais, aumente as medidas.",
+                    "tip": "Quanto mais congelada as frutas estiverem, melhor.",
+                    "image": "https://acdn.mitiendanube.com/stores/002/059/930/products/screenshot_20230131-2014201-7dd3d2d0ad82e625da16752072079887-640-0.jpg",
+                    "ingredients": [
+                        {
+                            "name": "Manga congelada",
+                            "quantity": "1/2",
+                            "unit": "Unit"
+                        },
+                        {
+                            "name": "Banana congelada",
+                            "quantity": "1",
+                            "unit": "Unit"
+                        }
+                    ]
+                },
+                {
+                    "title": "Bata tudo junto",
+                    "texto": "No liquidificador, coloque a banana cortada e os pedaços da manga juntos. Coloque um pouco de água, por volta de 20ml e comece a bater."
+                },
+                {
+                    "title": "Use a colher!",
+                    "texto": "Sempre que ver as frutas não serem cortadas pelas lâminas do liquidificador, desligue ele e use a colher pra desgrudar tudo e continue o processo."
+                },
+                {
+                    "title": "Sirva",
+                    "texto": "Após bater tudo e alcançar a consistência desejada, retire do liquidificador e sirva na vasilha.",
+                    "image": "https://img.cybercook.com.br/receitas/1/sorvete-de-manga-com-banana-1.jpeg"
+                }
+            ]
+        },
+        {
             "name": "Classic Margherita Pizza",
             "difficulty": 3,
             "rating": 4,
